@@ -1,21 +1,19 @@
-import { Get, Controller, Post, Param } from "@nestjs/common";
+import { Get, Controller, Post, Query } from "@nestjs/common";
 import { UserServcie } from "../service/user.service";
 
-import { UserDTO } from "../dto/user.interface";
+import { executionResult, UserDTO } from "../dto/user.dto";
 
 @Controller("user")
 export class UserController {
-	constructor(private readonly userService:UserServcie){}
-
+	constructor(private userService: UserServcie) {}
 
 	@Get()
-	getUser(@Param("id") id: string): string{
-		return this.userService.getUser(id);
+	async getUser(@Query("id") id: string): Promise<executionResult> {
+		return await this.userService.getUser(id);
 	}
 
-	@Post()
-	createUser(user:UserDTO): boolean{
-		return this.userService.createUser(user);
-	}
-
+	// @Post()
+	// createUser(user: UserDTO): boolean {
+	// 	return this.userService.createUser(user);
+	// }
 }
