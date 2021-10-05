@@ -1,4 +1,4 @@
-interface User{
+export class UserDTO{
 	idx: number;
 	name: string;
 	id: string;
