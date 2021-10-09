@@ -1,5 +1,3 @@
-import { stringify } from "querystring";
-
 export class dateParser {
 	public static dbDateParser = (stringDate: string): Date => {
 		console.log(stringDate);
@@ -14,5 +12,9 @@ export class dateParser {
 		} catch {
 			return new Date(0, 1, 1);
 		}
+	};
+
+	public static dbDateFormatter = (date: Date): string => {
+		return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 	};
 }

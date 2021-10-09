@@ -1,3 +1,9 @@
 {
-	"git.ignoreLimitWarning": true
+  "git.ignoreLimitWarning": true,
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.insertSpaces": false,
+  "editor.tabCompletion": "on",
+  "prettier.useTabs": true,
+  "prettier.tabWidth": 4
 }

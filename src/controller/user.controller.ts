@@ -1,19 +1,29 @@
-import { Get, Controller, Post, Query } from "@nestjs/common";
+import { Get, Controller, Post, Body, Param, Patch } from "@nestjs/common";
 import { UserServcie } from "../service/user.service";
 
-import { executionResult, UserDTO } from "../dto/user.dto";
+import { executionResult } from "../dto/user.dto";
+import { createUserDTO } from "src/dto/createUser.dto";
 
 @Controller("user")
 export class UserController {
 	constructor(private userService: UserServcie) {}
 
-	@Get()
-	async getUser(@Query("id") id: string): Promise<executionResult> {
+	@Get("/:id")
+	async getUser(@Param("id") id: string): Promise<executionResult> {
 		return await this.userService.getUser(id);
 	}
 
-	// @Post()
-	// createUser(user: UserDTO): boolean {
-	// 	return this.userService.createUser(user);
-	// }
+	@Post()
+	async createUser(@Body() user: createUserDTO): Promise<executionResult> {
+		return await this.userService.createUser(user);
+	}
+
+	@Patch("/:id")
+	async patchUser(
+		@Param("id") user: createUserDTO,
+	): Promise<executionResult> {
+		await this.userService.deleteUser(user.id);
+
+		return await this.userService.createUser(user);
+	}
 }
