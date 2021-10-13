@@ -34,9 +34,9 @@ export class Mapper {
 					),
 					mysql.FieldPacket[],
 			  ] = await conn.query(query, data).catch((err: Error) => {
-			  	console.error("Query execution failed");
-			  	console.error(err);
-			  });
+			console.error("Query execution failed");
+			console.error(err);
+		});
 
 		//Relase connection and return
 		try {
@@ -49,14 +49,18 @@ export class Mapper {
 		//Return result
 		if (Array.isArray(result)) {
 			if (result !== undefined) {
-				for (let idx = 0, len = (result[0] as any[]).length; idx < len; idx++) {
+				for (
+					let idx = 0, len = (result[0] as any[]).length;
+					idx < len;
+					idx++
+				) {
 					const tempResult = (result[0] as any[])[idx];
 					resultArr.push({
 						idx: Number.parseInt(tempResult.idx),
 						name: tempResult.name,
-						id: tempResult.company_name,
-						password: tempResult.company_address,
-						phoneNumber: tempResult.hiring_position,
+						id: tempResult.id,
+						password: tempResult.password,
+						phoneNumber: tempResult.phoneNumber,
 						birthDate: tempResult.birthDate,
 						gender: tempResult.gender,
 						mainCharacter: tempResult.mainCharacter,

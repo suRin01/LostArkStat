@@ -1,5 +1,5 @@
 import { Type } from "class-transformer";
-import { IsDate, IsDateString, IsString } from "class-validator";
+import { IsDate, IsString } from "class-validator";
 
 export class createUserDTO {
 	@IsString()
