@@ -8,4 +8,7 @@ export class queryString {
 		"INSERT INTO `LostArkStat`.`User` (`name`, `id`, `password`, `phoneNumber`, `birthDate`, `gender`, `mainCharacter`) VALUES (?, ?, ?, ?, ?, ?, ?)";
 	public static readonly deleteOne =
 		"DELETE FROM `LostArkStat`.`User` WHERE (`id` = ?);";
+
+	public static readonly login =
+		"SELECT * FROM `LostArtStat`.`User` WHERE `id`";
 }

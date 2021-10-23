@@ -6,11 +6,17 @@ import {
 	Param,
 	Patch,
 	Render,
+	UseGuards,
+	Request,
+	Session,
+	Res,
 } from "@nestjs/common";
-import { AuthUserDto } from "src/dto/auth.dto";
-import { executionResult } from "src/dto/user.dto";
+import { AuthGuard } from "@nestjs/passport";
+import { session } from "passport";
+import { AuthUserDto } from "../dto/auth.dto";
+import { executionResult } from "../dto/user.dto";
 
-import { AuthService } from "src/service/auth.service";
+import { AuthService } from "../service/auth.service";
 
 @Controller("auth")
 export class AuthController {
@@ -22,23 +28,33 @@ export class AuthController {
 		return { message: "hi" };
 	}
 
-	// @Get("/:id")
-	// async getUser(@Param("id") id: string): Promise<executionResult> {
-	// 	return await this.userService.getUser(id);
-	// }
-
+	@UseGuards(AuthGuard("local"))
 	@Post()
-	async login(@Body() user: AuthUserDto): Promise<boolean> {
-		console.log(user);
-		return await this.authService.login(user);
+	async login(
+		@Request() req,
+		@Res({ passthrough: true }) response,
+	): Promise<any> {
+		console.log(req.user);
+
+		const token = (
+			await this.authService.login({
+				useranme: req.user.username,
+				sub: req.user.userpw,
+			})
+		).access_token;
+
+		response.setHeader("Set-Cookie", `Authorization=${token}; HttpOnly`);
+		return token;
 	}
 
-	// @Patch("/:id")
-	// async patchUser(
-	// 	@Param("id") user: createUserDTO,
-	// ): Promise<executionResult> {
-	// 	await this.userService.deleteUser(user.id);
-
-	// 	return await this.userService.createUser(user);
-	// }
+	@UseGuards(AuthGuard("Jwt"))
+	@Get()
+	async renewToken(@Request() req, @Res({ passthrough: true }) response) {
+		const token = (
+			await this.authService.login({
+				useranme: req.user.username,
+				sub: req.user.userpw,
+			})
+		).access_token;
+	}
 }

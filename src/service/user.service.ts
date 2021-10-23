@@ -1,10 +1,10 @@
 import { Injectable } from "@nestjs/common";
-import { Mapper } from "src/mapper/mapper";
-import { queryString } from "src/common/query";
-import { executionResult, UserDTO } from "src/dto/user.dto";
-import { dateParser } from "src/util/dateParser";
-import { createUserDTO } from "src/dto/createUser.dto";
-import { UpdateUserDTO } from "src/dto/updateUser.dto";
+import { Mapper } from "../mapper/mapper";
+import { queryString } from "../common/query";
+import { executionResult, UserDTO } from "../dto/user.dto";
+import { dateParser } from "../util/dateParser";
+import { createUserDTO } from "../dto/createUser.dto";
+import { UpdateUserDTO } from "../dto/updateUser.dto";
 
 @Injectable()
 export class UserServcie {
