@@ -4,7 +4,7 @@ import { Injectable } from "@nestjs/common";
 
 const fromAuthCookie = function () {
 	return function (request) {
-		let token = null;
+		let token: string = null;
 		if (request && request.headers.cookie) {
 			token = request.headers.cookie.split("=")[1];
 			console.log(token);
@@ -24,7 +24,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 	}
 
 	async validate(payload: any) {
-		console.log(payload);
 		return { userId: payload.sub, username: payload.username };
 	}
 }
