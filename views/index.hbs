@@ -1,0 +1,43 @@
+<html lang="ko_KR" class="js localstorage js localstorage">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<script
+			src="https://kit.fontawesome.com/02b9945b46.js"
+			crossorigin="anonymous"
+		></script>
+	</head>
+	<body class="">
+		<link rel="icon" type="image/x-icon" />
+		<link href="/css/common.css" rel="stylesheet" type="text/css" />
+		<link href="/css/new.css" rel="stylesheet" type="text/css" />
+		<div class="l-wrap l-wrap--index">
+			<div class="l-container">
+				<div class="index-logo">
+					<div id="logo">
+						<img src="./images/logo.png" class="Image" />
+					</div>
+				</div>
+
+				<form
+					class="summoner-search-form"
+					action="/search"
+					autocomplete="off"
+				>
+					<input
+						type="text"
+						name="userName"
+						class="summoner-search-form__text _suggest js-bound"
+						placeholder="닉네임..."
+						autocomplete="off"
+					/>
+					<button type="submit" class="summoner-search-form__button">
+						<i class="fas fa-search"></i>
+					</button>
+
+				</form>
+
+				<div class="opgg__notice--index"></div>
+			</div>
+		</div>
+	</body>
+</html>
