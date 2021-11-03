@@ -30,3 +30,6 @@ bootstrap();
 
 // https://1drv.ms/u/s!Ajg9s_4mZeFglU3HdZ2kYjZztQDL
 // 테이블 구조 정리, 이후 페이지 작동 절차 정리
+
+// https://lostark.game.onstove.com/Profile/Character/1%EB%8C%80%EB%8C%80%EB%8B%B9%EC%A7%81%EC%82%AC%EB%A0%B9 공식 홈페이지
+// $.Profile => dom이하 데이터 저장된 오브젝트, 모든 데이터 끌어오기 가능

@@ -8,7 +8,6 @@ import {
 	UseGuards,
 } from "@nestjs/common";
 import { UserServcie } from "../service/user.service";
-
 import { executionResult } from "../dto/user.dto";
 import { createUserDTO } from "../dto/createUser.dto";
 import { AuthGuard } from "@nestjs/passport";

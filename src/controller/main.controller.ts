@@ -1,8 +1,9 @@
-import { Get, Controller, Render } from "@nestjs/common";
+import { Get, Controller, Render, Param, Query } from "@nestjs/common";
+import { CrawlingService } from "src/service/crawling.service";
 
 @Controller("/")
 export class MainController {
-	// constructor() {}
+	constructor(private crawlingService: CrawlingService) {}
 
 	@Get()
 	@Render("index")
@@ -10,9 +11,11 @@ export class MainController {
 		return { message: "hello" };
 	}
 
-	@Get("/character/:id")
+	@Get("/search")
 	@Render("character")
-	character() {
-		return;
+	character(@Query("userName") id: string) {
+		const profileData = this.crawlingService.getData(id);
+
+		return profileData;
 	}
 }
