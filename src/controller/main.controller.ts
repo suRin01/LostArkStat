@@ -13,7 +13,7 @@ export class MainController {
 
 	@Get("/search")
 	@Render("character")
-	character(@Query("userName") id: string) {
+	character(@Query("username") id: string) {
 		const profileData = this.crawlingService.getData(id);
 
 		return profileData;

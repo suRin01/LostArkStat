@@ -273,13 +273,15 @@
 						<ul class="navbar-nav ml-xl-auto">
 							<li class="nav-item">
 								<div class="pt-0 pl-0 pr-0 pb-0 m-0">
-									<div
+									<form
 										class="input-group input-group-sm pt-0 pb-0 pl-4 pr-4 m-0"
+										action="/search"
 									>
 										<input
 											id="character"
 											class="form-control form-control-sm text-center pt-1 pb-1 pl-0 pr-0 m-0 rounded-left bg-theme-4 bd-theme-8"
 											style="width: 169px"
+											name="username"
 											type="text"
 											placeholder="검색할 캐릭터명을 입력"
 											aria-label="Search"
@@ -296,7 +298,7 @@
 											</button>
 										</div>
 										<datalist id="choices"> </datalist>
-									</div>
+									</form>
 								</div>
 							</li>
 						</ul>
@@ -379,19 +381,9 @@
 									style="position: relative"
 								>
 									<p class="p-0 m-0 text-left">
-										<span
-											class="mp"
-										>{{characterName}}</span><span
-											class="align-bottom"
-											style="visibility: hidden"
-										><img
-												style="
-													position: absolute;
-													top: 4px;
-													right: 4px;
-												"
-												src="./character_files/badge.svg"
-											/>&nbsp;</span>
+										<strong
+											class="tfs14 text-theme-1"
+										>{{characterName}}</strong>
 									</p>
 								</div>
 							</div>
@@ -914,8 +906,9 @@
 																			"
 																		>
 																			<img
-																				src="./character_files/HT_Item_01_48.png"
-																				class="grade5 w46 img-thumbnail pb-2 mb-1"
+																				src={{hat.icon}}
+																				class="{{hat.tier}}
+																					w46 img-thumbnail pb-2 mb-1"
 																				alt=""
 																			/>
 																			<p
@@ -929,12 +922,8 @@
 																				>&nbsp;&nbsp;<strong
 																					>머리</strong>
 																				</span><span
-																					class="d-block text-grade5"
-																				>&nbsp;&nbsp;<span
-																						style="
-																							color: #fa5d00;
-																						"
-																					>{{hat}}</span></span>
+																					class="d-block text-{{hat.tier}}"
+																				>{{hat.name}}</span>
 																			</p>
 																			<div
 																				style="
@@ -954,8 +943,9 @@
 																			"
 																		>
 																			<img
-																				src="./character_files/SC_Item_132.png"
-																				class="grade5 w46 img-thumbnail pb-2 mb-1"
+																				src={{shoulder.icon}}
+																				class="{{shoulder.tier}}
+																					w46 img-thumbnail pb-2 mb-1"
 																				alt=""
 																			/>
 																			<p
@@ -969,12 +959,8 @@
 																				>&nbsp;&nbsp;<strong
 																					>어깨</strong>
 																				</span><span
-																					class="d-block text-grade5"
-																				>&nbsp;&nbsp;<span
-																						style="
-																							color: #fa5d00;
-																						"
-																					>{{shoulder}}</span></span>
+																					class="d-block text-{{shoulder.tier}}"
+																				>{{shoulder.name}}</span>
 																			</p>
 																			<div
 																				style="
@@ -1003,8 +989,9 @@
 																			"
 																		>
 																			<img
-																				src="./character_files/HT_Item_01_50.png"
-																				class="grade5 w46 img-thumbnail pb-2 mb-1"
+																				src={{top.icon}}
+																				class="{{top.tier}}
+																					w46 img-thumbnail pb-2 mb-1"
 																				alt=""
 																			/>
 																			<p
@@ -1018,12 +1005,8 @@
 																				>&nbsp;&nbsp;<strong
 																					>상의</strong>
 																				</span><span
-																					class="d-block text-grade5"
-																				>&nbsp;&nbsp;<span
-																						style="
-																							color: #fa5d00;
-																						"
-																					>{{top}}</span></span>
+																					class="d-block text-{{top.tier}}"
+																				>{{top.name}}</span>
 																			</p>
 																			<div
 																				style="
@@ -1052,8 +1035,9 @@
 																			"
 																		>
 																			<img
-																				src="./character_files/HT_Item_01_52.png"
-																				class="grade5 w46 img-thumbnail pb-2 mb-1"
+																				src={{bottom.icon}}
+																				class="{{bottom.tier}}
+																					w46 img-thumbnail pb-2 mb-1"
 																				alt=""
 																			/>
 																			<p
@@ -1067,12 +1051,8 @@
 																				>&nbsp;&nbsp;<strong
 																					>하의</strong>
 																				</span><span
-																					class="d-block text-grade5"
-																				>&nbsp;&nbsp;<span
-																						style="
-																							color: #fa5d00;
-																						"
-																					>{{bottom}}</span></span>
+																					class="d-block text-{{bottom.tier}}"
+																				>{{bottom.name}}</span>
 																			</p>
 																			<div
 																				style="
@@ -1101,8 +1081,9 @@
 																			"
 																		>
 																			<img
-																				src="./character_files/SC_Item_133.png"
-																				class="grade5 w46 img-thumbnail pb-2 mb-1"
+																				src={{gloves.icon}}
+																				class="{{gloves.tier}}
+																					w46 img-thumbnail pb-2 mb-1"
 																				alt=""
 																			/>
 																			<p
@@ -1116,12 +1097,8 @@
 																				>&nbsp;&nbsp;<strong
 																					>장갑</strong>
 																				</span><span
-																					class="d-block text-grade5"
-																				>&nbsp;&nbsp;<span
-																						style="
-																							color: #fa5d00;
-																						"
-																					>{{gloves}}</span></span>
+																					class="d-block text-{{gloves.tier}}"
+																				>{{gloves.name}}</span>
 																			</p>
 																			<div
 																				style="
@@ -1150,8 +1127,9 @@
 																			"
 																		>
 																			<img
-																				src="./character_files/SC_Item_137.png"
-																				class="grade5 w46 img-thumbnail pb-2 mb-1"
+																				src={{weapon.icon}}
+																				class="{{weapon.tier}}
+																					w46 img-thumbnail pb-2 mb-1"
 																				alt=""
 																			/>
 																			<p
@@ -1165,12 +1143,8 @@
 																				>&nbsp;&nbsp;<strong
 																					>무기</strong>
 																				</span><span
-																					class="d-block text-grade5"
-																				>&nbsp;&nbsp;<span
-																						style="
-																							color: #fa5d00;
-																						"
-																					>{{weapone}}</span></span>
+																					class="d-block text-{{weapon.tier}}"
+																				>{{weapon.name}}</span>
 																			</p>
 																			<div
 																				style="
@@ -1260,8 +1234,9 @@
 																			"
 																		>
 																			<img
-																				src="./character_files/Acc_212.png"
-																				class="grade5 w46 img-thumbnail pb-2 mb-1"
+																				src={{necklace.icon}}
+																				class="{{necklace.tier}}
+																					w46 img-thumbnail pb-2 mb-1"
 																				alt=""
 																			/>
 																			<p
@@ -1275,12 +1250,8 @@
 																				>&nbsp;&nbsp;<strong
 																					>목걸이</strong>
 																				</span><span
-																					class="d-block text-grade5"
-																				>&nbsp;&nbsp;<span
-																						style="
-																							color: #fa5d00;
-																						"
-																					>{{necklace}}</span></span>
+																					class="d-block text-{{necklace.tier}}"
+																				>{{necklace.name}}</span>
 																			</p>
 																			<div
 																				style="
@@ -1309,8 +1280,9 @@
 																			"
 																		>
 																			<img
-																				src="./character_files/Acc_112.png"
-																				class="grade5 w46 img-thumbnail pb-2 mb-1"
+																				src={{earringOne.icon}}
+																				class="{{earringOne.tier}}
+																					w46 img-thumbnail pb-2 mb-1"
 																				alt=""
 																			/>
 																			<p
@@ -1324,12 +1296,8 @@
 																				>&nbsp;&nbsp;<strong
 																					>귀걸이1</strong>
 																				</span><span
-																					class="d-block text-grade5"
-																				>&nbsp;&nbsp;<span
-																						style="
-																							color: #fa5d00;
-																						"
-																					>{{earringOne}}</span></span>
+																					class="d-block text-{{earringOne.tier}}"
+																				>{{earringOne.name}}</span>
 																			</p>
 																			<div
 																				style="
@@ -1358,8 +1326,9 @@
 																			"
 																		>
 																			<img
-																				src="./character_files/Acc_112.png"
-																				class="grade5 w46 img-thumbnail pb-2 mb-1"
+																				src={{earringTwo.icon}}
+																				class="{{earringTwo.tier}}
+																					w46 img-thumbnail pb-2 mb-1"
 																				alt=""
 																			/>
 																			<p
@@ -1373,12 +1342,8 @@
 																				>&nbsp;&nbsp;<strong
 																					>귀걸이2</strong>
 																				</span><span
-																					class="d-block text-grade5"
-																				>&nbsp;&nbsp;<span
-																						style="
-																							color: #fa5d00;
-																						"
-																					>{{earringTow}}</span></span>
+																					class="d-block text-{{earringTwo.tier}}"
+																				>{{earringTwo.name}}</span>
 																			</p>
 																			<div
 																				style="
@@ -1407,8 +1372,9 @@
 																			"
 																		>
 																			<img
-																				src="./character_files/Acc_19.png"
-																				class="grade5 w46 img-thumbnail pb-2 mb-1"
+																				src={{ringOne.icon}}
+																				class="{{ringOne.tier}}
+																					w46 img-thumbnail pb-2 mb-1"
 																				alt=""
 																			/>
 																			<p
@@ -1422,12 +1388,8 @@
 																				>&nbsp;&nbsp;<strong
 																					>반지1</strong>
 																				</span><span
-																					class="d-block text-grade5"
-																				>&nbsp;&nbsp;<span
-																						style="
-																							color: #fa5d00;
-																						"
-																					>{{ringOne}}</span></span>
+																					class="d-block text-{{ringOne.tier}}"
+																				>{{ringOne.name}}</span>
 																			</p>
 																			<div
 																				style="
@@ -1456,8 +1418,9 @@
 																			"
 																		>
 																			<img
-																				src="./character_files/Acc_16.png"
-																				class="grade5 w46 img-thumbnail pb-2 mb-1"
+																				src={{ringTwo.icon}}
+																				class="{{ringTwo.tier}}
+																					w46 img-thumbnail pb-2 mb-1"
 																				alt=""
 																			/>
 																			<p
@@ -1471,12 +1434,8 @@
 																				>&nbsp;&nbsp;<strong
 																					>반지2</strong>
 																				</span><span
-																					class="d-block text-grade5"
-																				>&nbsp;&nbsp;<span
-																						style="
-																							color: #fa5d00;
-																						"
-																					>{{ringTwo}}</span></span>
+																					class="d-block text-{{ringTwo.tier}}"
+																				>{{ringTwo.name}}</span>
 																			</p>
 																			<div
 																				style="
@@ -1505,8 +1464,9 @@
 																			"
 																		>
 																			<img
-																				src="./character_files/Acc_303.png"
-																				class="grade5 w46 img-thumbnail pb-2 mb-1"
+																				src={{bracelet.icon}}
+																				class="{{bracelet.tier}}
+																					w46 img-thumbnail pb-2 mb-1"
 																				alt=""
 																			/>
 																			<p
@@ -1520,12 +1480,8 @@
 																				>&nbsp;&nbsp;<strong
 																					>팔찌</strong>
 																				</span><span
-																					class="d-block text-grade5"
-																				>&nbsp;&nbsp;<span
-																						style="
-																							color: #fa5d00;
-																						"
-																					>{{bracelet}}</span></span>
+																					class="d-block text-{{bracelet.tier}}"
+																				>{{bracelet.name}}</span>
 																			</p>
 																			<div
 																				style="
@@ -1552,8 +1508,9 @@
 																			"
 																		>
 																			<img
-																				src="./character_files/Ability_22.png"
-																				class="grade5 w46 img-thumbnail pb-2 mb-1"
+																				src={{abilityStone.icon}}
+																				class="{{abilityStone.tier}}
+																					w46 img-thumbnail pb-2 mb-1"
 																				alt=""
 																			/>
 																			<p
@@ -1568,12 +1525,8 @@
 																					>어빌리티
 																						스톤</strong>
 																				</span><span
-																					class="d-block text-grade5"
-																				>&nbsp;&nbsp;<span
-																						style="
-																							color: #fa5d00;
-																						"
-																					>{{abilityStone}}</span></span>
+																					class="d-block text-{{abilityStone.tier}}"
+																				>{{abilityStone.name}}</span>
 																			</p>
 																			<div
 																				style="
@@ -1581,14 +1534,14 @@
 																				"
 																			>
 																				<img
-																					src="./character_files/p7.png"
+																					src="/images/stone/p7.png"
 																					class="img-thumbnail p-0"
 																					style="
 																						margin-top: 36px;
 																						width: 16px;
 																					"
 																				/><img
-																					src="./character_files/p7.png"
+																					src="/images/stone/p7.png"
 																					class="img-thumbnail p-0"
 																					style="
 																						margin-top: 36px;
@@ -1596,7 +1549,7 @@
 																						width: 16px;
 																					"
 																				/><img
-																					src="./character_files/m3.png"
+																					src="/images/stone/m3.png"
 																					class="img-thumbnail p-0"
 																					style="
 																						margin-top: 36px;
@@ -1639,16 +1592,9 @@
 																class="nav-item text-center"
 																role="presentation"
 															>
-																<a
-																	class="nav-theme-link pl-2 pt-2 pr-2 pb-1 tfs15 active"
-																	id="contact-tab"
-																	data-toggle="tab"
-																	href="https://loawa.com/char/1%EB%8C%80%EB%8C%80%EB%8B%B9%EC%A7%81%EC%82%AC%EB%A0%B9#contact"
-																	role="tab"
-																	aria-controls="contact"
-																	aria-selected="true"
-																><strong
-																	>특성/각인</strong></a>
+																<strong
+																	class="tfs14 text-theme-1"
+																>특성/각인</strong>
 															</li>
 														</ul>
 													</div>
@@ -1950,7 +1896,6 @@
 																				data-toggle="tooltip"
 																				data-html="true"
 																				title=""
-																				data-original-title="&lt;span class=&#39;tfs14 text-grade4 w700&#39;&gt;돌격대장 Lv.3&lt;/span&gt;&lt;BR/&gt;&lt;span class=&#39;tfs13&#39;&gt;기본 이동 속도 증가량 % 의 &lt;span class=&#39;text-grade1&#39;&gt;45%&lt;/span&gt; 만큼 적에게 주는 피해량이 증가한다.&lt;/span&gt;"
 																			>
 																				<img
 																					src="./character_files/028.png"
@@ -1965,7 +1910,6 @@
 																				data-toggle="tooltip"
 																				data-html="true"
 																				title=""
-																				data-original-title="&lt;span class=&#39;tfs14 text-grade4 w700&#39;&gt;바리케이드 Lv.3&lt;/span&gt;&lt;BR/&gt;&lt;span class=&#39;tfs13&#39;&gt;실드 효과가 적용되는 동안 적에게 입히는 피해가 &lt;span class=&#39;text-grade1&#39;&gt;16%&lt;/span&gt; 증가한다.&lt;/span&gt;"
 																			>
 																				<img
 																					src="./character_files/033.png"
@@ -1984,7 +1928,6 @@
 																				data-toggle="tooltip"
 																				data-html="true"
 																				title=""
-																				data-original-title="&lt;span class=&#39;tfs14 text-grade4 w700&#39;&gt;안정된 상태 Lv.3&lt;/span&gt;&lt;BR/&gt;&lt;span class=&#39;tfs13&#39;&gt;내 생명력이 &lt;span class=&#39;text-grade4&#39;&gt;80%&lt;/span&gt; 이상일 때 주는 피해가 &lt;span class=&#39;text-grade1&#39;&gt;16%&lt;/span&gt; 증가한다.&lt;/span&gt;"
 																			>
 																				<img
 																					src="./character_files/049.png"
@@ -1999,7 +1942,6 @@
 																				data-toggle="tooltip"
 																				data-html="true"
 																				title=""
-																				data-original-title="&lt;span class=&#39;tfs14 text-grade4 w700&#39;&gt;원한 Lv.3&lt;/span&gt;&lt;BR/&gt;&lt;span class=&#39;tfs13&#39;&gt;보스 등급 이상 몬스터에게 주는 피해가 &lt;span class=&#39;text-grade1&#39;&gt;20%&lt;/span&gt; 증가하지만, 받는 피해가 &lt;span class=&#39;text-red&#39;&gt;20%&lt;/span&gt; 증가한다.&lt;/span&gt;"
 																			>
 																				<img
 																					src="./character_files/058.png"
@@ -2018,7 +1960,6 @@
 																				data-toggle="tooltip"
 																				data-html="true"
 																				title=""
-																				data-original-title="&lt;span class=&#39;tfs14 text-grade4 w700&#39;&gt;아드레날린 Lv.2&lt;/span&gt;&lt;BR/&gt;&lt;span class=&#39;tfs13&#39;&gt;이동기 및 기본공격을 제외한 스킬사용 후 &lt;span class=&#39;text-grade4&#39;&gt;6&lt;/span&gt;초 동안 공격력이 &lt;span class=&#39;text-grade1&#39;&gt;0.6%&lt;/span&gt; 증가하며(최대 &lt;span class=&#39;text-grade4&#39;&gt;6&lt;/span&gt;중첩) 해당 효과가 최대 중첩 도달 시 치명타 적중률이 추가로 &lt;span class=&#39;text-grade1&#39;&gt;10%&lt;/span&gt; 증가한다. 해당 효과는 스킬 취소에 따른 재사용 대기시간 감소가 적용되는 경우, 스킬 종료 후 적용된다.&lt;/span&gt;"
 																			>
 																				<img
 																					src="./character_files/089.png"
@@ -2033,7 +1974,6 @@
 																				data-toggle="tooltip"
 																				data-html="true"
 																				title=""
-																				data-original-title="&lt;span class=&#39;tfs14 text-grade4 w700&#39;&gt;진화의 유산 Lv.1&lt;/span&gt;&lt;BR/&gt;&lt;span class=&#39;tfs13&#39;&gt;하이퍼 싱크 모드 중 싱크 스킬이 적중했을 시 피해량이 &lt;span class=&#39;text-grade1&#39;&gt;2%&lt;/span&gt; 증가하는 효과를 획득하며 (최대 &lt;span class=&#39;text-grade4&#39;&gt;3&lt;/span&gt;중첩) 다른 싱크 스킬들의 재사용 대기시간이 &lt;span class=&#39;text-grade4&#39;&gt;0.5&lt;/span&gt;초씩 감소한다. 또한 하이퍼 싱크 모드가 해제될 시 소모한 코어 에너지의 &lt;span class=&#39;text-grade4&#39;&gt;40%&lt;/span&gt;를 돌려받는다.&lt;/span&gt;"
 																			>
 																				<img
 																					src="./character_files/071.png"

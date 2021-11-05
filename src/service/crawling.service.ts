@@ -1,6 +1,8 @@
 import type { Browser } from "puppeteer";
 import { Injectable } from "@nestjs/common";
 import { InjectBrowser } from "nest-puppeteer";
+import { StaticKey } from "src/common/staticKey";
+import { selector } from "src/common/querySelector";
 
 @Injectable()
 export class CrawlingService {
@@ -15,72 +17,128 @@ export class CrawlingService {
 			"https://lostark.game.onstove.com/Profile/Character/" + id,
 		);
 
-		const profileData = await page.evaluate(() => {
-			if (this["$"] === undefined) {
-				return null;
-			}
-			return {
-				characterName: document.querySelector(
-					"#lostark-wrapper > div > main > div > div.profile-character-info > span.profile-character-info__name",
-				)["innerText"],
-				server: document.querySelector(
-					"#lostark-wrapper > div > main > div > div.profile-character-info > span.profile-character-info__server",
-				)["innerText"],
-				guild: document.querySelector(
-					"#lostark-wrapper > div > main > div > div.profile-ingame > div.profile-info > div.game-info > div.game-info__guild > span:nth-child(2)",
-				)["innerText"],
-				characterClass: document.querySelector(
-					"#lostark-wrapper > div > main > div > div.profile-character-info > img",
-				)["alt"],
-				characterTitle: document.querySelector(
-					"#lostark-wrapper > div > main > div > div.profile-ingame > div.profile-info > div.game-info > div.game-info__title > span:nth-child(2)",
-				)["innerText"],
-				level: document.querySelector(
-					"#lostark-wrapper > div > main > div > div.profile-ingame > div.profile-info > div.level-info > div.level-info__item > span:nth-child(2)",
-				)["innerText"],
-				itemLevel: document.querySelector(
-					"#lostark-wrapper > div > main > div > div.profile-ingame > div.profile-info > div.level-info2 > div.level-info2__expedition > span:nth-child(2)",
-				)["innerText"],
-				expeditionLevel: document.querySelector(
-					"#lostark-wrapper > div > main > div > div.profile-ingame > div.profile-info > div.level-info > div.level-info__expedition > span:nth-child(2)",
-				)["innerText"],
-				duelLevel: document.querySelector(
-					"#lostark-wrapper > div > main > div > div.profile-ingame > div.profile-info > div.game-info > div.level-info__pvp > span:nth-child(2)",
-				)["innerText"],
-				possessionLevel:
-					document.querySelector(
-						"#lostark-wrapper > div > main > div > div.profile-ingame > div.profile-info > div.game-info > div.game-info__wisdom > span:nth-child(2)",
-					)["innerText"] +
-					document.querySelector(
-						"#lostark-wrapper > div > main > div > div.profile-ingame > div.profile-info > div.game-info > div.game-info__wisdom > span:nth-child(3)",
-					)["innerText"],
+		const profileData = await page.evaluate(
+			(StaticKey, selector) => {
+				function getItem(equip, ItemCode) {
+					const key = Object.getOwnPropertyNames(equip)[0].slice(
+						0,
+						8,
+					);
 
-				island: document.querySelector(
-					"#lui-tab1-1 > div > div.collection-list > div > p > span.now-count",
-				)["innerText"],
-				star: document.querySelector(
-					"#lui-tab1-2 > div > div.collection-list > div > p > span.now-count",
-				)["innerText"],
-				heart: document.querySelector(
-					"#lui-tab1-3 > div > div.collection-list > div > p > span.now-count",
-				)["innerText"],
-				picture: document.querySelector(
-					"#lui-tab1-4 > div > div.collection-list > div > p > span.now-count",
-				)["innerText"],
-				mokoko: document.querySelector(
-					"#lui-tab1-5 > div > div.collection-list > div > p > span.now-count",
-				)["innerText"],
-				expedition: document.querySelector(
-					"#lui-tab1-6 > div > div.collection-list > div > p > span.now-count",
-				)["innerText"],
-				ignea: document.querySelector(
-					"#lui-tab1-7 > div > div.collection-list > div > p > span.now-count",
-				)["innerText"],
-				leaf: document.querySelector(
-					"#lui-tab1-8 > div > div.collection-list > div > p > span.now-count",
-				)["innerText"],
-			};
-		});
+					const itemObject = equip[key + "_" + ItemCode];
+					if (itemObject === undefined) {
+						return {
+							icon: "/images/blank.png",
+							name: "",
+							tier: "grade0",
+						};
+					}
+
+					return {
+						icon:
+							"https://cdn-lostark.game.onstove.com/" +
+							itemObject["Element_001"]["value"]["slotData"][
+								"iconPath"
+							],
+						name: itemObject["Element_000"]["value"]
+							.replace(/<[^>]*>/gm, " ")
+							.trim(),
+						tier: getTier(
+							itemObject["Element_001"]["value"]["leftStr0"],
+						),
+					};
+				}
+
+				function getTier(itemString: string): string {
+					if (itemString.includes("유물")) {
+						return "grade5";
+					} else if (itemString.includes("전설")) {
+						return "grade4";
+					} else if (itemString.includes("영웅")) {
+						return "grade3";
+					} else if (itemString.includes("희귀")) {
+						return "grade2";
+					} else if (itemString.includes("일반")) {
+						return "grade2";
+					}
+				}
+
+				function getStoneStat(stoneStatString: string) {
+					// const result = stoneStatString.
+				}
+
+				if (this["$"] === undefined) {
+					return null;
+				}
+
+				const equip = this["$"]["Profile"]["Equip"];
+
+				return {
+					characterName: document.querySelector(
+						selector.characterName,
+					)["innerText"],
+					server: document
+						.querySelector(selector.server)
+						["innerText"].replace("@", ""),
+					guild: document.querySelector(selector.guild)["innerText"],
+					characterClass: document.querySelector(
+						selector.characterClass,
+					)["alt"],
+					characterTitle: document.querySelector(
+						selector.characterTitle,
+					)["innerText"],
+					level: document.querySelector(selector.level)["innerText"],
+					itemLevel: document.querySelector(selector.itemLevel)[
+						"innerText"
+					],
+					expeditionLevel: document.querySelector(
+						selector.expeditionLevel,
+					)["innerText"],
+					duelLevel: document.querySelector(selector.duelLevel)[
+						"innerText"
+					],
+					possessionLevel:
+						document.querySelector(selector.possessionLevelFirst)[
+							"innerText"
+						] +
+						document.querySelector(selector.possessionLevelSecond)[
+							"innerText"
+						],
+
+					island: document.querySelector(selector.island)[
+						"innerText"
+					],
+					star: document.querySelector(selector.star)["innerText"],
+					heart: document.querySelector(selector.heart)["innerText"],
+					picture: document.querySelector(selector.picture)[
+						"innerText"
+					],
+					mokoko: document.querySelector(selector.mokoko)[
+						"innerText"
+					],
+					expedition: document.querySelector(selector.expedition)[
+						"innerText"
+					],
+					ignea: document.querySelector(selector.leaf)["innerText"],
+					leaf: document.querySelector(selector.leaf)["innerText"],
+					hat: getItem(equip, StaticKey.hat),
+					top: getItem(equip, StaticKey.top),
+					bottom: getItem(equip, StaticKey.bottom),
+					gloves: getItem(equip, StaticKey.gloves),
+					shoulder: getItem(equip, StaticKey.shoulder),
+					weapon: getItem(equip, StaticKey.weapon),
+					necklace: getItem(equip, StaticKey.necklace),
+					earringOne: getItem(equip, StaticKey.earringOne),
+					earringTwo: getItem(equip, StaticKey.earringTwo),
+					ringOne: getItem(equip, StaticKey.ringOne),
+					ringTwo: getItem(equip, StaticKey.ringTwo),
+					abilityStone: getItem(equip, StaticKey.abilityStone),
+					bracelet: getItem(equip, StaticKey.bracelet),
+				};
+			},
+			StaticKey,
+			selector,
+		);
 
 		console.log(profileData);
 
