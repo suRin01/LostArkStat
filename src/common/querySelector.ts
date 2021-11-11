@@ -21,4 +21,17 @@ export const selector = {
 	expedition: "#lui-tab1-6 " + countSelector,
 	ignea: "#lui-tab1-7 " + countSelector,
 	leaf: "#lui-tab1-8 " + countSelector,
+
+	combatPower: "#profile-ability > div.profile-ability-basic > ul > li:nth-child(1) > span:nth-child(2)",
+	healthPoint: "#profile-ability > div.profile-ability-basic > ul > li:nth-child(2) > span:nth-child(2)",
+	criticalScore: "#profile-ability > div.profile-ability-battle > ul > li:nth-child(1) > span:nth-child(2)",
+	specializationScore: "#profile-ability > div.profile-ability-battle > ul > li:nth-child(2) > span:nth-child(2)",
+	suppressScore: "#profile-ability > div.profile-ability-battle > ul > li:nth-child(3) > span:nth-child(2)",
+	speedScore: "#profile-ability > div.profile-ability-battle > ul > li:nth-child(4) > span:nth-child(2)",
+	patienceScore: "#profile-ability > div.profile-ability-battle > ul > li:nth-child(5) > span:nth-child(2)",
+	skilledScore: "#profile-ability > div.profile-ability-battle > ul > li:nth-child(6) > span:nth-child(2)",
+	intelligence: "#chart-states-wrap > div.states_box > span.states-01 > span > em",
+	courage: "#chart-states-wrap > div.states_box > span.states-02 > span > em",
+	charming: "#chart-states-wrap > div.states_box > span.states-03 > span > em",
+	kindness: "#chart-states-wrap > div.states_box > span.states-04 > span > em",
 };
