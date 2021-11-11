@@ -1,13 +1,4 @@
-import {
-	Get,
-	Controller,
-	Post,
-	Render,
-	UseGuards,
-	Request,
-	Res,
-	Redirect,
-} from "@nestjs/common";
+import { Get, Controller, Post, Render, UseGuards, Request, Res, Redirect } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
 
 import { AuthService } from "../service/auth.service";
@@ -25,10 +16,7 @@ export class AuthController {
 	@UseGuards(AuthGuard("local"))
 	@Redirect("/", 302)
 	@Post()
-	async login(
-		@Request() req,
-		@Res({ passthrough: true }) response,
-	): Promise<any> {
+	async login(@Request() req, @Res({ passthrough: true }) response): Promise<any> {
 		const tokens = await this.authService.getAccessToken({
 			useranme: req.user.username,
 			sub: req.user.userpw,

@@ -3,9 +3,17 @@ import { NestFactory } from "@nestjs/core";
 import { NestExpressApplication } from "@nestjs/platform-express";
 import { join } from "path";
 import { AppModule } from "./app.module";
+import * as fs from "fs";
 
 async function bootstrap() {
-	const app = await NestFactory.create<NestExpressApplication>(AppModule);
+	const httpsOptions = {
+		key: fs.readFileSync(join(__dirname, "..", "certification/privkey1.pem")),
+		cert: fs.readFileSync(join(__dirname, "..", "certification/cert1.pem")),
+	};
+
+	const app = await NestFactory.create<NestExpressApplication>(AppModule, {
+		httpsOptions,
+	});
 
 	// whiteList -> 엔티티 데코레이터에 없는 프로퍼티 값은 무조건 거름
 	// forbidNonWhitelisted -> 엔티티 데코레이터에 없는 값 인입시 그 값에 대한 에러메세지 알려줌
@@ -24,7 +32,7 @@ async function bootstrap() {
 
 	app.setViewEngine("hbs");
 
-	await app.listen(3000);
+	await app.listen(443, "0.0.0.0");
 }
 bootstrap();
 

@@ -3,6 +3,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectBrowser } from "nest-puppeteer";
 import { StaticKey } from "src/common/staticKey";
 import { selector } from "src/common/querySelector";
+import { engraveList } from "src/common/engrave";
 
 @Injectable()
 export class CrawlingService {
@@ -16,7 +17,7 @@ export class CrawlingService {
 		await page.goto("https://lostark.game.onstove.com/Profile/Character/" + id);
 
 		const profileData = await page.evaluate(
-			(StaticKey, selector) => {
+			(StaticKey, selector, engraveList) => {
 				function getItemObject(equip, ItemCode) {
 					if (equip === undefined) {
 						return undefined;
@@ -94,10 +95,29 @@ export class CrawlingService {
 						name: engraveObject["Element_000"]["value"],
 						stat: "+" + stat,
 						icon:
-							"https://cdn-lostark.game.onstove.com/" +
-							engraveObject["Element_001"]["value"]["slotData"]["iconPath"],
+							"/images/engrave/" +
+							String(engraveList[engraveObject["Element_000"]["value"]]).padStart(3, "0") +
+							".png",
 						tier: getTier(stat),
 					};
+				}
+
+				function getActiveEngraveArray() {
+					const nodeArray = document.querySelectorAll(
+						"#profile-ability > div.profile-ability-engrave > div > div.swiper-wrapper > ul > * > span",
+					);
+					const engraveArray = [];
+					for (let idx = 0, len = nodeArray.length; idx < len; idx++) {
+						engraveArray[idx] = {
+							name: nodeArray[idx]["innerText"],
+							icon:
+								"/images/engrave/" +
+								String(engraveList[nodeArray[idx]["innerText"].split(" Lv")[0]]).padStart(3, "0") +
+								".png",
+						};
+					}
+
+					return engraveArray;
 				}
 
 				if (this["$"] === undefined) {
@@ -109,6 +129,7 @@ export class CrawlingService {
 				const engrave = profile["Engrave"];
 
 				return {
+					activeEngrave: getActiveEngraveArray(),
 					characterName: document.querySelector(selector.characterName)["innerText"],
 					server: document.querySelector(selector.server)["innerText"].replace("@", ""),
 					guild: document.querySelector(selector.guild)["innerText"],
@@ -166,6 +187,7 @@ export class CrawlingService {
 			},
 			StaticKey,
 			selector,
+			engraveList,
 		);
 
 		console.log(profileData);

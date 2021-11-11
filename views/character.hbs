@@ -619,15 +619,9 @@
 															role="tablist"
 														>
 															<li class="nav-item" role="presentation">
-																<a
-																	class="nav-theme-link pl-2 pt-2 pr-2 pb-1 tfs15 active"
-																	id="first_home-tab"
-																	data-toggle="tab"
-																	href="https://loawa.com/char/1%EB%8C%80%EB%8C%80%EB%8B%B9%EC%A7%81%EC%82%AC%EB%A0%B9#first_home"
-																	role="tab"
-																	aria-controls="first_home"
-																	aria-selected="true"
-																><strong>&nbsp;장비&nbsp;</strong></a>
+																<strong
+																	class="tfs14 text-theme-1"
+																>&nbsp;장비&nbsp;</strong>
 															</li>
 														</ul>
 													</div>
@@ -1508,95 +1502,27 @@
 																		<span
 																			class="badge badge-pill btn-block bg-theme-8 text-theme-1 tfs14"
 																		>&nbsp;&nbsp;각인 효과&nbsp;&nbsp;</span><br />
+
 																		<div class="row pt-0 pb-0 pl-2 pr-2 m-0">
-																			<div
-																				class="col-12 col-md-6 text-left pt-1 pb-1 pl-0 pr-0 text-theme-0 tfs14 text-nowrap"
-																				style="
+
+																			{{#each activeEngrave as |engrave|}}
+																				<!-- start -->
+																				<div
+																					class="col-12 col-md-6 text-left pt-1 pb-1 pl-0 pr-0 text-theme-0 tfs14 text-nowrap"
+																					style="
 																					letter-spacing: -1px;
 																				"
-																				data-toggle="tooltip"
-																				data-html="true"
-																				title=""
-																			>
-																				<img
-																					src="./character_files/028.png"
-																					width="38"
-																				/>{{engravingSkillOne}}
-																			</div>
-																			<div
-																				class="col-12 col-md-6 text-left pt-1 pb-1 pl-0 pr-0 text-theme-0 tfs14 text-nowrap"
-																				style="
-																					letter-spacing: -1px;
-																				"
-																				data-toggle="tooltip"
-																				data-html="true"
-																				title=""
-																			>
-																				<img
-																					src="./character_files/033.png"
-																					width="38"
-																				/>{{engravingSkillTwo}}
-																			</div>
-																		</div>
-																		<div class="row pt-0 pb-0 pl-2 pr-2 m-0">
-																			<div
-																				class="col-12 col-md-6 text-left pt-1 pb-1 pl-0 pr-0 text-theme-0 tfs14 text-nowrap"
-																				style="
-																					letter-spacing: -1px;
-																				"
-																				data-toggle="tooltip"
-																				data-html="true"
-																				title=""
-																			>
-																				<img
-																					src="./character_files/049.png"
-																					width="38"
-																				/>{{engravingSkillThree}}
-																			</div>
-																			<div
-																				class="col-12 col-md-6 text-left pt-1 pb-1 pl-0 pr-0 text-theme-0 tfs14 text-nowrap"
-																				style="
-																					letter-spacing: -1px;
-																				"
-																				data-toggle="tooltip"
-																				data-html="true"
-																				title=""
-																			>
-																				<img
-																					src="./character_files/058.png"
-																					width="38"
-																				/>{{engravingSkillfour}}
-																			</div>
-																		</div>
-																		<div class="row pt-0 pb-0 pl-2 pr-2 m-0">
-																			<div
-																				class="col-12 col-md-6 text-left pt-1 pb-1 pl-0 pr-0 text-theme-0 tfs14 text-nowrap"
-																				style="
-																					letter-spacing: -1px;
-																				"
-																				data-toggle="tooltip"
-																				data-html="true"
-																				title=""
-																			>
-																				<img
-																					src="./character_files/089.png"
-																					width="38"
-																				/>{{engravingSkillfive}}
-																			</div>
-																			<div
-																				class="col-12 col-md-6 text-left pt-1 pb-1 pl-0 pr-0 text-theme-0 tfs14 text-nowrap"
-																				style="
-																					letter-spacing: -1px;
-																				"
-																				data-toggle="tooltip"
-																				data-html="true"
-																				title=""
-																			>
-																				<img
-																					src="./character_files/071.png"
-																					width="38"
-																				/>{{engravingSkillSix}}
-																			</div>
+																					data-toggle="tooltip"
+																					data-html="true"
+																					title=""
+																				>
+																					<img
+																						src={{engrave.icon}}
+																						width="38"
+																					/>{{engrave.name}}
+																				</div>
+																			{{/each}}
+																			<!-- end -->
 																		</div>
 																	</div>
 																</div>

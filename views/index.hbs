@@ -1,12 +1,23 @@
 <html lang="ko_KR" class="js localstorage js localstorage">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<script
-			src="https://kit.fontawesome.com/02b9945b46.js"
-			crossorigin="anonymous"
-		></script>
+		<script src="https://kit.fontawesome.com/02b9945b46.js" crossorigin="anonymous"></script>
 	</head>
 	<body class="">
+		<nav>
+			<ul class="gnb-list">
+				<li class="gnb-list-item gnb-list-item__login">
+					<a class="gnb-btn-login" href="/auth">
+						로그인
+					</a>
+				</li>
+				<li>
+					<a class="gnb-btn-login" href="/register">
+						등록
+					</a>
+				</li>
+			</ul>
+		</nav>
 		<link rel="icon" type="image/x-icon" />
 		<link href="/css/common.css" rel="stylesheet" type="text/css" />
 		<link href="/css/new.css" rel="stylesheet" type="text/css" />
@@ -14,15 +25,11 @@
 			<div class="l-container">
 				<div class="index-logo">
 					<div id="logo">
-						<img src="./images/logo.png" class="Image" />
+						<img src="/images/logo.png" class="Image" />
 					</div>
 				</div>
 
-				<form
-					class="summoner-search-form"
-					action="/search"
-					autocomplete="off"
-				>
+				<form class="summoner-search-form" action="/search" autocomplete="off">
 					<input
 						type="text"
 						name="username"
