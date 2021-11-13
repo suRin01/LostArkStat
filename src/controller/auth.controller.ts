@@ -8,9 +8,18 @@ export class AuthController {
 	constructor(private authService: AuthService) {}
 
 	@Get()
-	@Render("login")
-	loginPage() {
-		return { message: "hello" };
+	// @Render("login")
+	loginPage(@Res() response) {
+		try {
+			const result = AuthGuard("jwt");
+			console.log(result);
+
+			console.log("Authorlized");
+			response.redirect("/");
+		} catch (e) {
+			return response.render("login");
+		}
+		return {};
 	}
 
 	@UseGuards(AuthGuard("local"))
