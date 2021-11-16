@@ -1,5 +1,6 @@
-import { Get, Controller, Post, Render, UseGuards, Request, Res, Redirect } from "@nestjs/common";
+import { Get, Controller, Post, Render, UseGuards, Request, Res, Redirect, UseFilters } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
+import { LoginAuthFilter } from "src/filter/LoginAuth.Filter";
 
 import { AuthService } from "../service/auth.service";
 
@@ -8,9 +9,12 @@ export class AuthController {
 	constructor(private authService: AuthService) {}
 
 	@Get()
-	@Render("login")
-	loginPage() {
-		return { message: "hello" };
+	@UseGuards(AuthGuard("jwt"))
+	@UseFilters(LoginAuthFilter)
+	loginPage(@Res() response) {
+		response.status(200).redirect("/");
+
+		return {};
 	}
 
 	@UseGuards(AuthGuard("local"))

@@ -4,25 +4,24 @@ import { InjectBrowser } from "nest-puppeteer";
 import { StaticKey } from "src/common/staticKey";
 import { selector } from "src/common/querySelector";
 import { engraveList } from "src/common/engrave";
+import { Page } from "puppeteer";
 
 @Injectable()
 export class CrawlingService {
 	constructor(@InjectBrowser() private readonly browser: Browser) {}
 
 	async getData(id: string): Promise<any> {
-		const page = await this.browser.newPage();
-
-		console.log("https://lostark.game.onstove.com/Profile/Character/" + id);
+		const page: Page = await this.browser.newPage();
 
 		await page.goto("https://lostark.game.onstove.com/Profile/Character/" + id);
 
 		const profileData = await page.evaluate(
 			(StaticKey, selector, engraveList) => {
-				function getItemObject(equip, ItemCode) {
+				function getItemObject(equip, ItemCode: string) {
 					if (equip === undefined) {
 						return undefined;
 					}
-					const key = Object.getOwnPropertyNames(equip)[0].slice(0, 8);
+					const key: string = Object.getOwnPropertyNames(equip)[0].slice(0, 8);
 
 					const itemObject = equip[key + "_" + ItemCode];
 					return itemObject;
@@ -190,7 +189,6 @@ export class CrawlingService {
 			engraveList,
 		);
 
-		console.log(profileData);
 		return profileData;
 	}
 }

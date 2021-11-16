@@ -1,0 +1,13 @@
+.nav-login-button {
+	float: left;
+	height: 26px;
+	padding: 0 20px;
+	border: none;
+	border-radius: 2px;
+	line-height: 26px;
+	font-size: 12px;
+	letter-spacing: -0.5px;
+	color: #fff;
+	background: #1c87c3;
+	text-decoration: none;
+}

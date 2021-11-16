@@ -4,12 +4,12 @@ import { Injectable } from "@nestjs/common";
 
 const fromAuthCookie = function () {
 	return function (request) {
-		let token: string = null;
+		let accessToken: string = null;
 		if (request && request.headers.cookie) {
-			token = request.headers.cookie.split("=")[1];
-			console.log(token);
+			const tokens: string[] = request.headers.cookie.split(";");
+			accessToken = tokens[0].split("=")[1].trim();
 		}
-		return token;
+		return accessToken;
 	};
 };
 
