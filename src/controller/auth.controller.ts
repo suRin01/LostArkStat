@@ -1,5 +1,6 @@
-import { Get, Controller, Post, Render, UseGuards, Request, Res, Redirect } from "@nestjs/common";
+import { Get, Controller, Post, Render, UseGuards, Request, Res, Redirect, UseFilters } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
+import { LoginAuthFilter } from "src/filter/LoginAuth.Filter";
 
 import { AuthService } from "../service/auth.service";
 
@@ -8,17 +9,11 @@ export class AuthController {
 	constructor(private authService: AuthService) {}
 
 	@Get()
-	// @Render("login")
+	@UseGuards(AuthGuard("jwt"))
+	@UseFilters(LoginAuthFilter)
 	loginPage(@Res() response) {
-		try {
-			const result = AuthGuard("jwt");
-			console.log(result);
+		response.status(200).redirect("/");
 
-			console.log("Authorlized");
-			response.redirect("/");
-		} catch (e) {
-			return response.render("login");
-		}
 		return {};
 	}
 

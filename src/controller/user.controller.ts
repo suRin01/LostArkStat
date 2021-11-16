@@ -3,7 +3,7 @@ import { UserServcie } from "../service/user.service";
 import { executionResult } from "../dto/user.dto";
 import { createUserDTO } from "../dto/createUser.dto";
 import { AuthGuard } from "@nestjs/passport";
-import { ViewAuthFilter } from "src/filter/ViewAuth.Filter";
+import { ViewAuthFilter } from "../filter/ViewAuth.Filter";
 
 @Controller("user")
 export class UserController {
@@ -13,7 +13,6 @@ export class UserController {
 	@UseFilters(ViewAuthFilter)
 	@Get("/:id")
 	async getUser(@Param("id") id: string): Promise<executionResult> {
-		console.log(await this.userService.getUser(id));
 		return await this.userService.getUser(id);
 	}
 

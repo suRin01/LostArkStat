@@ -1,5 +1,6 @@
 import { createPool, Pool, PoolConnection } from "mysql2/promise";
 import "dotenv/config";
+import { WinstonLogger } from "./logger";
 
 export class database {
 	private pool: Pool;
@@ -14,15 +15,14 @@ export class database {
 		});
 
 		this.pool.getConnection().catch((err: Error) => {
-			console.log(err);
+			WinstonLogger.getInstance().error(err);
 		});
-		console.log("Mysql connection pool created.");
+		WinstonLogger.getInstance().info("Mysql connection pool created.");
 	}
 
 	public getConnection = async (): Promise<PoolConnection | undefined> => {
 		return await this.pool.getConnection().catch((err: Error) => {
-			console.log("Mysql connection pool creation failed.");
-			console.log(err);
+			WinstonLogger.getInstance().error("Mysql connection pool creation failed.");
 			return undefined;
 		});
 	};

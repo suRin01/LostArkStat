@@ -13,8 +13,6 @@ export class CrawlingService {
 	async getData(id: string): Promise<any> {
 		const page: Page = await this.browser.newPage();
 
-		console.log("https://lostark.game.onstove.com/Profile/Character/" + id);
-
 		await page.goto("https://lostark.game.onstove.com/Profile/Character/" + id);
 
 		const profileData = await page.evaluate(
