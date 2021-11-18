@@ -4,8 +4,10 @@ export class queryString {
 	public static readonly updateOne =
 		"UPDATE `LostArkStat`.`User` SET `name` = ?, `password` = ?, `phoneNumber` = ?, `birthDate` = ?, `mainCharacter` = ? WHERE (`id` = ?);";
 	public static readonly createOne =
-		"INSERT INTO `LostArkStat`.`Users` (`name`, `id`, `password`, `phoneNumber`, `birthDate`, `gender`, `mainCharacter`) VALUES (?, ?, ?, ?, ?, ?, ?)";
-	public static readonly deleteOne = "DELETE FROM `LostArkStat`.`Users` WHERE (`id` = ?);";
+		"INSERT INTO `LostArkStat`.`Users` (`name`, `id`, `password`, `phoneNumber`, `birthDate`, `gender`, `mainCharacter`, `salt`, `is_deleted`) VALUES (?, ?, ?, ?, ?, ?, ?, ? ,?)";
+	// public static readonly deleteOne = "DELETE FROM `LostArkStat`.`Users` WHERE (`id` = ?);";
 
 	public static readonly login = "SELECT * FROM `LostArtStat`.`Users` WHERE `id`";
+
+	public static readonly deleteOne = "UPDATE `LostArkStat`.`User` SET `is_deleted` = true WHERE (`id` = ?);";
 }

@@ -1,5 +1,5 @@
 import { Optional } from "@nestjs/common";
-import { IsDate, IsString } from "class-validator";
+import { IsBoolean, IsDate, IsString } from "class-validator";
 
 export class UserDTO {
 	@IsString()
@@ -21,6 +21,10 @@ export class UserDTO {
 	mainCharacter: string;
 	@IsDate()
 	timestamp: Date;
+	@IsString()
+	salt: string;
+	@IsBoolean()
+	is_deleted;
 }
 
 export class executionResult {

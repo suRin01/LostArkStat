@@ -58,6 +58,8 @@ export class Mapper {
 						gender: tempResult.gender,
 						mainCharacter: tempResult.mainCharacter,
 						timestamp: tempResult.timestamp,
+						salt: tempResult.salt,
+						is_deleted: tempResult.is_deleted,
 					});
 				}
 			}
