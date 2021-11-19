@@ -18,4 +18,8 @@ export class MainController {
 
 		return profileData;
 	}
+
+	@Get("/test")
+	@Render("oauthTest")
+	test() {}
 }

@@ -24,7 +24,7 @@ export class UserDTO {
 	@IsString()
 	salt: string;
 	@IsBoolean()
-	is_deleted;
+	is_deleted: boolean;
 }
 
 export class executionResult {

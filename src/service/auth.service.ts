@@ -1,26 +1,20 @@
 import { Injectable } from "@nestjs/common";
 import { Mapper } from "../mapper/mapper";
 import { queryString } from "../common/query";
-import { UserServcie } from "./user.service";
 import { JwtService } from "@nestjs/jwt";
 import { executionResult } from "src/dto/user.dto";
 
 @Injectable()
 export class AuthService {
-	constructor(
-		private readonly mapper: Mapper,
-		private readonly jwtService: JwtService,
-	) {}
+	constructor(private readonly mapper: Mapper, private readonly jwtService: JwtService) {}
 
 	async validate(userid: string, userpw: string): Promise<any> {
-		const findOne: executionResult = await this.mapper.mapper(
-			queryString.findOne,
-			[userid],
-		);
+		const findOne: executionResult = await this.mapper.mapper(queryString.findOne, [userid]);
 
 		if (
 			findOne.data.length !== 0 &&
-			findOne.data[0]["password"] === userpw
+			findOne.data[0]["password"] === userpw &&
+			findOne.data[0]["is_deleted"] != true
 		) {
 			return findOne;
 		} else {

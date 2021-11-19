@@ -6,13 +6,13 @@ import { AppModule } from "./app.module";
 import * as fs from "fs";
 
 async function bootstrap() {
-	const httpsOptions = {
-		key: fs.readFileSync(join(__dirname, "..", "certification/privkey1.pem")),
-		cert: fs.readFileSync(join(__dirname, "..", "certification/cert1.pem")),
-	};
+	// const httpsOptions = {
+	// 	key: fs.readFileSync(join(__dirname, "..", "certification/privkey1.pem")),
+	// 	cert: fs.readFileSync(join(__dirname, "..", "certification/cert1.pem")),
+	// };
 
 	const app = await NestFactory.create<NestExpressApplication>(AppModule, {
-		httpsOptions,
+		// httpsOptions,
 	});
 
 	// whiteList -> 엔티티 데코레이터에 없는 프로퍼티 값은 무조건 거름
@@ -32,7 +32,7 @@ async function bootstrap() {
 
 	app.setViewEngine("hbs");
 
-	await app.listen(443, "0.0.0.0");
+	await app.listen(8080, "0.0.0.0");
 }
 bootstrap();
 
