@@ -1,17 +1,24 @@
 import { Strategy } from "passport-jwt";
 import { PassportStrategy } from "@nestjs/passport";
 import { Injectable } from "@nestjs/common";
+import * as CookieParser from "cookie-parser"
 
-const fromAuthCookie = function () {
-	return function (request) {
+const fromAuthCookie = ()=>{
+	return (request): string=>{
 		let accessToken: string = null;
 		if (request && request.headers.cookie) {
-			const tokens: string[] = request.headers.cookie.split(";");
-			accessToken = tokens[0].split("=")[1].trim();
-		}
+			const cookies = request.headers.cookie.split("; ").reduce((prev, current) => {
+				const [name, ...value] = current.split('=');
+				prev[name] = value.join('=');
+				return prev;
+			  }, {});
+			  accessToken = cookies["Authorization"];
+		};
+		console.debug(accessToken);
 		return accessToken;
 	};
 };
+
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {

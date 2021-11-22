@@ -3,6 +3,8 @@ import { Mapper } from "../mapper/mapper";
 import { queryString } from "../common/query";
 import { JwtService } from "@nestjs/jwt";
 import { executionResult } from "src/dto/user.dto";
+import * as bcrypt from 'bcrypt';
+
 
 @Injectable()
 export class AuthService {
@@ -10,10 +12,13 @@ export class AuthService {
 
 	async validate(userid: string, userpw: string): Promise<any> {
 		const findOne: executionResult = await this.mapper.mapper(queryString.findOne, [userid]);
-
+		
+		const saltRound:number = 10;
+		
 		if (
 			findOne.data.length !== 0 &&
-			findOne.data[0]["password"] === userpw &&
+			await bcrypt.compare(userpw, findOne.data[0]["password"]) && 
+			// findOne.data[0]["password"] === hashedPassword && 
 			findOne.data[0]["is_deleted"] != true
 		) {
 			return findOne;
