@@ -9,8 +9,15 @@ export class LoginAuthFilter implements ExceptionFilter {
 	catch(exception: HttpException, host: ArgumentsHost) {
 		const context:HttpArgumentsHost = host.switchToHttp();
 		const response:Response<any, Record<string, any>> = context.getResponse<Response>();
+		const request:Request = context.getRequest<Request>();
 		const status = exception.getStatus();
-
-		response.render("login");
+		
+		if(request.url === "/auth"){
+			response.render("login");
+		}
+		else{
+			response.status(status).redirect("/auth");
+		}
+		
 	}
 }

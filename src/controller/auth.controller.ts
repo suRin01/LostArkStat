@@ -1,7 +1,6 @@
 import { Get, Controller, Post, Render, UseGuards, Request, Res, Redirect, UseFilters } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
 import { LoginAuthFilter } from "src/filter/LoginAuth.Filter";
-
 import { AuthService } from "../service/auth.service";
 
 @Controller("auth")
@@ -35,14 +34,8 @@ export class AuthController {
 		return;
 	}
 
-	// @UseGuards(AuthGuard("Jwt"))
-	// @Get()
-	// async renewToken(@Request() req, @Res({ passthrough: true }) response) {
-	// 	const token = (
-	// 		await this.authService.login({
-	// 			useranme: req.user.username,
-	// 			sub: req.user.userpw,
-	// 		})
-	// 	).access_token;
-	// }
+	@Get()
+	async renewToken(@Request() req, @Res({ passthrough: true }) response) {
+
+	}
 }

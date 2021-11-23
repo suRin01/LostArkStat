@@ -3,14 +3,14 @@ import { UserServcie } from "../service/user.service";
 import { executionResult } from "../dto/user.dto";
 import { createUserDTO } from "../dto/createUser.dto";
 import { AuthGuard } from "@nestjs/passport";
-import { ViewAuthFilter } from "../filter/ViewAuth.Filter";
+import { LoginAuthFilter } from "src/filter/LoginAuth.Filter";
 
 @Controller("user")
 export class UserController {
 	constructor(private userService: UserServcie) {}
 
 	@UseGuards(AuthGuard("jwt"))
-	@UseFilters(ViewAuthFilter)
+	@UseFilters(LoginAuthFilter)
 	@Get("/:id")
 	async getUser(@Param("id") id: string): Promise<executionResult> {
 		return await this.userService.getUser(id);
@@ -23,7 +23,7 @@ export class UserController {
 	}
 
 	@UseGuards(AuthGuard("jwt"))
-	@UseFilters(ViewAuthFilter)
+	@UseFilters(LoginAuthFilter)
 	@Patch("/:id")
 	async patchUser(@Param("id") user: createUserDTO): Promise<executionResult> {
 		await this.userService.deleteUser(user.id);

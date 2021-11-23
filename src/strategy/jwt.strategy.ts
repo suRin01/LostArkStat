@@ -1,7 +1,6 @@
 import { Strategy } from "passport-jwt";
 import { PassportStrategy } from "@nestjs/passport";
 import { Injectable } from "@nestjs/common";
-import * as CookieParser from "cookie-parser"
 
 const fromAuthCookie = ()=>{
 	return (request): string=>{
@@ -26,7 +25,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 		super({
 			jwtFromRequest: fromAuthCookie(),
 			ignoreExpiration: false,
-			secretOrKey: process.env.JWTSECRET,
+			secretOrKey: process.env.ACCESSJWTSECRET,
 		});
 	}
 

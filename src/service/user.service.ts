@@ -7,6 +7,9 @@ import { createUserDTO } from "../dto/createUser.dto";
 import { UpdateUserDTO } from "../dto/updateUser.dto";
 import * as bcrypt from 'bcrypt';
 
+import { GaxiosResponse } from "gaxios";
+import { oauth2_v2 } from "googleapis";
+
 @Injectable()
 export class UserServcie {
 	constructor(private readonly mapper: Mapper) {}
@@ -40,6 +43,10 @@ export class UserServcie {
 
 	async deleteUser(userID: string): Promise<executionResult> {
 		return this.mapper.mapper(queryString.deleteOne, [userID]);
+	}
+
+	async createOauthUser(userProfile: oauth2_v2.Schema$Userinfo){
+		return this.mapper.mapper(queryString.createOautOne, [userProfile.name, userProfile.id, userProfile.email, "1"])
 	}
 
 }
