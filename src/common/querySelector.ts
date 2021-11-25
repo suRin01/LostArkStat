@@ -1,4 +1,5 @@
-const countSelector:string = " > div > div.collection-list > div > p > span.now-count";
+// eslint-disable-next-line @typescript-eslint/no-inferrable-types
+const countSelector: string = " > div > div.collection-list > div > p > span.now-count";
 
 export const selector = {
 	characterName: "span.profile-character-info__name",

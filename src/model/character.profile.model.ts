@@ -1,4 +1,4 @@
-export class CharacterProfile{
+export class CharacterProfile {
 	activeEngrave: ItemObject[];
 	characterName: string;
 	server: string;
@@ -9,7 +9,7 @@ export class CharacterProfile{
 	itemLevel: string;
 	expeditionLevel: string;
 	duelLevel: string;
-	possessionLevel:string;
+	possessionLevel: string;
 
 	combatPower: string;
 	healthPoint: string;
@@ -44,22 +44,22 @@ export class CharacterProfile{
 	necklace: ItemObject;
 	earringOne: ItemObject;
 	earringTwo: ItemObject;
-	ringOne:ItemObject;
+	ringOne: ItemObject;
 	ringTwo: ItemObject;
 	abilityStone: ItemObject;
 	abilityStoneStat: AbilityStoneStat;
 	bracelet: ItemObject;
 
 	engravement: EquippedEngraves;
-};
-
-export class EquippedEngraves{
-	first: ItemObject;
-	second: ItemObject
 }
 
-export class ItemObject{
-	constructor(icon: string, name:string, stat:string = null, tier:string = null){
+export class EquippedEngraves {
+	first: ItemObject;
+	second: ItemObject;
+}
+
+export class ItemObject {
+	constructor(icon: string, name: string, stat: string = null, tier: string = null) {
 		this.icon = icon;
 		this.name = name;
 		this.stat = stat;
@@ -69,10 +69,10 @@ export class ItemObject{
 	name: string;
 	stat: string;
 	tier: string;
-};
+}
 
-export class AbilityStoneStat{
+export class AbilityStoneStat {
 	buffFirst: string;
 	buffSecond: string;
 	debuff: string;
-};
+}

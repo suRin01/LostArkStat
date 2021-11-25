@@ -1,13 +1,11 @@
 import { Page } from "puppeteer";
-import { selector } from "src/common/querySelector";
 import { engraveList } from "src/common/engrave";
-import {AbilityStoneStat,EquippedEngraves,ItemObject} from "../model/character.profile.model"
+import { AbilityStoneStat, ItemObject } from "../model/character.profile.model";
 import { ElementHandle } from "puppeteer";
+import { urls } from "src/common/url";
 
-
-export class PageParser{
-
-	public getItemObject(equip, ItemCode: string) {
+export class PageParser {
+	public getItemObject(equip: Record<string, any>, ItemCode: string): Record<string, any> {
 		if (equip === undefined) {
 			return undefined;
 		}
@@ -16,8 +14,6 @@ export class PageParser{
 		const itemObject = equip[key + "_" + ItemCode];
 		return itemObject;
 	}
-
-
 
 	public getTier(itemString: string): string {
 		if (itemString.includes("유물")) {
@@ -33,13 +29,13 @@ export class PageParser{
 		}
 	}
 
-	public getStoneStat(equip, ItemCode:string):AbilityStoneStat{
+	public getStoneStat(equip: Record<string, any>, ItemCode: string): AbilityStoneStat {
 		const itemObject = this.getItemObject(equip, ItemCode);
 		if (itemObject === undefined) {
 			return {
 				buffFirst: null,
 				buffSecond: null,
-				debuff: null
+				debuff: null,
 			};
 		}
 		let stoneStatString: string;
@@ -60,34 +56,32 @@ export class PageParser{
 			debuff: result[2],
 		};
 	}
-	public getItem(equip, ItemCode:string) :ItemObject{
+	public getItem(equip: Record<string, any>, ItemCode: string): ItemObject {
 		const itemObject = this.getItemObject(equip, ItemCode);
 		if (itemObject === undefined) {
 			return {
-				icon: "/images/blank.png",
+				icon: urls.blankImage,
 				name: "",
 				tier: "grade0",
-				stat: null
+				stat: null,
 			};
 		}
 
 		return {
-			icon:
-				"https://cdn-lostark.game.onstove.com/" +
-				itemObject["Element_001"]["value"]["slotData"]["iconPath"],
+			icon: "https://cdn-lostark.game.onstove.com/" + itemObject["Element_001"]["value"]["slotData"]["iconPath"],
 			name: itemObject["Element_000"]["value"].replace(/<[^>]*>/gm, " ").trim(),
 			tier: this.getTier(itemObject["Element_001"]["value"]["leftStr0"]),
-			stat: null
+			stat: null,
 		};
 	}
-	public getEngrave(engrave, order:string) :ItemObject{
+	public getEngrave(engrave: Record<string, any>, order: string): ItemObject {
 		const engraveObject = this.getItemObject(engrave, order);
 		if (engraveObject === undefined) {
 			return {
-				icon: "/images/blank.png",
+				icon: urls.blankImage,
 				name: "",
 				tier: "grade0",
-				stat: null
+				stat: null,
 			};
 		}
 		const stat = engraveObject["Element_002"]["value"].match(/>(\d+)/gm)[0].replace(">", "");
@@ -95,20 +89,20 @@ export class PageParser{
 			name: engraveObject["Element_000"]["value"],
 			stat: "+" + stat,
 			icon:
-				"/images/engrave/" +
+				urls.engraveImgBase +
 				String(engraveList[engraveObject["Element_000"]["value"]]).padStart(3, "0") +
 				".png",
 			tier: this.getTier(stat),
 		};
 	}
 
-	public getActiveEngraveArray(engraveNodeList:ElementHandle<Element>[]): ItemObject[]{
+	public getActiveEngraveArray(engraveNodeList: ElementHandle<Element>[]): ItemObject[] {
 		const engraveArray = [];
 		for (let idx = 0, len = engraveNodeList.length; idx < len; idx++) {
 			engraveArray[idx] = {
 				name: engraveNodeList[idx]["innerText"],
 				icon:
-					"/images/engrave/" +
+					urls.engraveImgBase +
 					String(engraveList[engraveNodeList[idx]["innerText"].split(" Lv")[0]]).padStart(3, "0") +
 					".png",
 				stat: null,
@@ -119,31 +113,32 @@ export class PageParser{
 		return engraveArray;
 	}
 
-
-	public async getInnerText(page:Page, selector: string): Promise<string>{
-		return await page.$eval(selector, (pageElement)=>{
+	public async getInnerText(page: Page, selector: string): Promise<string> {
+		return await page.$eval(selector, (pageElement) => {
 			return pageElement.textContent;
 		});
 	}
 
-	public async getInnerItemArray(page:Page, selector: string): Promise<ItemObject[]>{
-		return await page.$$eval(selector, (pageElements)=>{
-			const resultArr: ItemObject[] = [];
-			for(let idx = 0, len = pageElements.length; idx<len; idx++){
-				resultArr.push({
-					name: pageElements[idx].textContent,
-					icon:
-						"/images/engrave/" +
-						String(engraveList[pageElements[idx].textContent.split(" Lv")[0]]).padStart(3, "0") +
-						".png",
-					stat: null,
-					tier: null,
-				})
-			}
+	public async getInnerItemArray(page: Page, selector: string): Promise<ItemObject[]> {
+		return await page.$$eval(
+			selector,
+			(pageElements, engraveList) => {
+				const resultArr: ItemObject[] = [];
+				for (let idx = 0, len = pageElements.length; idx < len; idx++) {
+					resultArr.push({
+						name: pageElements[idx].textContent,
+						icon:
+							urls.engraveImgBase +
+							String(engraveList[pageElements[idx].textContent.split(" Lv")[0]]).padStart(3, "0") +
+							".png",
+						stat: null,
+						tier: null,
+					});
+				}
 
-			return resultArr;
-		});
-
+				return resultArr;
+			},
+			engraveList,
+		);
 	}
-
 }

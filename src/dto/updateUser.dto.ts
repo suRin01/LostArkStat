@@ -4,23 +4,23 @@ import { IsDate, IsString } from "class-validator";
 export class UpdateUserDTO {
 	@IsString()
 	@Optional()
-	name: string;
+	readonly name: string;
 	@IsString()
 	@Optional()
-	id: string;
+	readonly id: string;
 	@IsString()
 	@Optional()
-	password: string;
+	readonly password: string;
 	@IsString()
 	@Optional()
-	phoneNumber: string;
+	readonly phoneNumber: string;
 	@IsDate()
 	@Optional()
-	birthDate: Date;
+	readonly birthDate: Date;
 	@IsString()
 	@Optional()
-	gender: string;
+	readonly gender: string;
 	@IsString()
 	@Optional()
-	mainCharacter: string;
+	readonly mainCharacter: string;
 }

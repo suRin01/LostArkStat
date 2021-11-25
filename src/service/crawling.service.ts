@@ -1,30 +1,29 @@
-import type { Browser, ElementHandle } from "puppeteer";
+import { Browser } from "puppeteer";
 import { Injectable } from "@nestjs/common";
 import { InjectBrowser } from "nest-puppeteer";
 import { StaticKey } from "src/common/staticKey";
 import { selector } from "src/common/querySelector";
-import { engraveList } from "src/common/engrave";
 import { Page } from "puppeteer";
 import { CharacterProfile } from "src/model/character.profile.model";
 import { PageParser } from "src/util/pageParser";
+import { urls } from "src/common/url";
 
 @Injectable()
 export class CrawlingService {
-	constructor(@InjectBrowser() private readonly browser: Browser) {}
+	constructor(@InjectBrowser() private browser: Browser) {}
 
 	async getData(id: string): Promise<CharacterProfile> {
 		const page: Page = await this.browser.newPage();
 
-		await page.goto("https://lostark.game.onstove.com/Profile/Character/" + id);
+		await page.goto(urls.stoveProfileSearch + id);
 
-		const profileJson = await page.evaluate(()=>{
+		const profileJson = await page.evaluate(() => {
 			return this["$"]["Profile"];
-		})
-		
+		});
+
 		const equip = profileJson["Equip"];
 		const engrave = profileJson["Engrave"];
-		const pageParser:PageParser = new PageParser();
-
+		const pageParser: PageParser = new PageParser();
 
 		return {
 			activeEngrave: await pageParser.getInnerItemArray(page, selector.activeEngrave),
@@ -38,8 +37,8 @@ export class CrawlingService {
 			expeditionLevel: await pageParser.getInnerText(page, selector.expeditionLevel),
 			duelLevel: await pageParser.getInnerText(page, selector.duelLevel),
 			possessionLevel:
-				await pageParser.getInnerText(page, selector.possessionLevelFirst) +
-				await pageParser.getInnerText(page, selector.possessionLevelSecond),
+				(await pageParser.getInnerText(page, selector.possessionLevelFirst)) +
+				(await pageParser.getInnerText(page, selector.possessionLevelSecond)),
 			combatPower: await pageParser.getInnerText(page, selector.combatPower),
 			healthPoint: await pageParser.getInnerText(page, selector.healthPoint),
 			criticalScore: await pageParser.getInnerText(page, selector.criticalScore),
@@ -74,7 +73,10 @@ export class CrawlingService {
 			abilityStone: pageParser.getItem(equip, StaticKey.abilityStone),
 			abilityStoneStat: pageParser.getStoneStat(equip, StaticKey.abilityStone),
 			bracelet: pageParser.getItem(equip, StaticKey.bracelet),
-			engravement: { first: pageParser.getEngrave(engrave, "000"), second: pageParser.getEngrave(engrave, "001") },
+			engravement: {
+				first: pageParser.getEngrave(engrave, "000"),
+				second: pageParser.getEngrave(engrave, "001"),
+			},
 		};
 	}
 }

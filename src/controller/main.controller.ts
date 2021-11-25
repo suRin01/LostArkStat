@@ -1,4 +1,5 @@
-import { Get, Controller, Render, Param, Query } from "@nestjs/common";
+import { Get, Controller, Render, Query } from "@nestjs/common";
+import { CharacterProfile } from "src/model/character.profile.model";
 import { CrawlingService } from "src/service/crawling.service";
 
 @Controller("/")
@@ -7,19 +8,19 @@ export class MainController {
 
 	@Get()
 	@Render("index")
-	loginPage() {
+	loginPage(): Record<string, string> {
 		return { message: "hello" };
 	}
 
 	@Get("/search")
 	@Render("character")
-	character(@Query("username") id: string) {
-		const profileData = this.crawlingService.getData(id);
-
-		return profileData;
+	async character(@Query("username") id: string): Promise<CharacterProfile> {
+		return this.crawlingService.getData(id);
 	}
 
 	@Get("/test")
 	@Render("oauthTest")
-	test() {}
+	test(): void {
+		return;
+	}
 }

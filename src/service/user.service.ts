@@ -5,10 +5,10 @@ import { executionResult } from "../dto/user.dto";
 import { dateParser } from "../util/dateParser";
 import { createUserDTO } from "../dto/createUser.dto";
 import { UpdateUserDTO } from "../dto/updateUser.dto";
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from "bcrypt";
 
-import { GaxiosResponse } from "gaxios";
 import { oauth2_v2 } from "googleapis";
+import { WinstonLogger } from "src/util/logger";
 
 @Injectable()
 export class UserServcie {
@@ -19,10 +19,12 @@ export class UserServcie {
 	}
 
 	async createUser(user: createUserDTO): Promise<executionResult> {
-		const saltRound:number = 10;
+		// eslint-disable-next-line @typescript-eslint/no-inferrable-types
+		const saltRound: number = 10;
 
 		const salt: string = await bcrypt.genSalt(saltRound);
-		const hashedPassword:string = await bcrypt.hash(user.password, salt);
+		const hashedPassword: string = await bcrypt.hash(user.password, salt);
+		WinstonLogger.getInstance().info("Create New User");
 		return await this.mapper.mapper(queryString.createOne, [
 			user.name,
 			user.id,
@@ -32,9 +34,8 @@ export class UserServcie {
 			user.gender,
 			user.mainCharacter,
 			salt,
-			user.email
+			user.email,
 		]);
-
 	}
 
 	async updateUser(user: UpdateUserDTO): Promise<executionResult> {
@@ -42,11 +43,15 @@ export class UserServcie {
 	}
 
 	async deleteUser(userID: string): Promise<executionResult> {
-		return this.mapper.mapper(queryString.deleteOne, [userID]);
+		return await this.mapper.mapper(queryString.deleteOne, [userID]);
 	}
 
-	async createOauthUser(userProfile: oauth2_v2.Schema$Userinfo){
-		return this.mapper.mapper(queryString.createOautOne, [userProfile.name, userProfile.id, userProfile.email, "1"])
+	async createOauthUser(userProfile: oauth2_v2.Schema$Userinfo): Promise<executionResult> {
+		return await this.mapper.mapper(queryString.createOautOne, [
+			userProfile.name,
+			userProfile.id,
+			userProfile.email,
+			"1",
+		]);
 	}
-
 }
