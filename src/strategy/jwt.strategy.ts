@@ -1,6 +1,8 @@
-import { Strategy } from "passport-jwt";
+import { ExtractJwt, Strategy } from "passport-jwt";
 import { PassportStrategy } from "@nestjs/passport";
 import { Injectable } from "@nestjs/common";
+import jwtPayload from "src/model/jwt.payload.model";
+import { JwtModule } from "@nestjs/jwt";
 
 const fromAuthCookie = ()=>{
 	return (request): string=>{
@@ -29,7 +31,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 		});
 	}
 
-	async validate(payload: any) {
+	async validate(payload: jwtPayload) {
 		return { userId: payload.sub, username: payload.username };
 	}
 }
