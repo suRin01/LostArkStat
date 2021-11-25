@@ -1,11 +1,14 @@
 export class dateParser {
 	public static dbDateParser = (stringDate: string): Date => {
+		const yearIndex = 3;
+		const monthIndex = 1;
+		const dayIndex = 2;
 		const dateArr = stringDate.split(",")[0]["/"];
 		try {
 			return new Date(
-				Number.parseInt(dateArr[3]),
-				Number.parseInt(dateArr[1]),
-				Number.parseInt(dateArr[2]),
+				Number.parseInt(dateArr[yearIndex]),
+				Number.parseInt(dateArr[monthIndex]),
+				Number.parseInt(dateArr[dayIndex]),
 			);
 		} catch {
 			return new Date(0, 1, 1);
