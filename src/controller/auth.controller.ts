@@ -1,7 +1,8 @@
-import { Get, Controller, Post, Render, UseGuards, Request, Res, Redirect, UseFilters } from "@nestjs/common";
+import { Get, Controller, Post, UseGuards, Res, Redirect, UseFilters, Req } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
+import { Request, Response } from "express";
 import { LoginAuthFilter } from "src/filter/LoginAuth.Filter";
-
+import JwtToken from "src/model/jwt.token.model";
 import { AuthService } from "../service/auth.service";
 
 @Controller("auth")
@@ -11,38 +12,28 @@ export class AuthController {
 	@Get()
 	@UseGuards(AuthGuard("jwt"))
 	@UseFilters(LoginAuthFilter)
-	loginPage(@Res() response) {
-		response.status(200).redirect("/");
+	loginPage(@Res() res: Response): void {
+		res.status(200).redirect("/");
 
-		return {};
+		return;
 	}
 
 	@UseGuards(AuthGuard("local"))
 	@Redirect("/", 302)
 	@Post()
-	async login(@Request() req, @Res({ passthrough: true }) response): Promise<any> {
-		const tokens = await this.authService.getAccessToken({
-			useranme: req.user.username,
-			sub: req.user.userpw,
+	async login(@Req() req: Request, @Res({ passthrough: true }) res: Response): Promise<void> {
+		const tokens: JwtToken = await this.authService.getAccessToken({
+			username: req.user["data"][0]["name"],
+			sub: req.user["data"][0]["id"],
 		});
 
-		response.cookie("Authorization", tokens.access_token, {
+		res.cookie("Authorization", tokens.access_token, {
 			httpOnly: true,
 		});
-		response.cookie("Refresh", tokens.refresh_token, {
+		res.cookie("Refresh", tokens.refresh_token, {
 			httpOnly: true,
 		});
 		return;
 	}
 
-	// @UseGuards(AuthGuard("Jwt"))
-	// @Get()
-	// async renewToken(@Request() req, @Res({ passthrough: true }) response) {
-	// 	const token = (
-	// 		await this.authService.login({
-	// 			useranme: req.user.username,
-	// 			sub: req.user.userpw,
-	// 		})
-	// 	).access_token;
-	// }
 }

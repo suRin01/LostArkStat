@@ -22,6 +22,7 @@ export class database {
 
 	public getConnection = async (): Promise<PoolConnection | undefined> => {
 		return await this.pool.getConnection().catch((err: Error) => {
+			WinstonLogger.getInstance().error(err);
 			WinstonLogger.getInstance().error("Mysql connection pool creation failed.");
 			return undefined;
 		});

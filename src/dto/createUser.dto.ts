@@ -1,5 +1,5 @@
 import { Type } from "class-transformer";
-import { IsDate, IsString } from "class-validator";
+import { IsDate, IsEmail, IsString } from "class-validator";
 
 export class createUserDTO {
 	@IsString()
@@ -10,6 +10,8 @@ export class createUserDTO {
 	readonly password: string;
 	@IsString()
 	readonly phoneNumber: string;
+	@IsEmail()
+	readonly email: string;
 
 	@IsDate()
 	@Type(() => Date)

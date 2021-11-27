@@ -1,29 +1,21 @@
 import { Strategy } from "passport-jwt";
 import { PassportStrategy } from "@nestjs/passport";
 import { Injectable } from "@nestjs/common";
-
-const fromAuthCookie = function () {
-	return function (request) {
-		let accessToken: string = null;
-		if (request && request.headers.cookie) {
-			const tokens: string[] = request.headers.cookie.split(";");
-			accessToken = tokens[0].split("=")[1].trim();
-		}
-		return accessToken;
-	};
-};
+import jwtPayload from "src/model/jwt.payload.model";
+import JwtValidatePayload from "src/model/jwt.validate.model";
+import { RequestUtility } from "src/util/req.util";
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
 	constructor() {
 		super({
-			jwtFromRequest: fromAuthCookie(),
+			jwtFromRequest: RequestUtility.fromAuthCookie(),
 			ignoreExpiration: false,
-			secretOrKey: process.env.JWTSECRET,
+			secretOrKey: process.env.ACCESSJWTSECRET,
 		});
 	}
 
-	async validate(payload: any) {
+	validate(payload: jwtPayload): JwtValidatePayload {
 		return { userId: payload.sub, username: payload.username };
 	}
 }

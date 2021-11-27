@@ -3,31 +3,31 @@ import { IsBoolean, IsDate, IsString } from "class-validator";
 
 export class UserDTO {
 	@IsString()
-	idx: number;
+	readonly idx: number;
 	@IsString()
-	name: string;
+	readonly name: string;
 	@IsString()
-	id: string;
+	readonly id: string;
 	@IsString()
-	password: string;
+	readonly password: string;
 	@IsString()
-	phoneNumber: string;
+	readonly phoneNumber: string;
 	@IsDate()
-	birthDate: Date;
+	readonly birthDate: Date;
 	@IsString()
-	gender: string;
+	readonly gender: string;
 	@IsString()
 	@Optional()
-	mainCharacter: string;
+	readonly mainCharacter: string;
 	@IsDate()
-	timestamp: Date;
+	readonly timestamp: Date;
 	@IsString()
-	salt: string;
+	readonly salt: string;
 	@IsBoolean()
-	is_deleted;
+	readonly is_deleted: boolean;
 }
 
 export class executionResult {
-	status: number;
-	data: Array<UserDTO>;
+	readonly status: number;
+	readonly data: Array<UserDTO>;
 }

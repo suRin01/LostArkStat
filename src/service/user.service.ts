@@ -1,10 +1,14 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, Next } from "@nestjs/common";
 import { Mapper } from "../mapper/mapper";
 import { queryString } from "../common/query";
 import { executionResult } from "../dto/user.dto";
 import { dateParser } from "../util/dateParser";
 import { createUserDTO } from "../dto/createUser.dto";
 import { UpdateUserDTO } from "../dto/updateUser.dto";
+import * as bcrypt from "bcrypt";
+
+import { oauth2_v2 } from "googleapis";
+import { WinstonLogger } from "src/util/logger";
 
 @Injectable()
 export class UserServcie {
@@ -15,16 +19,22 @@ export class UserServcie {
 	}
 
 	async createUser(user: createUserDTO): Promise<executionResult> {
+		// eslint-disable-next-line @typescript-eslint/no-inferrable-types
+		const saltRound: number = 10;
+
+		const salt: string = await bcrypt.genSalt(saltRound);
+		const hashedPassword: string = await bcrypt.hash(user.password, salt);
+		WinstonLogger.getInstance().info("Create New User");
 		return await this.mapper.mapper(queryString.createOne, [
 			user.name,
 			user.id,
-			user.password,
+			hashedPassword,
 			user.phoneNumber,
 			dateParser.dbDateFormatter(user.birthDate),
 			user.gender,
 			user.mainCharacter,
-			this.generateString(16),
-			"false",
+			salt,
+			user.email,
 		]);
 	}
 
@@ -33,18 +43,15 @@ export class UserServcie {
 	}
 
 	async deleteUser(userID: string): Promise<executionResult> {
-		return this.mapper.mapper(queryString.deleteOne, [userID]);
+		return await this.mapper.mapper(queryString.deleteOne, [userID]);
 	}
 
-	private generateString(length) {
-		const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-		let result = " ";
-		const charactersLength = characters.length;
-		for (let i = 0; i < length; i++) {
-			result += characters.charAt(Math.floor(Math.random() * charactersLength));
-		}
-
-		return result;
+	async createOauthUser(userProfile: oauth2_v2.Schema$Userinfo): Promise<executionResult> {
+		return await this.mapper.mapper(queryString.createOautOne, [
+			userProfile.name,
+			userProfile.id,
+			userProfile.email,
+			"1",
+		]);
 	}
 }

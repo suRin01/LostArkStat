@@ -1,4 +1,5 @@
-const countSelector = " > div > div.collection-list > div > p > span.now-count";
+// eslint-disable-next-line @typescript-eslint/no-inferrable-types
+const countSelector: string = " > div > div.collection-list > div > p > span.now-count";
 
 export const selector = {
 	characterName: "span.profile-character-info__name",
@@ -34,4 +35,6 @@ export const selector = {
 	courage: "#chart-states-wrap > div.states_box > span.states-02 > span > em",
 	charming: "#chart-states-wrap > div.states_box > span.states-03 > span > em",
 	kindness: "#chart-states-wrap > div.states_box > span.states-04 > span > em",
+
+	activeEngrave: "#profile-ability > div.profile-ability-engrave > div > div.swiper-wrapper > ul > * > span",
 };

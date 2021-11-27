@@ -1,4 +1,3 @@
-import { LoggerService as LS } from "@nestjs/common";
 import { utilities as nestWinstonModuleUtilities } from "nest-winston";
 import * as winston from "winston";
 import * as moment from "moment";
@@ -8,7 +7,7 @@ export class WinstonLogger {
 	private static instance: winston.Logger;
 	// eslint-disable-next-line @typescript-eslint/no-empty-function
 	private constructor() {}
-	public static getInstance() {
+	public static getInstance(): winston.Logger {
 		if (this.instance) {
 			return this.instance;
 		}
