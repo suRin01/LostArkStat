@@ -2,7 +2,7 @@ import { Get, Controller, Post, UseGuards, Res, Redirect, UseFilters, Req } from
 import { AuthGuard } from "@nestjs/passport";
 import { Request, Response } from "express";
 import { LoginAuthFilter } from "src/filter/LoginAuth.Filter";
-import JwtToken from "src/modules/jwt.token.model";
+import JwtToken from "src/model/jwt.token.model";
 import { AuthService } from "../service/auth.service";
 
 @Controller("auth")
@@ -23,8 +23,8 @@ export class AuthController {
 	@Post()
 	async login(@Req() req: Request, @Res({ passthrough: true }) res: Response): Promise<void> {
 		const tokens: JwtToken = await this.authService.getAccessToken({
-			username: req.user["username"],
-			sub: req.user["userpw"],
+			username: req.user["data"][0]["name"],
+			sub: req.user["data"][0]["id"],
 		});
 
 		res.cookie("Authorization", tokens.access_token, {
@@ -36,6 +36,4 @@ export class AuthController {
 		return;
 	}
 
-	// @Get()
-	// async renewToken(@Request() req, @Res({ passthrough: true }) response) {}
 }

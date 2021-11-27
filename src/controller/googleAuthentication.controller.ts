@@ -6,7 +6,7 @@ import { oauth2_v2 } from "googleapis";
 import { UserServcie } from "src/service/user.service";
 import { executionResult } from "src/dto/user.dto";
 import { AuthService } from "src/service/auth.service";
-import JwtToken from "src/modules/jwt.token.model";
+import JwtToken from "src/model/jwt.token.model";
 import { Response } from "express";
 
 @Controller("auth/google")

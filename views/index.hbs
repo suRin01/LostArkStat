@@ -2,26 +2,33 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<script src="https://kit.fontawesome.com/02b9945b46.js" crossorigin="anonymous"></script>
-	</head>
-	<body class="">
-		<nav>
-			<ul class="gnb-list">
-				<li class="gnb-list-item gnb-list-item__login" style="float: left;">
-					<a class="gnb-btn-login" href="/auth">
-						로그인
-					</a>
-				</li>
-				<li style="float: left;">
-					<a class="gnb-btn-login" href="/register">
-						등록
-					</a>
-				</li>
-			</ul>
-		</nav>
 		<link rel="icon" type="image/x-icon" />
 		<link href="https://lostarkstat.s3.ap-northeast-2.amazonaws.com/css/common.css" rel="stylesheet" type="text/css" />
 		<link href="https://lostarkstat.s3.ap-northeast-2.amazonaws.com/css/new.css" rel="stylesheet" type="text/css" />
 		<link href="https://lostarkstat.s3.ap-northeast-2.amazonaws.com/css/styleSheet.css" rel="stylesheet" type="text/css" />
+		
+	</head>
+	<body class="">
+		{{#if isLogin }}
+			<div style="height: auto; display: flex; align-items: center;">
+				<h3>
+					어서오세요, {{ name }}님!
+				</h3>
+				<li class="gnb-list-item gnb-list-item__login">
+					<a class="gnb-btn-login" href="/auth/logout">
+						로그아웃
+					</a>
+				</li>
+			</div>
+		{{else}}
+		<div style="height: auto;">
+			<li class="gnb-list-item gnb-list-item__login">
+				<a class="gnb-btn-login" href="/auth">
+					로그인
+				</a>
+			</li>
+		</div>
+		{{/if}}
 		<div class="l-wrap l-wrap--index">
 			<div class="l-container">
 				<div class="index-logo">

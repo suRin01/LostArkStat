@@ -13,6 +13,8 @@ export class LoginAuthFilter implements ExceptionFilter {
 
 		if (request.url === "/auth") {
 			response.render("login");
+		} else if(request.url === "/") {
+			response.render("index", {"isLogin":false})
 		} else {
 			response.status(status).redirect("/auth");
 		}
