@@ -22,16 +22,4 @@ export class RequestUtility {
 	
 		return JSON.parse(jsonPayload);
 	};
-
-	// spring 기준
-	// interceptor ?
-	// request pre/post/close,end? > hooking
-	
-	// AOP > aspect object pro!!!~~~
-	// mvc 
-	// a 기능 > controller > service > db > return
-	// b 기능 > controller > service > db > return
-	// c 기능 > controller > service > db > return
-	// aspect > 구체적으로 한 땀 한 땀 hooking 
-
 }

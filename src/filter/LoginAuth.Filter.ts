@@ -11,7 +11,6 @@ export class LoginAuthFilter implements ExceptionFilter {
 		const request: Request = context.getRequest<Request>();
 		const status: number = exception.getStatus();
 
-	
 		if (request.url === "/auth") {
 			response.render("login");
 		} else if(request.url === "/") {

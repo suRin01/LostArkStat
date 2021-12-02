@@ -6,7 +6,6 @@ import { executionResult } from "src/dto/user.dto";
 import * as bcrypt from "bcrypt";
 import jwtPayload from "src/model/jwt.payload.model";
 import JwtToken from "src/model/jwt.token.model";
-import { StatusCode } from "src/common/statusCode";
 
 @Injectable()
 export class AuthService {
@@ -17,12 +16,12 @@ export class AuthService {
 
 		if (
 			findOne.data.length !== 0 &&
-			(await bcrypt.compare(userpw, findOne.data[0].password)) &&
-			findOne.data[0].is_deleted != true
+			(await bcrypt.compare(userpw, findOne.data[0]["password"])) &&
+			findOne.data[0]["is_deleted"] != true
 		) {
 			return findOne;
 		} else {
-			return { status: StatusCode.unauthorlized, data: [] };
+			return { status: 401, data: [] };
 		}
 	}
 

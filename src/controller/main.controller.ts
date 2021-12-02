@@ -1,16 +1,15 @@
 import { Get, Controller, Render, Query, UseFilters, Res, Req, UseGuards } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
+import { response } from "express";
 import { CharacterSearchFilter } from "src/filter/character.search.filter";
 import { LoginAuthFilter } from "src/filter/LoginAuth.Filter";
 import { CharacterProfile } from "src/model/character.profile.model";
-import { RedisCacheService } from "src/service/cache.service";
 import { CrawlingService } from "src/service/crawling.service";
-import { WinstonLogger } from "src/util/logger";
 import { RequestUtility } from "src/util/req.util";
 
 @Controller("/")
 export class MainController {
-	constructor(private crawlingService: CrawlingService, private readonly redisCacheService: RedisCacheService) {}
+	constructor(private crawlingService: CrawlingService) {}
 
 	@Get()
 	@UseGuards(AuthGuard("jwt"))
@@ -31,8 +30,7 @@ export class MainController {
 
 	@Get("/test")
 	@Render("oauthTest")
-	async test(): Promise<void> {
-		WinstonLogger.getInstance().info(await this.redisCacheService.get("aa"));
+	test(): void {
 		return;
 	}
 }

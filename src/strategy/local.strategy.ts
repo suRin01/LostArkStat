@@ -3,7 +3,6 @@ import { PassportStrategy } from "@nestjs/passport";
 import { Injectable, UnauthorizedException } from "@nestjs/common";
 import { AuthService } from "../service/auth.service";
 import { executionResult } from "src/dto/user.dto";
-import { StatusCode } from "src/common/statusCode";
 
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
@@ -13,7 +12,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
 
 	async validate(username: string, password: string): Promise<executionResult> {
 		const result: executionResult = await this.authService.validate(username, password);
-		if (result.status === StatusCode.unauthorlized) {
+		if (result.status === 401) {
 			throw new UnauthorizedException();
 		}
 		return result;

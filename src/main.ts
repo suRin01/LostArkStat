@@ -3,6 +3,9 @@ import { NestFactory } from "@nestjs/core";
 import { NestExpressApplication } from "@nestjs/platform-express";
 import { join } from "path";
 import { AppModule } from "./app.module";
+import * as fs from "fs";
+import * as hbs from "hbs"
+import { profile } from "winston";
 
 async function bootstrap() {
 	// const httpsOptions = {
@@ -13,8 +16,6 @@ async function bootstrap() {
 	const app = await NestFactory.create<NestExpressApplication>(AppModule, {
 		// httpsOptions,
 	});
-
-
 
 	// whiteList -> 엔티티 데코레이터에 없는 프로퍼티 값은 무조건 거름
 	// forbidNonWhitelisted -> 엔티티 데코레이터에 없는 값 인입시 그 값에 대한 에러메세지 알려줌
