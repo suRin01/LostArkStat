@@ -4,6 +4,7 @@ import * as moment from "moment";
 const { errors, combine, json, timestamp, ms, prettyPrint } = winston.format;
 
 export class WinstonLogger {
+	// TODO : static / singleton 차이 포스팅 
 	private static instance: winston.Logger;
 	// eslint-disable-next-line @typescript-eslint/no-empty-function
 	private constructor() {}

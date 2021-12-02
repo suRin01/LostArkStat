@@ -2,7 +2,7 @@ import { IsString } from "class-validator";
 
 export default class jwtPayload {
 	@IsString()
-	readonly username: string;
+	public readonly username: string;
 	@IsString()
-	readonly sub: string;
+	public readonly sub: string;
 }
