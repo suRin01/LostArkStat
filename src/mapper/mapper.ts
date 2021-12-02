@@ -4,6 +4,7 @@ import "dotenv/config";
 import { database } from "../util/db";
 import { UserDTO, executionResult } from "../dto/user.dto";
 import { WinstonLogger } from "../util/logger";
+import { StatusCode } from "src/common/statusCode";
 
 export class Mapper {
 	constructor(private db: database) {
@@ -15,7 +16,7 @@ export class Mapper {
 		const conn: mysql.PoolConnection | undefined = await this.db.getConnection();
 		if (conn === undefined) {
 			WinstonLogger.getInstance().error("database connection failed.");
-			return { status: 500, data: [] };
+			return { status: StatusCode.DbExecutionFail, data: [] };
 		}
 
 		//Excute query
@@ -43,34 +44,32 @@ export class Mapper {
 		}
 
 		const resultArr: Array<UserDTO> = [];
-		//Return result
+		
 		if (Array.isArray(result)) {
-			if (result !== undefined) {
-				for (let idx = 0, len = (result[0] as any[]).length; idx < len; idx++) {
-					const tempResult = (result[0] as any[])[idx];
-					resultArr.push({
-						idx: Number.parseInt(tempResult.idx),
-						name: tempResult.name,
-						id: tempResult.id,
-						password: tempResult.password,
-						phoneNumber: tempResult.phoneNumber,
-						birthDate: tempResult.birthDate,
-						gender: tempResult.gender,
-						mainCharacter: tempResult.mainCharacter,
-						timestamp: tempResult.timestamp,
-						salt: tempResult.salt,
-						is_deleted: tempResult.is_deleted,
-					});
-				}
+			for (let idx = 0, len = (result[0] as any[]).length; idx < len; idx++) {
+				const tempResult = (result[0] as any[])[idx];
+				resultArr.push({
+					idx: Number.parseInt(tempResult.idx),
+					name: tempResult.name,
+					id: tempResult.id,
+					password: tempResult.password,
+					phoneNumber: tempResult.phoneNumber,
+					birthDate: tempResult.birthDate,
+					gender: tempResult.gender,
+					mainCharacter: tempResult.mainCharacter,
+					timestamp: tempResult.timestamp,
+					salt: tempResult.salt,
+					is_deleted: tempResult.is_deleted,
+				});
 			}
 			WinstonLogger.getInstance().info("Query execution success");
-			return { status: 200, data: resultArr };
+			return { status: StatusCode.OK, data: resultArr };
 		} else if (result !== undefined) {
 			WinstonLogger.getInstance().info("Query execution success with no returning data");
-			return { status: 200, data: [] };
+			return { status: StatusCode.OkNoReturnData, data: [] };
 		} else {
 			WinstonLogger.getInstance().error("Query execution failed");
-			return { status: 500, data: [] };
+			return { status: StatusCode.DbExecutionFail , data: [] };
 		}
 	};
 }

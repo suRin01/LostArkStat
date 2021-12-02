@@ -50,8 +50,7 @@ export class UserServcie {
 		return await this.mapper.mapper(queryString.createOautOne, [
 			userProfile.name,
 			userProfile.id,
-			userProfile.email,
-			"1",
+			userProfile.email
 		]);
 	}
 }

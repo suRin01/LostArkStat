@@ -1,10 +1,13 @@
 import { Page } from "puppeteer";
-import { engraveList } from "src/common/engrave";
 import { AbilityStoneStat, ItemObject } from "../model/character.profile.model";
 import { ElementHandle } from "puppeteer";
 import { urls } from "src/common/url";
+import { RedisCacheService } from "src/service/cache.service";
+import { Injectable } from "@nestjs/common";
 
+@Injectable()
 export class PageParser {
+	constructor(private readonly redisCacheService: RedisCacheService){}
 	public getItemObject(equip: Record<string, any>, ItemCode: string): Record<string, any> {
 		if (equip === undefined) {
 			return undefined;
@@ -74,7 +77,7 @@ export class PageParser {
 			stat: null,
 		};
 	}
-	public getEngrave(engrave: Record<string, any>, order: string): ItemObject {
+	public async getEngrave(engrave: Record<string, any>, order: string): Promise<ItemObject> {
 		const engraveObject = this.getItemObject(engrave, order);
 		if (engraveObject === undefined) {
 			return {
@@ -90,20 +93,22 @@ export class PageParser {
 			stat: "+" + stat,
 			icon:
 				urls.engraveImgBase +
-				String(engraveList[engraveObject["Element_000"]["value"]]).padStart(3, "0") +
+				(await this.redisCacheService.get(engraveObject["Element_000"]["value"])).padStart(3, "0")  + 
+				//String(engraveList[engraveObject["Element_000"]["value"]]).padStart(3, "0") +
 				".png",
 			tier: this.getTier(stat),
 		};
 	}
 
-	public getActiveEngraveArray(engraveNodeList: ElementHandle<Element>[]): ItemObject[] {
+	public async getActiveEngraveArray(engraveNodeList: ElementHandle<Element>[]): Promise<ItemObject[]> {
 		const engraveArray = [];
 		for (let idx = 0, len = engraveNodeList.length; idx < len; idx++) {
 			engraveArray[idx] = {
 				name: engraveNodeList[idx]["innerText"],
 				icon:
 					urls.engraveImgBase +
-					String(engraveList[engraveNodeList[idx]["innerText"].split(" Lv")[0]]).padStart(3, "0") +
+					(await this.redisCacheService.get(engraveNodeList[idx]["innerText"].split(" Lv")[0])).padStart(3, "0")  + 
+					// String(engraveList[engraveNodeList[idx]["innerText"].split(" Lv")[0]]).padStart(3, "0") +
 					".png",
 				stat: null,
 				tier: null,
@@ -120,17 +125,17 @@ export class PageParser {
 	}
 
 	public async getInnerItemArray(page: Page, selector: string): Promise<ItemObject[]> {
-		return await page.$$eval(
+		const tempResult = await page.$$eval(
 			selector,
-			(pageElements, engraveList) => {
+			(pageElements) => {
 				const resultArr: ItemObject[] = [];
 				for (let idx = 0, len = pageElements.length; idx < len; idx++) {
 					resultArr.push({
 						name: pageElements[idx].textContent,
-						icon:
-							urls.engraveImgBase +
-							String(engraveList[pageElements[idx].textContent.split(" Lv")[0]]).padStart(3, "0") +
-							".png",
+						icon: pageElements[idx].textContent.split(" Lv")[0],
+							// urls.engraveImgBase +
+							// String(engraveList[pageElements[idx].textContent.split(" Lv")[0]]).padStart(3, "0") +
+							// ".png",
 						stat: null,
 						tier: null,
 					});
@@ -138,7 +143,22 @@ export class PageParser {
 
 				return resultArr;
 			},
-			engraveList,
 		);
+
+		const result: ItemObject[] = [];
+		tempResult.forEach(async (itemObjectElement: ItemObject)=>{
+			result.push({
+				name: itemObjectElement.name,
+				icon: 
+					urls.engraveImgBase +
+					(await this.redisCacheService.get(itemObjectElement.icon)).padStart(3, "0")  + 
+					// String(engraveList[pageElements[idx].textContent.split(" Lv")[0]]).padStart(3, "0") +
+					".png",
+				stat: null,
+				tier: null,
+			})
+		})
+
+		return result;
 	}
 }
