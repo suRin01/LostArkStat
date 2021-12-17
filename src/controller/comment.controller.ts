@@ -3,7 +3,6 @@ import {
 	Controller,
 	Post,
 	Body,
-	UploadedFile,
 	Delete,
 	Query,
 	UseGuards,

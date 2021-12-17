@@ -26,30 +26,3 @@ export class ImageObject {
 	public readonly post_id?: string;
 }
 
-/*
-{
-    id,
-    content,
-    createdAt,
-    // 게시글을 작성한 유저
-    User: {
-      _id,
-      name,
-      // 게시글을 작성한 유저의 프로필 이미지
-      Image: {
-        path,
-      },
-    },
-    // 게시글의 이미지
-    Image: [
-      {
-        _id,
-        path,
-      },
-      // ...
-    ],
-  },
-
-
-
-*/
