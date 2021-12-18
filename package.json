@@ -25,10 +25,15 @@
 		"@nestjs/config": "^1.1.5",
 		"@nestjs/core": "^8.0.0",
 		"@nestjs/jwt": "^8.0.0",
+<<<<<<< HEAD
 		"@nestjs/microservices": "^8.2.3",
+=======
+		"@nestjs/mapped-types": "^1.0.1",
+>>>>>>> develop
 		"@nestjs/passport": "^8.0.1",
 		"@nestjs/platform-express": "^8.0.0",
 		"@types/bcrypt": "^5.0.0",
+		"@types/multer": "^1.4.7",
 		"axios": "^0.24.0",
 		"bcrypt": "^5.0.1",
 		"cache-manager": "^3.6.0",

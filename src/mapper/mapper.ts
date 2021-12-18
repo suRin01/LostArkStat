@@ -11,7 +11,7 @@ export class Mapper {
 		this.db = new database();
 		WinstonLogger.getInstance().info("Database connection created");
 	}
-	public mapper = async (query: string, data: string[] = []): Promise<executionResult> => {
+	public mapper = async (query: string, data: (string|number)[] = []): Promise<executionResult> => {
 		//Get database Connection
 		const conn: mysql.PoolConnection | undefined = await this.db.getConnection();
 		if (conn === undefined) {
@@ -46,6 +46,7 @@ export class Mapper {
 		const resultArr: Array<UserDTO> = [];
 		
 		if (Array.isArray(result)) {
+<<<<<<< HEAD
 			for (let idx = 0, len = (result[0] as any[]).length; idx < len; idx++) {
 				const tempResult = (result[0] as any[])[idx];
 				resultArr.push({
@@ -61,6 +62,21 @@ export class Mapper {
 					salt: tempResult.salt,
 					is_deleted: tempResult.is_deleted,
 				});
+=======
+			for (
+				let idx = 0, len = (result[0] as any[]).length;
+				idx < len;
+				idx++
+			) {
+				const tempResult = (result[0] as any[])[idx];
+				const keyArray = Object.getOwnPropertyNames(tempResult);
+				const putValue: any = {};
+
+				keyArray.forEach((element) => {
+					putValue[element] = tempResult[element];
+				});
+				resultArr.push(putValue);
+>>>>>>> develop
 			}
 			WinstonLogger.getInstance().info("Query execution success");
 			return { status: StatusCode.OK, data: resultArr };

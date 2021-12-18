@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { Mapper } from "../mapper/mapper";
-import { queryString } from "../common/query";
+import { userQueryString } from "../common/query";
 import { JwtService } from "@nestjs/jwt";
 import { executionResult } from "src/dto/user.dto";
 import * as bcrypt from "bcrypt";
@@ -13,7 +13,7 @@ export class AuthService {
 	constructor(private readonly mapper: Mapper, private readonly jwtService: JwtService) {}
 
 	async validate(userid: string, userpw: string): Promise<executionResult> {
-		const findOne: executionResult = await this.mapper.mapper(queryString.findOne, [userid]);
+		const findOne: executionResult = await this.mapper.mapper(userQueryString.findOne, [userid]);
 
 		if (
 			findOne.data.length !== 0 &&
