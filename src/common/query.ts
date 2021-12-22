@@ -46,9 +46,6 @@ export class imageQueryString {
 		"insert into `LostArkStat`.`Images` (`post_idx`, `path`) values (?, ?);";
 }
 
-<<<<<<< HEAD
-	public static readonly createOautOne:string = "INSERT INTO `LostArkStat`.`Users` (`name`, `id`, `email`, `is_oauth_register`) VALUES (?, ?, ? , `1`)";
-=======
 export class likeQueryString {
 	public static readonly createOne =
 		"insert into `LostArkStat`.`Likes` (`post_idx`, `user_idx`) values( ?, ?)";
@@ -56,11 +53,4 @@ export class likeQueryString {
 		"delete from `LostArkStat`.`Likes` where (`post_idx` = ? and `user_idx` = ?);";
 	public static readonly findAll =
 		"select `LostArkStat`.`likes`.`user_idx` from `LostArkStat`.`Likes` where (`post_idx` = ?);";
->>>>>>> develop
 }
-
-// prepared
-// secure coding = 보안?안전?한 코딩
-// database 취약점 공격
-// 1. database injection > OR 1=1; DROP DATABASE blabla;
-// prepared 를 사용하면 ? 모든걸 순수 string => keyword (where, or, and)를 keyword로 해석 x

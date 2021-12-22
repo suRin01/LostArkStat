@@ -46,23 +46,6 @@ export class Mapper {
 		const resultArr: Array<UserDTO> = [];
 		
 		if (Array.isArray(result)) {
-<<<<<<< HEAD
-			for (let idx = 0, len = (result[0] as any[]).length; idx < len; idx++) {
-				const tempResult = (result[0] as any[])[idx];
-				resultArr.push({
-					idx: Number.parseInt(tempResult.idx),
-					name: tempResult.name,
-					id: tempResult.id,
-					password: tempResult.password,
-					phoneNumber: tempResult.phoneNumber,
-					birthDate: tempResult.birthDate,
-					gender: tempResult.gender,
-					mainCharacter: tempResult.mainCharacter,
-					timestamp: tempResult.timestamp,
-					salt: tempResult.salt,
-					is_deleted: tempResult.is_deleted,
-				});
-=======
 			for (
 				let idx = 0, len = (result[0] as any[]).length;
 				idx < len;
@@ -76,7 +59,6 @@ export class Mapper {
 					putValue[element] = tempResult[element];
 				});
 				resultArr.push(putValue);
->>>>>>> develop
 			}
 			WinstonLogger.getInstance().info("Query execution success");
 			return { status: StatusCode.OK, data: resultArr };
