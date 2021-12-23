@@ -7,6 +7,8 @@ import { RedisCacheService } from "src/service/cache.service";
 import { CrawlingService } from "src/service/crawling.service";
 import { WinstonLogger } from "src/util/logger";
 import { RequestUtility } from "src/util/req.util";
+// import * as redis from "redis";
+import { createClient } from "redis";
 
 @Controller("/")
 export class MainController {
@@ -30,9 +32,30 @@ export class MainController {
 	}
 
 	@Get("/test")
-	@Render("oauthTest")
+	@Render("reservation")
 	async test(): Promise<void> {
-		WinstonLogger.getInstance().info(await this.redisCacheService.get("aa"));
+		const client = createClient({
+				url: "redis://:silverlistic97!@203.232.193.178:9779",
+			});
+		client.on('error', (err) => console.log('Redis Client Error', err));
+
+		await client.connect();
+		const result = await client.get("bottom");
+
+		console.debug(result);
+		return;
+
+	}
+
+	@Get("testPage")
+	@Render("reservation")
+	async render(): Promise<void>{
+		return;
+	}
+
+	@Get("testNewReservation")
+	@Render("new_reservation")
+	async newReservation(): Promise<void>{
 		return;
 	}
 }

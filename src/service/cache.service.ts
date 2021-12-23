@@ -8,7 +8,10 @@ export class RedisCacheService {
   ) {}
 
   async get(key) {
-    return await this.cache.get(key);
+    // const result = await this.cache.get(key);
+    // await this.cache.
+    // console.debug(result)
+    return await this.cache.get(key, {parse: false});
   }
 
   async set(key, value) {
