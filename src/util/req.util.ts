@@ -1,16 +1,20 @@
 export class RequestUtility {
+	public static getAccessToken = () =>{
+		return (request): string =>{
+			return this.fromAuthCookie()(request).Authorization;
+		}
+	}
 	public static fromAuthCookie = () => {
-		return (request): string => {
-			let accessToken: string = null;
+		return (request): Record<string, string> => {
 			if (request && request.headers.cookie) {
-				const cookies = request.headers.cookie.split("; ").reduce((prev, current) => {
+				const cookies:Record<string, string> = request.headers.cookie.split("; ").reduce((prev, current) => {
 					const [name, ...value]: string = current.split("=");
 					prev[name] = value.join("=");
 					return prev;
 				}, {});
-				accessToken = cookies["Authorization"];
+				return cookies;
 			}
-			return accessToken;
+			return {};
 		};
 	};
 	public static parseJwt (token:string):Record<string, string> {

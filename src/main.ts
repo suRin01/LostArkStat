@@ -14,6 +14,10 @@ async function bootstrap() {
 		// httpsOptions,
 	});
 
+	app.enableCors({
+		origin: "http://localhost:8080",
+		credentials: true
+	});
 
 
 	// whiteList -> 엔티티 데코레이터에 없는 프로퍼티 값은 무조건 거름
@@ -32,7 +36,6 @@ async function bootstrap() {
 	app.setBaseViewsDir(join(__dirname, "..", "views"));
 
 	app.setViewEngine("hbs");
-
 
 
 	

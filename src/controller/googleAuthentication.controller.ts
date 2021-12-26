@@ -4,10 +4,11 @@ import { OAuth2Client } from "google-auth-library";
 import "dotenv/config";
 import { oauth2_v2 } from "googleapis";
 import { UserServcie } from "src/service/user.service";
-import { executionResult } from "src/dto/user.dto";
 import { AuthService } from "src/service/auth.service";
 import JwtToken from "src/model/jwt.token.model";
 import { Response } from "express";
+import { ExecutionResult } from "src/dto/executionResult.dto";
+import { UserDTO } from "src/dto/user.dto";
 
 @Controller("auth/google")
 @UseInterceptors(ClassSerializerInterceptor)
@@ -27,13 +28,13 @@ export class GoogleAuthenticationController {
 			await this.googleAuthenticationService.getUserProfile(result)
 		).data;
 
-		const findUser: executionResult = await this.userService.getUser(userProfile.id);
+		const findUser: ExecutionResult = await this.userService.getUser(userProfile.id);
 
 		if (findUser.data.length === 0) {
 			await this.userService.createOauthUser(userProfile);
 		}
 
-		const tokens: JwtToken = this.authService.getAccessToken({ username: userProfile.email, sub: userProfile.id });
+		const tokens: JwtToken = this.authService.getAccessToken({ username: userProfile.email, sub: userProfile.id, idx: 10, mainCharacter: (findUser.data[0] as UserDTO).mainCharacter, guildName: (findUser.data[0] as UserDTO).guildName});
 
 		res.cookie("Authorization", tokens.access_token, {
 			httpOnly: true,

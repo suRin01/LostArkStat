@@ -9,6 +9,7 @@ import { WinstonLogger } from "src/util/logger";
 import { RequestUtility } from "src/util/req.util";
 // import * as redis from "redis";
 import { createClient } from "redis";
+import { Request } from "express";
 
 @Controller("/")
 export class MainController {
@@ -18,8 +19,10 @@ export class MainController {
 	@UseGuards(AuthGuard("jwt"))
 	@UseFilters(LoginAuthFilter)
 	loginPage(@Res() res, @Req() req):void {
-		const accessToken:string = RequestUtility.fromAuthCookie()(req);
-		res.render("index", {isLogin: true, name: RequestUtility.parseJwt(accessToken).useranme})
+		const jwtTokenData:Record<string, string> = RequestUtility.fromAuthCookie()(req);
+		const jwtParsedData: Record<string, string> = RequestUtility.parseJwt(jwtTokenData.Authorization)
+		console.debug(jwtParsedData)
+		res.render("index", {isLogin: true, name: jwtParsedData.username})
 
 		return;
 	}
@@ -47,13 +50,18 @@ export class MainController {
 
 	}
 
-	@Get("testPage")
+	@Get("raids")
 	@Render("reservation")
-	async render(): Promise<void>{
-		return;
+	async raids(
+		@Req() req: Request): Promise<Record<string, string>>{
+			
+		const jwtTokenData: Record<string, string> = RequestUtility.fromAuthCookie()(req);
+		const jwtParsedData: Record<string, string> = RequestUtility.parseJwt(jwtTokenData.Authorization);
+		
+		return {mainCharacter: jwtParsedData.mainCharacter};
 	}
 
-	@Get("testNewReservation")
+	@Get("reservation")
 	@Render("new_reservation")
 	async newReservation(): Promise<void>{
 		return;

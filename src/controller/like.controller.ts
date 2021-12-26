@@ -5,34 +5,36 @@ import {
 	Post,
 	Delete,
 	Param,
+	Body,
 } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
-import { LikeService } from "src/service/like.service";
+import { Request } from "express";
+import { Applicant } from "src/model/applicant.model";
+import { ApplyService } from "src/service/apply.service";
 import { RequestUtility } from "src/util/req.util";
 
-@Controller("api/like")
+@Controller("api/apply")
 export class LikeController {
-	constructor(private readonly likeService: LikeService) {}
+	constructor(private readonly applyService: ApplyService) {}
 	@Post("/:postId")
 	@UseGuards(AuthGuard("jwt"))
 	appendLike(
-		@Req() req,
-		@Param("postId") postId: Record<string, string>,
+		@Req() req :Request,
+		@Body() applicant: Applicant,
+		@Param("postId") postId: number,
 	): void {
 		const cookie = RequestUtility.fromAuthCookie()(req);
-		const userId = RequestUtility.parseJwt(cookie);
 
 		console.debug(postId);
 
-		this.likeService.appendLike(Number(postId), Number(userId["sub"]));
+		this.applyService.appendApplicant(postId, Number(cookie.sub), applicant.applicantClass, applicant.applicantId);
 	}
 
 	@Delete("/:postId")
 	@UseGuards(AuthGuard("jwt"))
-	deleteLike(@Req() req, @Param("postId") postId: number): void {
+	deleteLike(@Req() req :Request, @Param("postId") postId: number): void {
 		const cookie = RequestUtility.fromAuthCookie()(req);
-		const userId = RequestUtility.parseJwt(cookie);
 
-		this.likeService.deleteLike(Number(postId), Number(userId["sub"]));
+		this.applyService.deleteApplicant(Number(postId), Number(cookie.sub));
 	}
 }

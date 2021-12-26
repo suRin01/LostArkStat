@@ -6,6 +6,7 @@ import {
 	Param,
 	Post,
 	Query,
+	Redirect,
 	Req,
 	UploadedFiles,
 	UseGuards,
@@ -14,100 +15,73 @@ import {
 import { AuthGuard } from "@nestjs/passport";
 import { ExecutionResult } from "src/dto/executionResult.dto";
 import { PostService } from "../service/post.service";
-import { dataCasting } from "src/util/response.util";
-import { ImageObject, PostObject } from "src/model/postData.model";
 import { RequestUtility } from "src/util/req.util";
-import { CommentService } from "src/service/comment.service";
+import { PostData } from "src/model/post.model";
+import { Request } from "express";
+import jwtPayload from "src/model/jwt.payload.model";
+import { ApplyService } from "src/service/apply.service";
 import { PostDTO } from "src/dto/post.dto";
-import { ImageService } from "src/service/image.service";
-import { FileInterceptor, FilesInterceptor } from "@nestjs/platform-express";
-import { extname } from "path";
-import { diskStorage } from "multer";
-import { LikeService } from "src/service/like.service";
-import { LikeUser } from "src/dto/likeUser.dto";
+import { Applicant } from "src/model/applicant.model";
 
 @Controller("api/posts")
 export class PostController {
 	constructor(
 		private readonly postService: PostService,
-		private readonly commentService: CommentService,
-		private readonly imageService: ImageService,
-		private readonly likeService: LikeService,
+		private readonly applyServcie: ApplyService
 	) {}
 
+	@UseGuards(AuthGuard("jwt"))
 	@Get("/")
-	async getPosts(@Query("offset") offset: number): Promise<PostObject[]> {
-		const result = await this.postService.getPosts(offset);
+	async getPosts(@Req() req: Request): Promise<PostDTO[]> {
 
-		for (let idx = 0, len = result.data.length; idx < len; idx++) {
-			const post: PostDTO = result.data[idx] as PostDTO;
-			//코멘트 갯수 삽입
-			(result.data[idx] as PostDTO).comments = (
-				await this.commentService.getComments(post._id.toString())
-			).data.length;
+		const jwtTokenData: Record<string, string> = RequestUtility.fromAuthCookie()(req);
+		const jwtParsedData: Record<string, string> = RequestUtility.parseJwt(jwtTokenData.Authorization);
+		
 
-			//이미지 배열 삽입
-			const imageArray = (await this.imageService.getImages(post._id))
-				.data as ImageObject[];
+		let posts: PostDTO[] = (await this.postService.getPosts(jwtParsedData.guildName)).data as PostDTO[];
 
-			(result.data[idx] as PostDTO).Images = imageArray.map(
-				(image) => image.path,
-			);
-
-			//좋아요 누른 유저 리스트 삽입
-			(result.data[idx] as PostDTO).Like = (
-				await this.likeService.getLikes(post._id)
-			).data as LikeUser[];
+		for(let idx = 0, len = posts.length; idx<len; idx++){
+			const postId: number = posts[idx].post_idx;
+			const applicants: Applicant[] = (await this.applyServcie.getApplicants(postId)).data as Applicant[];
+			posts[idx].applicants = applicants;
 		}
-
-		return dataCasting.toPostData(result);
+		// return posts;
+		return posts;
 	}
 
 	@Get("/:idx")
-	async getPost(@Param("idx") idx: string): Promise<PostObject[]> {
+	async getPost(@Param("idx") idx: string): Promise<ExecutionResult> {
 		const result = await this.postService.getPost(idx);
 
-		return dataCasting.toPostData(result);
+		return result;
 	}
 
 	@UseGuards(AuthGuard("jwt"))
 	@Post()
-	@UseInterceptors(
-		FilesInterceptor("images", 10, {
-			storage: diskStorage({
-				destination: "./public/images",
-				filename: (req, file, cb) => {
-					const randomName = Array(32)
-						.fill(null)
-						.map(() => Math.round(Math.random() * 16).toString(16))
-						.join("");
-					cb(null, `${randomName}${extname(file.originalname)}`);
-				},
-			}),
-		}),
-	)
+	@Redirect("/raids")
 	async createPost(
-		@UploadedFiles() files: Array<Express.Multer.File>,
-		@Body() post: { content: string },
-		@Req() req,
-	): Promise<ExecutionResult> {
-		console.debug(files);
+		@Body() post: PostData,
+		@Req() req: Request,
+	): Promise<void> {
+
 		console.debug(post);
 
-		const jwtTokenData: string = RequestUtility.fromAuthCookie()(req);
-		const userData = RequestUtility.parseJwt(jwtTokenData);
-
+		const jwtTokenData: Record<string, string> = RequestUtility.fromAuthCookie()(req);
+		const jwtParsedData: Record<string, string> = RequestUtility.parseJwt(jwtTokenData.Authorization);
+		
 		const createPostResult = await this.postService.createPost({
-			user_id: Number(userData.sub),
-			content: post.content,
+			user_idx: Number(jwtParsedData.idx),
+			commander: post.commander,
+			target: `${post.from},${post.to}`,
+			date: new Date(`${post.raidDate} ${post.raidTime}:00`),
+			constraint: post.constraint,
+			comment: post.comment,
+			guildName: jwtParsedData.guildName
 		});
 
-		const createImagesResult = await this.imageService.createImages(
-			createPostResult.affectedRow,
-			files.map((file) => file.filename),
-		);
+		await this.applyServcie.appendApplicant(createPostResult.affectedRow, Number(jwtParsedData.idx), post.applicantClass, post.applicantId);
 
-		return createImagesResult;
+		return;
 	}
 
 	@UseGuards(AuthGuard("jwt"))
@@ -116,11 +90,10 @@ export class PostController {
 		@Param("idx") idx: string,
 		@Req() req,
 	): Promise<ExecutionResult> {
-		const jwtTokenData: string = RequestUtility.fromAuthCookie()(req);
-		const userData = RequestUtility.parseJwt(jwtTokenData);
+		const jwtTokenData: Record<string, string> = RequestUtility.fromAuthCookie()(req);
 
-		console.debug(userData, idx);
+		console.debug(jwtTokenData, idx);
 
-		return await this.postService.deletePost(idx, Number(userData.sub));
+		return await this.postService.deletePost(idx, Number(jwtTokenData.sub));
 	}
 }

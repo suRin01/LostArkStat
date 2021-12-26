@@ -1,7 +1,8 @@
 import { Get, Controller, Post, UseGuards, Res, Redirect, UseFilters, Req } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
 import { Request, Response } from "express";
-import { executionResult, UserDTO } from "src/dto/user.dto";
+import { ExecutionResult } from "src/dto/executionResult.dto";
+import { UserDTO } from "src/dto/user.dto";
 import { LoginAuthFilter } from "src/filter/LoginAuth.Filter";
 import jwtPayload from "src/model/jwt.payload.model";
 import JwtToken from "src/model/jwt.token.model";
@@ -24,10 +25,13 @@ export class AuthController {
 	@Redirect("/", 302)
 	@Post()
 	async login(@Req() req: Request, @Res({ passthrough: true }) res: Response): Promise<void> {
-		const firstUserData: UserDTO = (req.user as executionResult).data[0];
+		const firstUserData: UserDTO = (req.user as ExecutionResult).data[0] as UserDTO;
 		const tokens: JwtToken = await this.authService.getAccessToken({
 			username: firstUserData.name,
 			sub: firstUserData.id,
+			idx: firstUserData.user_idx,
+			mainCharacter: firstUserData.mainCharacter,
+			guildName: firstUserData.guildName
 		});
 		
 

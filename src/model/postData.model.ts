@@ -4,6 +4,7 @@ import { LikeUser } from "src/dto/likeUser.dto";
 export class PostObject {
 	@IsString()
 	public readonly _id: string;
+	@IsString()
 	public readonly content: string;
 	public readonly createAt: Date;
 	public readonly updatedAt: Date;

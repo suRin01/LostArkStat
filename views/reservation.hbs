@@ -92,258 +92,154 @@
 <div id="root">
 	<div class="header">
 		<div class="title">
-			<div id="nickName"> hello, 1대대당직사령!</div>
-			<div id="time">오늘은 2021년 12월 23일입니다. </div>
+			<div id="nickName"> hello, {{mainCharacter}}.</div>
+			<div id="time"></div>
 
 		</div>
 		<div class="iconBox">
-			<input type="button" value="새 글 등록하기">
+			<input type="button" id="apply" value="새 글 등록하기">
 		</div>
 
 	</div>
 	<div class="timeTable">
-		<div class="row">
+		<div class="row" id = "baltanNormal">
 			<div class="title"><h3>발탄_노말</h3></div>
 			<div class="post">
-				<div class="">출발 시간</div>
-				<div class="time">2021.12.23 17:30</div>
-				<div class="">도전 관문</div>
-				<div class="time">1-2</div>
-				<div class="users">
-					<div class="user">
-						<div class="role">바드</div>
-						<div class="nickname">찾으시던바드</div>
-					</div>
-					<div class="user">
-						<div class="role">스카우터</div>
-						<div class="nickname">1대대당직사령</div>
-					</div>
-					<div class="user">
-						<div class="role">스트라이커</div>
-						<div class="nickname">낙지매운탕</div>
-					</div>
-					<div class="user">
-						<div class="role">워로드</div>
-						<div class="nickname">구세군무장친위대</div>
-					</div>
-					<div class="user">
-						<div class="role">디스트로이어</div>
-						<div class="nickname">13글자를꽉채울수가있을까</div>
-					</div>
-				</div>
-				<input type="button" value="지원하기">
-			</div>
-			
-			<div class="post">
-				<div class="">출발 시간</div>
-				<div class="time">2021.12.23 17:30</div>
-				<div class="">도전 관문</div>
-				<div class="time">1-2</div>
-				<div class="users">
-					<div class="user">
-						<div class="role">바드</div>
-						<div class="nickname">찾으시던바드</div>
-					</div>
-					<div class="user">
-						<div class="role">스카우터</div>
-						<div class="nickname">1대대당직사령</div>
-					</div>
-					<div class="user">
-						<div class="role">스트라이커</div>
-						<div class="nickname">낙지매운탕</div>
-					</div>
-					<div class="user">
-						<div class="role">워로드</div>
-						<div class="nickname">구세군무장친위대</div>
-					</div>
-					<div class="user">
-						<div class="role">디스트로이어</div>
-						<div class="nickname">13글자를꽉채울수가있을까</div>
-					</div>
-				</div>
-				<input type="button" value="지원하기">
-			</div>
-			
-			<div class="post">
-				<div class="">출발 시간</div>
-				<div class="time">2021.12.23 17:30</div>
-				<div class="">도전 관문</div>
-				<div class="time">1-2</div>
-				<div class="users">
-					<div class="user">
-						<div class="role">바드</div>
-						<div class="nickname">찾으시던바드</div>
-					</div>
-					<div class="user">
-						<div class="role">스카우터</div>
-						<div class="nickname">1대대당직사령</div>
-					</div>
-					<div class="user">
-						<div class="role">스트라이커</div>
-						<div class="nickname">낙지매운탕</div>
-					</div>
-					<div class="user">
-						<div class="role">워로드</div>
-						<div class="nickname">구세군무장친위대</div>
-					</div>
-					<div class="user">
-						<div class="role">디스트로이어</div>
-						<div class="nickname">13글자를꽉채울수가있을까</div>
-					</div>
-				</div>
-				<input type="button" value="지원하기">
+				등록된 공격대가 없습니다.
 			</div>
 		</div>
-		<div class="row">
+		<div class="row" id = "baltanHard">
 			<div class="title"><h3>발탄_하드</h3></div>
 			<div class="post">
-				<div class="">출발 시간</div>
-				<div class="time">2021.12.23 17:30</div>
-				<div class="">도전 관문</div>
-				<div class="time">1-2</div>
-				<div class="users">
-					<div class="user">
-						<div class="role">바드</div>
-						<div class="nickname">찾으시던바드</div>
-					</div>
-					<div class="user">
-						<div class="role">스카우터</div>
-						<div class="nickname">1대대당직사령</div>
-					</div>
-					<div class="user">
-						<div class="role">워로드</div>
-						<div class="nickname">구세군무장친위대</div>
-					</div>
-					<div class="user">
-						<div class="role">디스트로이어</div>
-						<div class="nickname">13글자를꽉채울수가있을까</div>
-					</div>
-				</div>
-				<input type="button" value="지원하기">
+				등록된 공격대가 없습니다.
 			</div>
 		</div>
-		<div class="row">
+		<div class="row" id = "biackissNormal">
 			<div class="title"><h3>비아키스_노말</h3></div>
 			<div class="post">
 				등록된 공격대가 없습니다.
 			</div>
 		</div>
-		<div class="row">
+		<div class="row" id = "biackissHard">
 			<div class="title"><h3>비아키스_하드</h3></div>
 			<div class="post">
-				<div class="">출발 시간</div>
-				<div class="time">2021.12.23 17:30</div>
-				<div class="">도전 관문</div>
-				<div class="time">1-2</div>
-				<div class="users">
-					<div class="user">
-						<div class="role">바드</div>
-						<div class="nickname">찾으시던바드</div>
-					</div>
-					<div class="user">
-						<div class="role">스카우터</div>
-						<div class="nickname">1대대당직사령</div>
-					</div>
-					<div class="user">
-						<div class="role">워로드</div>
-						<div class="nickname">구세군무장친위대</div>
-					</div>
-					<div class="user">
-						<div class="role">디스트로이어</div>
-						<div class="nickname">13글자를꽉채울수가있을까</div>
-					</div>
-				</div>
-				<input type="button" value="지원하기">
+				등록된 공격대가 없습니다.
 			</div>
 		</div>
-		<div class="row">
+		<div class="row" id = "koukuSatonRehearsal">
+			<div class="title"><h3>쿠크세이튼 리허설</h3></div>
+			<div class="post">
+				등록된 공격대가 없습니다.
+			</div>
+		</div>
+		<div class="row" id = "koukuSatonNormal">
 			<div class="title"><h3>쿠크세이튼</h3></div>
 			<div class="post">
-				<div class="">출발 시간</div>
-				<div class="time">2021.12.23 17:30</div>
-				<div class="">도전 관문</div>
-				<div class="time">1-2</div>
-				<div class="users">
-					<div class="user">
-						<div class="role">바드</div>
-						<div class="nickname">찾으시던바드</div>
-					</div>
-					<div class="user">
-						<div class="role">스카우터</div>
-						<div class="nickname">1대대당직사령</div>
-					</div>
-					<div class="user">
-						<div class="role">워로드</div>
-						<div class="nickname">구세군무장친위대</div>
-					</div>
-					<div class="user">
-						<div class="role">디스트로이어</div>
-						<div class="nickname">13글자를꽉채울수가있을까</div>
-					</div>
-				</div>
-				<input type="button" value="지원하기">
+				등록된 공격대가 없습니다.
 			</div>
 		</div>
-		<div class="row">
+		<div class="row" id = "abrelshudDejavu">
+			<div class="title"><h3>아브렐슈드_데자뷰</h3></div>
+			<div class="post">
+				등록된 공격대가 없습니다.
+			</div>
+		</div>
+		<div class="row" id = "abrelshudNormal">
 			<div class="title"><h3>아브렐슈드_노말</h3></div>
 			<div class="post">
-				<div class="">출발 시간</div>
-				<div class="time">2021.12.23 17:30</div>
-				<div class="">도전 관문</div>
-				<div class="time">1-2</div>
-				<div class="users">
-					<div class="user">
-						<div class="role">바드</div>
-						<div class="nickname">찾으시던바드</div>
-					</div>
-					<div class="user">
-						<div class="role">스카우터</div>
-						<div class="nickname">1대대당직사령</div>
-					</div>
-					<div class="user">
-						<div class="role">워로드</div>
-						<div class="nickname">구세군무장친위대</div>
-					</div>
-					<div class="user">
-						<div class="role">디스트로이어</div>
-						<div class="nickname">13글자를꽉채울수가있을까</div>
-					</div>
-				</div>
-				<input type="button" value="지원하기">
+				등록된 공격대가 없습니다.
 			</div>
 		</div>
-		<div class="row">
+		<div class="row" id = "abrelshudHard">
 			<div class="title"><h3>아브렐슈드_하드</h3></div>
 			<div class="post">
-				<div class="">출발 시간</div>
-				<div class="time">2021.12.23 17:30</div>
-				<div class="">도전 관문</div>
-				<div class="time">1-2</div>
-				<div class="users">
-					<div class="user">
-						<div class="role">바드</div>
-						<div class="nickname">찾으시던바드</div>
-					</div>
-					<div class="user">
-						<div class="role">스카우터</div>
-						<div class="nickname">1대대당직사령</div>
-					</div>
-					<div class="user">
-						<div class="role">워로드</div>
-						<div class="nickname">구세군무장친위대</div>
-					</div>
-					<div class="user">
-						<div class="role">디스트로이어</div>
-						<div class="nickname">13글자를꽉채울수가있을까</div>
-					</div>
-				</div>
-				<input type="button" value="지원하기">
+				등록된 공격대가 없습니다.
 			</div>
 		</div>
 
 	</div>
 	
 </div>
+<script>
+	const connectedDate = new Date();
+	const options = {
+		"baltan": ["1", "2"],
+		"biackiss": [ "1", "2", "3"],
+		"koukuSaton": [ "1", "2", "3"],
+		"abrelshudDejavu":["1-2", "3-4"],
+		"abrelshud": ["1-2", "3-4", "5-6"]
+	}
+	document.querySelector("#apply").addEventListener("click", function(event){
+		window.location.href = "/reservation"
+	})
+	document.querySelector("#time").innerText = `오늘은 ${connectedDate.getFullYear()}년 ${connectedDate.getMonth()+1}월 ${connectedDate.getDate()}일 입니다.`;
+
+	const xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState === xhr.DONE){
+			if(xhr.status === 200 || xhr.status === 201){
+				{{!-- console.log(xhr.responseText); --}}
+				const posts = JSON.parse(xhr.responseText);
+				console.log(posts);
+				posts.forEach((post)=>{
+					const targetGates = post.target.split(",");
+					let option;
+					switch(post.commander){
+						case "baltanNormal":
+						case "baltanHard":
+							option = options.baltan;
+							break;
+						case "biackissHard":
+						case "biackissNormal":
+							option = options.biackiss;
+							break;
+						case "koukuSatonRehearsal":
+						case "koukuSatonNormal":
+							option = options.koukuSaton;
+							break;
+						case "abrelshudDejavu":
+							option = options.abrelshudDejavu;
+							break;
+						case "abrelshudHard":
+						case "abrelshudNormal":
+							option = options.abrelshud;
+							break;
+						default:
+							break;
+					}
+					let postHtml = `<div class="post">`
+									+`	<div class="">출발 시간</div>`
+									+`	<div class="time">2021.12.23 17:30</div>`
+									+`	<div class="">도전 관문</div>`
+									+`	<div class="time">${option[targetGates[0]]} - ${option[targetGates[1]]}</div>`
+									+`	<div class="users">`
+					post.applicants.forEach((applicant)=>{
+						postHtml += `<div class="user">`
+								   +`	<div class="role">${applicant.applicantClass}</div>`
+								   +`	<div class="nickname">${applicant.applicantId}</div>`
+								   +`</div>`
+					})
+					postHtml	   +=`	</div><input type="button" value="지원하기"></div>`
+					const postElement = createElementFromHTML(postHtml);
+					document.querySelector("#"+post.commander).appendChild(postElement);
+				})
+
+			}else{
+				console.error(xhr.responseText);
+			}
+		}
+	}
+	xhr.open("GET", "api/posts");
+	xhr.send();
+
+	function createElementFromHTML(htmlString) {
+	    let div = document.createElement("div");
+	    div.innerHTML = htmlString.trim();
+
+	    // Change this to div.childNodes to support multiple top-level nodes
+	    return div.firstChild;
+	}
+</script>
 
 </body>
 
