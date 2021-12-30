@@ -1,0 +1,142 @@
+<html>
+<head>
+	<style>
+		
+	body{
+    	background-image: url("/images/vacation.jpg");
+    	background-size: cover;
+		color: #DEE8E9;
+		margin: 0px;
+		padding: 5px;
+		
+	    display: flex;
+	    justify-content: center;
+	    align-items: center;
+	}
+	.root{
+		height: 600px;
+		width: 500px;
+		background-color: #0A528C;
+		padding: 5px;
+		border: 2px solid white;
+		border-radius: 10px;
+	}
+	.root .header{
+		height: 30px;
+	}
+	.root #comment{
+		width: 500px;
+		height: 410px;
+		resize: none;
+		margin-bottom: 5px;
+	}
+
+	.root .icoBox{
+		height: 50px;
+	}
+	
+	</style>
+</head>
+<body>
+<div class="root">
+	<form method="post" action="http://localhost:8080/api/posts">
+		<div id="commander" class="header">
+			{{commander}}
+		</div>
+		<div id="target" class="header">
+			{{!-- 1, 2, 3, 4, 5, 6관  --}}
+			<div id="from">{{from}}</div>
+			<div id="to">{{to}}</div>
+		</div>
+		<div id="date" class="header">
+			{{!-- 2021. 12. 23 --}}
+			{{date}}
+		</div>
+		<div id="constraint" class="header">
+			{{!-- 제한사항, 숙련, 반숙, 클경, 트라이 --}}
+			{{constraint}}
+		</div>
+		<div id="applicant" class="header">
+			<select name="applicantClass" id="applicantClass">
+				<option>
+					바드
+				</option>
+				<option>
+					홀리나이트
+				</option>
+				<option>
+					디스트로이어
+				</option>
+				<option>
+					워로드
+				</option>
+				<option>
+					배틀마스터
+				</option>
+				<option>
+					인파이터
+				</option>
+				<option>
+					기공사
+				</option>
+				<option>
+					창술사
+				</option>
+				<option>
+					스트라이커
+				</option>
+				<option>
+					데빌헌터
+				</option>
+				<option>
+					블래스터
+				</option>
+				<option>
+					호크아이
+				</option>
+				<option>
+					스카우터
+				</option>
+				<option>
+					건슬링어
+				</option>
+				<option>
+					아르카나
+				</option>
+				<option>
+					서머너
+				</option>
+				<option>
+					소서리스
+				</option>
+				<option>
+					데모닉
+				</option>
+				<option>
+					블레이드
+				</option>
+				<option>
+					리퍼
+				</option>
+			</select>
+			<input type="text" name="applicantId" id="applicantId" placeholder="닉네임">
+		</div>
+		
+			{{!-- 부가적인 설명 --}}
+		<textarea name="comment" id="comment">{{target.comment}}</textarea>
+		<div id="iconBox">
+			<input type="submit" value="등록">
+			<input type="button" id="cancel" value="취소">
+		</div>
+	</form>
+	
+
+</div>
+</body>
+
+
+<script>
+	
+</script>
+
+</html>

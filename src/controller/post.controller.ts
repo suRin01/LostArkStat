@@ -45,7 +45,6 @@ export class PostController {
 			const applicants: Applicant[] = (await this.applyServcie.getApplicants(postId)).data as Applicant[];
 			posts[idx].applicants = applicants;
 		}
-		// return posts;
 		return posts;
 	}
 

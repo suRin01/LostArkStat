@@ -209,7 +209,7 @@
 					}
 					let postHtml = `<div class="post">`
 									+`	<div class="">출발 시간</div>`
-									+`	<div class="time">2021.12.23 17:30</div>`
+									+`	<div class="time">${post.date}</div>`
 									+`	<div class="">도전 관문</div>`
 									+`	<div class="time">${option[targetGates[0]]} - ${option[targetGates[1]]}</div>`
 									+`	<div class="users">`
@@ -219,7 +219,7 @@
 								   +`	<div class="nickname">${applicant.applicantId}</div>`
 								   +`</div>`
 					})
-					postHtml	   +=`	</div><input type="button" value="지원하기"></div>`
+					postHtml	   +=`	</div><input type="button" value="지원하기" onclick="window.location.href='/apply?post_id=${post.post_idx}'"></div>`
 					const postElement = createElementFromHTML(postHtml);
 					document.querySelector("#"+post.commander).appendChild(postElement);
 				})

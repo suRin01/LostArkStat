@@ -10,10 +10,12 @@ import { RequestUtility } from "src/util/req.util";
 // import * as redis from "redis";
 import { createClient } from "redis";
 import { Request } from "express";
+import { PostService } from "src/service/post.service";
+import { PostDTO } from "src/dto/post.dto";
 
 @Controller("/")
 export class MainController {
-	constructor(private crawlingService: CrawlingService, private readonly redisCacheService: RedisCacheService) {}
+	constructor(private crawlingService: CrawlingService, private readonly redisCacheService: RedisCacheService, private readonly postService: PostService) {}
 
 	@Get()
 	@UseGuards(AuthGuard("jwt"))
@@ -34,21 +36,32 @@ export class MainController {
 		return this.crawlingService.getData(id);
 	}
 
-	@Get("/test")
-	@Render("reservation")
-	async test(): Promise<void> {
-		const client = createClient({
-				url: "redis://:silverlistic97!@203.232.193.178:9779",
-			});
-		client.on('error', (err) => console.log('Redis Client Error', err));
-
-		await client.connect();
-		const result = await client.get("bottom");
-
-		console.debug(result);
-		return;
-
+	@Get("/apply")
+	@UseGuards(AuthGuard("jwt"))
+	@Render("apply")
+	async apply(@Query("post_id") postIdx: string): Promise<PostDTO>{
+		console.debug(postIdx);
+		console.debug(await this.postService.getPost(postIdx));
+		const result = await this.postService.getPost(postIdx);
+		return result.data[0] as PostDTO;
+		
 	}
+
+	// @Get("/test")
+	// @Render("reservation")
+	// async test(): Promise<void> {
+	// 	const client = createClient({
+	// 			url: "redis://:silverlistic97!@203.232.193.178:9779",
+	// 		});
+	// 	client.on('error', (err) => console.log('Redis Client Error', err));
+
+	// 	await client.connect();
+	// 	const result = await client.get("bottom");
+
+	// 	console.debug(result);
+	// 	return;
+
+	// }
 
 	@Get("raids")
 	@Render("reservation")
