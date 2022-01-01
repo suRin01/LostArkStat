@@ -19,7 +19,9 @@ export class PageParser {
 	}
 
 	public getTier(itemString: string): string {
-		if (itemString.includes("유물")) {
+		if (itemString.includes("고대")) {
+			return "grade6";
+		} else if (itemString.includes("유물")) {
 			return "grade5";
 		} else if (itemString.includes("전설") || itemString === "12") {
 			return "grade4";

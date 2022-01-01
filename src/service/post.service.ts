@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { postQueryString } from "src/common/query";
-import { CreatePostDTO } from "src/dto/createPost.dto";
+import { PostDTO } from "src/dto/post.dto";
 import { ExecutionResult } from "src/dto/executionResult.dto";
 import { Mapper } from "../mapper/mapper";
 
@@ -12,14 +12,19 @@ export class PostService {
 		return await this.mapper.mapper(postQueryString.findOne, [idx]);
 	}
 
-	async getPosts(offset: number): Promise<ExecutionResult> {
-		return await this.mapper.mapper(postQueryString.findPosts, [offset]);
+	async getPosts(guildName: string): Promise<ExecutionResult> {
+		return await this.mapper.mapper(postQueryString.findPosts, [guildName]);
 	}
 
-	async createPost(post: CreatePostDTO): Promise<ExecutionResult> {
+	async createPost(post: PostDTO): Promise<ExecutionResult> {
 		return await this.mapper.mapper(postQueryString.createOne, [
-			post.user_id,
-			post.content,
+			post.user_idx,
+			post.commander,
+			post.target,
+			post.date,
+			post.constraint,
+			post.comment,
+			post.guildName
 		]);
 	}
 

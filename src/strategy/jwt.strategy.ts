@@ -9,7 +9,7 @@ import { RequestUtility } from "src/util/req.util";
 export class JwtStrategy extends PassportStrategy(Strategy) {
 	constructor() {
 		super({
-			jwtFromRequest: RequestUtility.fromAuthCookie(),
+			jwtFromRequest: RequestUtility.getAccessToken(),
 			ignoreExpiration: false,
 			secretOrKey: process.env.ACCESSJWTSECRET,
 		});

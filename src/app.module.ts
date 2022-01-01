@@ -4,9 +4,11 @@ import { GoogleAuthenticationModule } from "./modules/googleAuthentication.modul
 import { MainModule } from "./modules/main.module";
 import { UserModule } from "./modules/user.module";
 import "dotenv/config";
+import { PostModule } from "./modules/post.module";
+import { ApplyModule } from "./modules/apply.module";
 
 @Module({
-	imports: [UserModule, AuthModule, MainModule, GoogleAuthenticationModule,],
+	imports: [UserModule, AuthModule, MainModule, GoogleAuthenticationModule,PostModule, ApplyModule],
 	controllers: [],
 	providers: [],
 })

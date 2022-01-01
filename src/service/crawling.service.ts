@@ -17,13 +17,12 @@ export class CrawlingService {
 
 		await page.goto(urls.stoveProfileSearch + id);
 
-		const profileJson = await page.evaluate(() => {
+		const profileJson:Record<string, any> = await page.evaluate(() => {
 			return this["$"]["Profile"];
 		});
 		try{
-			const equip = profileJson["Equip"];
-			const engrave = profileJson["Engrave"];
-			// const pageParser: PageParser = new PageParser();
+			const equip:Record<string, any> = profileJson["Equip"];
+			const engrave:Record<string, any> = profileJson["Engrave"];
 
 			return {
 				activeEngrave: await this.pageParser.getInnerItemArray(page, selector.activeEngrave),
@@ -71,7 +70,7 @@ export class CrawlingService {
 				ringOne: this.pageParser.getItem(equip, await this.redisCacheService.get("ringOne")),
 				ringTwo: this.pageParser.getItem(equip, await this.redisCacheService.get("ringTwo")),
 				abilityStone: this.pageParser.getItem(equip, await this.redisCacheService.get("abilityStone")),
-				abilityStoneStat: this.pageParser.getStoneStat(equip, await this.redisCacheService.get("abilityStoneStat")),
+				abilityStoneStat: this.pageParser.getStoneStat(equip, await this.redisCacheService.get("abilityStone")),
 				bracelet: this.pageParser.getItem(equip, await this.redisCacheService.get("bracelet")),
 				engravement: {
 					first: await this.pageParser.getEngrave(engrave, "000"),
