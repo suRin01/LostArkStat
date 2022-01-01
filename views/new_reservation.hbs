@@ -1,0 +1,266 @@
+<html>
+<head>
+	<style>
+		
+	body{
+    	background-image: url("/images/vacation.jpg");
+    	background-size: cover;
+		color: #DEE8E9;
+		margin: 0px;
+		padding: 5px;
+		
+	    display: flex;
+	    justify-content: center;
+	    align-items: center;
+	}
+	.root{
+		height: 600px;
+		width: 500px;
+		background-color: #0A528C;
+		padding: 5px;
+		border: 2px solid white;
+		border-radius: 10px;
+	}
+	.root .header{
+		height: 30px;
+	}
+	.root #comment{
+		width: 500px;
+		height: 410px;
+		resize: none;
+		margin-bottom: 5px;
+	}
+
+	.root .icoBox{
+		height: 50px;
+	}
+	
+	</style>
+</head>
+<body>
+<div class="root">
+	<form method="post" action="http://localhost:8080/api/posts">
+		<div id="commander" class="header">
+		{{!-- 발탄 노말, 발탄 하드, 비아키스 노말, 비아키스 하드 등 --}}
+		<select id="commandSelect" name="commander">
+			<option value="">
+				>-----군단장을 선택해주세요-----<
+			</option>
+			<option value="1">
+				발탄 노말
+			</option>
+			<option value="2">
+				발탄 하드
+			</option>
+			<option value="3">
+				비아키스 노말
+			</option>
+			<option value="4">
+				비아키스 하드
+			</option>
+			<option value="5">
+				쿠크세이튼 리허설
+			</option>
+			<option value="6">
+				쿠크세이튼 노말
+			</option>
+			<option value="7">
+				아브렐슈드 데자뷰
+			</option>
+			<option value="8">
+				아브렐슈드 노말
+			</option>
+			<option value="9">
+				아브렐슈드 하드
+			</option>
+		</select>
+		</div>
+		<div id="target" class="header">
+			{{!-- 1, 2, 3, 4, 5, 6관  --}}
+			<select id="from" name="from">
+			</select>
+			<select id="to" name="to">
+			</select>
+		</div>
+		<div id="date" class="header">
+			{{!-- 2021. 12. 23 --}}
+			<input type="date" min="2018-01-01" id="raidDate" name="raidDate">
+			<input type="time" min="2018-01-01" id="raidTime" name="raidTime">
+		</div>
+		<div id="constraint" class="header">
+			{{!-- 제한사항, 숙련, 반숙, 클경, 트라이 --}}
+			<select id="constraintSelect" name="constraint">
+				<option value="0">
+					숙련
+				</option>
+				<option value="1">
+					반숙
+				</option>
+				<option value="2">
+					클경
+				</option>
+				<option value="3">
+					트라이
+				</option>
+			</select>
+		</div>
+		<div id="applicant" class="header">
+			<select name="applicantClass" id="applicantClass">
+				<option>
+					바드
+				</option>
+				<option>
+					홀리나이트
+				</option>
+				<option>
+					디스트로이어
+				</option>
+				<option>
+					워로드
+				</option>
+				<option>
+					배틀마스터
+				</option>
+				<option>
+					인파이터
+				</option>
+				<option>
+					기공사
+				</option>
+				<option>
+					창술사
+				</option>
+				<option>
+					스트라이커
+				</option>
+				<option>
+					데빌헌터
+				</option>
+				<option>
+					블래스터
+				</option>
+				<option>
+					호크아이
+				</option>
+				<option>
+					스카우터
+				</option>
+				<option>
+					건슬링어
+				</option>
+				<option>
+					아르카나
+				</option>
+				<option>
+					서머너
+				</option>
+				<option>
+					소서리스
+				</option>
+				<option>
+					데모닉
+				</option>
+				<option>
+					블레이드
+				</option>
+				<option>
+					리퍼
+				</option>
+			</select>
+			<input type="text" name="applicantId" id="applicantId" placeholder="닉네임">
+		</div>
+			{{!-- 부가적인 설명 --}}
+		<textarea name="comment" id="comment"></textarea>
+		<div id="iconBox">
+			<input type="submit" value="등록">
+			<input type="button" id="cancel" value="취소">
+		</div>
+	</form>
+	
+
+</div>
+</body>
+
+
+<script>
+	
+	const options = {
+		"baltan": ["1", "2"],
+		"biackiss": [ "1", "2", "3"],
+		"koukuSaton": [ "1", "2", "3"],
+		"abrelshudDejavu":["1-2", "3-4"],
+		"abrelshud": ["1-2", "3-4", "5-6"]
+	}
+	const today = new Date();
+	let dd = today.getDate();
+	let mm = today.getMonth() + 1;
+	const yyyy = today.getFullYear();
+	if (dd < 10) {
+	   dd = '0' + dd;
+	}
+	if (mm < 10) {
+	   mm = '0' + mm;
+	}
+
+	document.querySelector("#raidDate").setAttribute("min", yyyy + "-" + mm + "-" + dd)
+	
+	document.querySelector("#from").addEventListener("change", function(event){
+		document.querySelector("#to").selectedIndex = event.target.selectedIndex;
+	})
+	document.querySelector("#to").addEventListener("change", function(event){
+		const from = document.querySelector("#from").selectedIndex;
+		if(from>event.target.selectedIndex){
+			alert("시작 관문과 같거나 이후 관문을 선택해주세요!");
+			event.target.selectedIndex = from;
+		}
+	})
+	document.querySelector("#cancel").addEventListener("click", function(event){
+		window.location.href = "/raids";
+	})
+
+	document.querySelector("#commandSelect").addEventListener("change", function(event){
+		const from = document.querySelector("#from");
+		const to = document.querySelector("#to");
+
+		from.innerHTML = "";
+		to.innerHTML = "";
+		let option;
+		switch(event.target.value){
+			case "1":
+			case "2":
+				option = options.baltan;
+				break;
+			case "3":
+			case "4":
+				option = options.biackiss;
+				break;
+			case "5":
+			case "6":
+				option = options.koukuSaton;
+				break;
+			case "7":
+				option = options.abrelshudDejavu;
+				break;
+			case "8":
+			case "9":
+				option = options.abrelshud;
+				break;
+			default:
+				break;
+		}
+		createOption(from, option);
+		createOption(to, option);
+	})
+
+	function createOption(select, option){
+		for(let idx = 0, len = option.length; idx<len; idx++){
+			let selectOption = document.createElement("option");
+			selectOption.innerText = option[idx];
+			selectOption.value = idx;
+			
+			select.appendChild(selectOption);
+		}
+	}
+</script>
+
+</html>

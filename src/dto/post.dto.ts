@@ -1,39 +1,32 @@
-import {
-	IsArray,
-	IsDate,
-	IsNumber,
-	IsOptional,
-	IsString,
-} from "class-validator";
-import { LikeUser } from "./likeUser.dto";
+import { Optional } from "@nestjs/common";
+import { IsDate, IsDateString, IsNumber, IsString } from "class-validator";
+import { Applicant } from "src/model/applicant.model";
 
 export class PostDTO {
 	@IsNumber()
-	public readonly _id: number;
+	@Optional()
+	public readonly post_idx?: number;
 	@IsNumber()
-	public readonly user_id: number;
-	@IsString()
-	public readonly content: string;
+	public readonly user_idx: number;
 	@IsDate()
-	public readonly created_at: Date;
+	@Optional()
+	public readonly created_at?: Date;
 	@IsDate()
-	public readonly updated_at: Date;
+	@Optional()
+	public readonly updated_at?: Date;
 	@IsString()
-	public readonly username: string;
+	public readonly commander: string;
 	@IsString()
-	public readonly isDeleted: string;
+	public readonly target: string;
+	@IsDate()
+	public readonly date: Date;
 	@IsString()
-	public readonly profile_image: string;
+	public readonly constraint: string;
+	@IsString()
+	public readonly comment: string;
+	@IsString()
+	public readonly guildName: string;
 
-	@IsOptional()
-	@IsArray()
-	public Like?: LikeUser[];
-
-	@IsOptional()
-	@IsArray()
-	public Images?: string[];
-
-	@IsOptional()
-	@IsNumber()
-	public comments?: number;
+	@Optional()
+	public applicants?: Applicant[];
 }

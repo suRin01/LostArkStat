@@ -10,5 +10,10 @@ export const StatusCode = {
 	// OK 200 ~ 299
 	OK: 200,
 	OkNoReturnData: 201,
+
+	// Redirect
+	Redirect: 302,
 	
+	// Internal Error 500
+	InternalError: 500,
 }

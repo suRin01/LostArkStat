@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { Mapper } from "../mapper/mapper";
 import { imageQueryString } from "../common/query";
 import { ExecutionResult } from "src/dto/executionResult.dto";
+import { StatusCode } from "src/common/statusCode";
 
 @Injectable()
 export class ImageService {
@@ -18,12 +19,12 @@ export class ImageService {
 			});
 
 			return {
-				status: 200,
+				status: StatusCode.OK,
 				data: [],
 			};
 		} catch {
 			return {
-				status: 500,
+				status: StatusCode.InternalError,
 				data: [],
 			};
 		}

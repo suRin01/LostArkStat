@@ -3,7 +3,7 @@ import { IsBoolean, IsDate, IsString } from "class-validator";
 
 export class UserDTO {
 	@IsString()
-	readonly idx: number;
+	readonly user_idx: number;
 	@IsString()
 	readonly name: string;
 	@IsString()
@@ -25,9 +25,7 @@ export class UserDTO {
 	readonly salt: string;
 	@IsBoolean()
 	readonly is_deleted: boolean;
+	@IsString()
+	readonly guildName: string;
 }
 
-export class executionResult {
-	readonly status: number;
-	readonly data: Array<UserDTO>;
-}

@@ -2,16 +2,17 @@ import mysql from "mysql2/promise";
 import "dotenv/config";
 
 import { database } from "../util/db";
-import { UserDTO, executionResult } from "../dto/user.dto";
+import { UserDTO } from "../dto/user.dto";
 import { WinstonLogger } from "../util/logger";
 import { StatusCode } from "src/common/statusCode";
+import { ExecutionResult } from "src/dto/executionResult.dto";
 
 export class Mapper {
 	constructor(private db: database) {
 		this.db = new database();
 		WinstonLogger.getInstance().info("Database connection created");
 	}
-	public mapper = async (query: string, data: (string|number)[] = []): Promise<executionResult> => {
+	public mapper = async (query: string, data: (string|number|Date)[] = []): Promise<ExecutionResult> => {
 		//Get database Connection
 		const conn: mysql.PoolConnection | undefined = await this.db.getConnection();
 		if (conn === undefined) {
@@ -45,7 +46,7 @@ export class Mapper {
 
 		const resultArr: Array<UserDTO> = [];
 		
-		if (Array.isArray(result)) {
+		if (Array.isArray(result) && result[1] !== undefined) {
 			for (
 				let idx = 0, len = (result[0] as any[]).length;
 				idx < len;
@@ -61,10 +62,10 @@ export class Mapper {
 				resultArr.push(putValue);
 			}
 			WinstonLogger.getInstance().info("Query execution success");
-			return { status: StatusCode.OK, data: resultArr };
-		} else if (result !== undefined) {
+			return { status: StatusCode.OK, data: resultArr};
+		} else if (result[1] === undefined) {
 			WinstonLogger.getInstance().info("Query execution success with no returning data");
-			return { status: StatusCode.OkNoReturnData, data: [] };
+			return { status: StatusCode.OkNoReturnData, data: [] , affectedRow: result[0].insertId };
 		} else {
 			WinstonLogger.getInstance().error("Query execution failed");
 			return { status: StatusCode.DbExecutionFail , data: [] };
