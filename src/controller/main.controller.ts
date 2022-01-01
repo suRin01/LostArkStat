@@ -5,13 +5,12 @@ import { LoginAuthFilter } from "src/filter/LoginAuth.Filter";
 import { CharacterProfile } from "src/model/character.profile.model";
 import { RedisCacheService } from "src/service/cache.service";
 import { CrawlingService } from "src/service/crawling.service";
-import { WinstonLogger } from "src/util/logger";
 import { RequestUtility } from "src/util/req.util";
-// import * as redis from "redis";
-import { createClient } from "redis";
-import { Request } from "express";
+import { Request, Response } from "express";
 import { PostService } from "src/service/post.service";
 import { PostDTO } from "src/dto/post.dto";
+import JwtToken from "src/model/jwt.token.model";
+import jwtPayload from "src/model/jwt.payload.model";
 
 @Controller("/")
 export class MainController {
@@ -20,9 +19,9 @@ export class MainController {
 	@Get()
 	@UseGuards(AuthGuard("jwt"))
 	@UseFilters(LoginAuthFilter)
-	loginPage(@Res() res, @Req() req):void {
-		const jwtTokenData:Record<string, string> = RequestUtility.fromAuthCookie()(req);
-		const jwtParsedData: Record<string, string> = RequestUtility.parseJwt(jwtTokenData.Authorization)
+	loginPage(@Res() res:Response, @Req() req:Request):void {
+		const jwtTokenData: JwtToken = RequestUtility.fromAuthCookie()(req);
+		const jwtParsedData: jwtPayload = RequestUtility.parseJwt(jwtTokenData.Authorization)
 		console.debug(jwtParsedData)
 		res.render("index", {isLogin: true, name: jwtParsedData.username})
 
@@ -47,29 +46,14 @@ export class MainController {
 		
 	}
 
-	// @Get("/test")
-	// @Render("reservation")
-	// async test(): Promise<void> {
-	// 	const client = createClient({
-	// 			url: "redis://:silverlistic97!@203.232.193.178:9779",
-	// 		});
-	// 	client.on('error', (err) => console.log('Redis Client Error', err));
-
-	// 	await client.connect();
-	// 	const result = await client.get("bottom");
-
-	// 	console.debug(result);
-	// 	return;
-
-	// }
 
 	@Get("raids")
-	@Render("reservation")
+	@Render("raids")
 	async raids(
 		@Req() req: Request): Promise<Record<string, string>>{
 			
-		const jwtTokenData: Record<string, string> = RequestUtility.fromAuthCookie()(req);
-		const jwtParsedData: Record<string, string> = RequestUtility.parseJwt(jwtTokenData.Authorization);
+		const jwtTokenData: JwtToken = RequestUtility.fromAuthCookie()(req);
+		const jwtParsedData: jwtPayload = RequestUtility.parseJwt(jwtTokenData.Authorization);
 		
 		return {mainCharacter: jwtParsedData.mainCharacter};
 	}
@@ -79,4 +63,5 @@ export class MainController {
 	async newReservation(): Promise<void>{
 		return;
 	}
+
 }

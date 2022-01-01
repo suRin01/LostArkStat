@@ -26,17 +26,6 @@ export class postQueryString {
 		"select posts.*, users.profileImage, users.mainCharacter from LostArkStat.Posts as posts left join LostArkStat.Users as users ON users.user_idx = posts.user_idx where posts.is_deleted = 0 && posts.date > CURDATE() && posts.guildName = ? order by posts.post_idx DESC;"
 }
 
-export class commentQueryString {
-	public static readonly findAll =
-		"select A.*, B.username, B.profile_image from LostArkStat.Comments as A left join LostArkStat.Users as B using(user_idx) where A.post_idx = ? && A.is_deleted = 0 order by A.created_at;"; // 한 개의 포스터에 모든 댓글
-	public static readonly updateOne =
-		"UPDATE `LostArkStat`.`Comments` SET `user_idx` = ?, `post_idx` = ?, comment_id = ?, `comment_text` = ? WHERE (`comment_idx` = ?);";
-	public static readonly createOne =
-		"INSERT INTO `LostArkStat`.`Comments` (`user_idx`, `post_idx`,`parent_idx`, `content`) VALUES (?, ?, ?, ?);";
-	public static readonly deleteOne =
-		"UPDATE `LostArkStat`.`Comments` SET `is_deleted` = 1 WHERE ( comment_idx = ? and user_idx = ? );";
-}
-
 export class imageQueryString {
 	public static readonly findAll =
 		"select * from `LostArkStat`.`Images` where post_idx = ?;";

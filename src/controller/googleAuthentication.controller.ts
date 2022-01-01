@@ -36,10 +36,10 @@ export class GoogleAuthenticationController {
 
 		const tokens: JwtToken = this.authService.getAccessToken({ username: userProfile.email, sub: userProfile.id, idx: 10, mainCharacter: (findUser.data[0] as UserDTO).mainCharacter, guildName: (findUser.data[0] as UserDTO).guildName});
 
-		res.cookie("Authorization", tokens.access_token, {
+		res.cookie("Authorization", tokens.Authorization, {
 			httpOnly: true,
 		});
-		res.cookie("Refresh", tokens.refresh_token, {
+		res.cookie("Refresh", tokens.Refresh, {
 			httpOnly: true,
 		});
 

@@ -5,12 +5,9 @@ import {
 	Get,
 	Param,
 	Post,
-	Query,
 	Redirect,
 	Req,
-	UploadedFiles,
 	UseGuards,
-	UseInterceptors,
 } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
 import { ExecutionResult } from "src/dto/executionResult.dto";
@@ -22,6 +19,7 @@ import jwtPayload from "src/model/jwt.payload.model";
 import { ApplyService } from "src/service/apply.service";
 import { PostDTO } from "src/dto/post.dto";
 import { Applicant } from "src/model/applicant.model";
+import JwtToken from "src/model/jwt.token.model";
 
 @Controller("api/posts")
 export class PostController {
@@ -34,8 +32,8 @@ export class PostController {
 	@Get("/")
 	async getPosts(@Req() req: Request): Promise<PostDTO[]> {
 
-		const jwtTokenData: Record<string, string> = RequestUtility.fromAuthCookie()(req);
-		const jwtParsedData: Record<string, string> = RequestUtility.parseJwt(jwtTokenData.Authorization);
+		const jwtTokenData: JwtToken = RequestUtility.fromAuthCookie()(req);
+		const jwtParsedData: jwtPayload = RequestUtility.parseJwt(jwtTokenData.Authorization);
 		
 
 		let posts: PostDTO[] = (await this.postService.getPosts(jwtParsedData.guildName)).data as PostDTO[];
@@ -62,11 +60,8 @@ export class PostController {
 		@Body() post: PostData,
 		@Req() req: Request,
 	): Promise<void> {
-
-		console.debug(post);
-
-		const jwtTokenData: Record<string, string> = RequestUtility.fromAuthCookie()(req);
-		const jwtParsedData: Record<string, string> = RequestUtility.parseJwt(jwtTokenData.Authorization);
+		const jwtTokenData: JwtToken = RequestUtility.fromAuthCookie()(req);
+		const jwtParsedData: jwtPayload = RequestUtility.parseJwt(jwtTokenData.Authorization);
 		
 		const createPostResult = await this.postService.createPost({
 			user_idx: Number(jwtParsedData.idx),
@@ -89,7 +84,8 @@ export class PostController {
 		@Param("idx") idx: string,
 		@Req() req,
 	): Promise<ExecutionResult> {
-		const jwtTokenData: Record<string, string> = RequestUtility.fromAuthCookie()(req);
+		const jwtToken: JwtToken = RequestUtility.fromAuthCookie()(req);
+		const jwtTokenData: jwtPayload = RequestUtility.parseJwt(jwtToken.Authorization);
 
 		console.debug(jwtTokenData, idx);
 

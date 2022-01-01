@@ -29,11 +29,11 @@ export class AuthService {
 
 	getAccessToken(user: jwtPayload): JwtToken {
 		return {
-			access_token: this.jwtService.sign(user, {
+			Authorization: this.jwtService.sign(user, {
 				secret: process.env.ACCESSJWTSECRET,
 				expiresIn: "1d",
 			}),
-			refresh_token: this.jwtService.sign(user, {
+			Refresh: this.jwtService.sign(user, {
 				secret: process.env.REFRESHJWTSECRET,
 				expiresIn: "7d",
 			}),

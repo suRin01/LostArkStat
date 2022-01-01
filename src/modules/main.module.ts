@@ -2,7 +2,6 @@ import { Module } from "@nestjs/common";
 import { PuppeteerModule } from "nest-puppeteer";
 import { MainController } from "src/controller/main.controller";
 import { CrawlingService } from "src/service/crawling.service";
-import { PostService } from "src/service/post.service";
 import { PageParser } from "src/util/pageParser";
 import { PostModule } from "./post.module";
 import { RedisCacheModule } from "./redis.module";

@@ -46,31 +46,31 @@
 			<option value="">
 				>-----군단장을 선택해주세요-----<
 			</option>
-			<option value="baltanNormal">
+			<option value="1">
 				발탄 노말
 			</option>
-			<option value="baltanHard">
+			<option value="2">
 				발탄 하드
 			</option>
-			<option value="biackissNormal">
+			<option value="3">
 				비아키스 노말
 			</option>
-			<option value="biackissHard">
+			<option value="4">
 				비아키스 하드
 			</option>
-			<option value="koukuSatonRehearsal">
+			<option value="5">
 				쿠크세이튼 리허설
 			</option>
-			<option value="koukuSatonNormal">
+			<option value="6">
 				쿠크세이튼 노말
 			</option>
-			<option value="abrelshudDejavu">
+			<option value="7">
 				아브렐슈드 데자뷰
 			</option>
-			<option value="abrelshudNormal">
+			<option value="8">
 				아브렐슈드 노말
 			</option>
-			<option value="abrelshudHard">
+			<option value="9">
 				아브렐슈드 하드
 			</option>
 		</select>
@@ -192,8 +192,8 @@
 		"abrelshud": ["1-2", "3-4", "5-6"]
 	}
 	const today = new Date();
-	const dd = today.getDate();
-	const mm = today.getMonth() + 1;
+	let dd = today.getDate();
+	let mm = today.getMonth() + 1;
 	const yyyy = today.getFullYear();
 	if (dd < 10) {
 	   dd = '0' + dd;
@@ -226,23 +226,23 @@
 		to.innerHTML = "";
 		let option;
 		switch(event.target.value){
-			case "baltanNormal":
-			case "baltanHard":
+			case "1":
+			case "2":
 				option = options.baltan;
 				break;
-			case "biackissHard":
-			case "biackissNormal":
+			case "3":
+			case "4":
 				option = options.biackiss;
 				break;
-			case "koukuSatonRehearsal":
-			case "koukuSatonNormal":
+			case "5":
+			case "6":
 				option = options.koukuSaton;
 				break;
-			case "abrelshudDejavu":
+			case "7":
 				option = options.abrelshudDejavu;
 				break;
-			case "abrelshudHard":
-			case "abrelshudNormal":
+			case "8":
+			case "9":
 				option = options.abrelshud;
 				break;
 			default:

@@ -1,3 +1,6 @@
+import jwtPayload from "src/model/jwt.payload.model";
+import JwtToken from "src/model/jwt.token.model";
+
 export class RequestUtility {
 	public static getAccessToken = () =>{
 		return (request): string =>{
@@ -5,19 +8,22 @@ export class RequestUtility {
 		}
 	}
 	public static fromAuthCookie = () => {
-		return (request): Record<string, string> => {
+		return (request): JwtToken => {
 			if (request && request.headers.cookie) {
-				const cookies:Record<string, string> = request.headers.cookie.split("; ").reduce((prev, current) => {
+				const cookies:JwtToken = request.headers.cookie.split("; ").reduce((prev, current) => {
 					const [name, ...value]: string = current.split("=");
 					prev[name] = value.join("=");
 					return prev;
 				}, {});
 				return cookies;
 			}
-			return {};
+			return {
+				Authorization: null,
+				Refresh: null
+			};
 		};
 	};
-	public static parseJwt (token:string):Record<string, string> {
+	public static parseJwt (token:string):jwtPayload {
 		var base64Url:string = token.split('.')[1];
 		var base64:string = base64Url.replace(/-/g, '+').replace(/_/g, '/');
 		var jsonPayload:string = decodeURIComponent(Buffer.from(base64, "base64").toString("binary").split('').map(function(character) {

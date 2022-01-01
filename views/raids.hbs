@@ -102,55 +102,55 @@
 
 	</div>
 	<div class="timeTable">
-		<div class="row" id = "baltanNormal">
+		<div class="row" id = "commander1">
 			<div class="title"><h3>발탄_노말</h3></div>
 			<div class="post">
 				등록된 공격대가 없습니다.
 			</div>
 		</div>
-		<div class="row" id = "baltanHard">
+		<div class="row" id = "commander2">
 			<div class="title"><h3>발탄_하드</h3></div>
 			<div class="post">
 				등록된 공격대가 없습니다.
 			</div>
 		</div>
-		<div class="row" id = "biackissNormal">
+		<div class="row" id = "commander3">
 			<div class="title"><h3>비아키스_노말</h3></div>
 			<div class="post">
 				등록된 공격대가 없습니다.
 			</div>
 		</div>
-		<div class="row" id = "biackissHard">
+		<div class="row" id = "commander4">
 			<div class="title"><h3>비아키스_하드</h3></div>
 			<div class="post">
 				등록된 공격대가 없습니다.
 			</div>
 		</div>
-		<div class="row" id = "koukuSatonRehearsal">
+		<div class="row" id = "commander5">
 			<div class="title"><h3>쿠크세이튼 리허설</h3></div>
 			<div class="post">
 				등록된 공격대가 없습니다.
 			</div>
 		</div>
-		<div class="row" id = "koukuSatonNormal">
+		<div class="row" id = "commander6">
 			<div class="title"><h3>쿠크세이튼</h3></div>
 			<div class="post">
 				등록된 공격대가 없습니다.
 			</div>
 		</div>
-		<div class="row" id = "abrelshudDejavu">
+		<div class="row" id = "commander7">
 			<div class="title"><h3>아브렐슈드_데자뷰</h3></div>
 			<div class="post">
 				등록된 공격대가 없습니다.
 			</div>
 		</div>
-		<div class="row" id = "abrelshudNormal">
+		<div class="row" id = "commander8">
 			<div class="title"><h3>아브렐슈드_노말</h3></div>
 			<div class="post">
 				등록된 공격대가 없습니다.
 			</div>
 		</div>
-		<div class="row" id = "abrelshudHard">
+		<div class="row" id = "commander9">
 			<div class="title"><h3>아브렐슈드_하드</h3></div>
 			<div class="post">
 				등록된 공격대가 없습니다.
@@ -161,6 +161,35 @@
 	
 </div>
 <script>
+	Date.prototype.format = function(f) {
+	    if (!this.valueOf()) return " ";
+	
+	    var weekName = ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"];
+	    var d = this;
+	
+	    return f.replace(/(yyyy|yy|MM|dd|E|hh|mm|ss|a\/p)/gi, function($1) {
+	        switch ($1) {
+	            case "yyyy": return d.getFullYear();
+	            case "yy": return (d.getFullYear() % 1000).zf(2);
+	            case "MM": return (d.getMonth() + 1).zf(2);
+	            case "dd": return d.getDate().zf(2);
+	            case "E": return weekName[d.getDay()];
+	            case "HH": return d.getHours().zf(2);
+	            case "hh": return ((h = d.getHours() % 12) ? h : 12).zf(2);
+	            case "mm": return d.getMinutes().zf(2);
+	            case "ss": return d.getSeconds().zf(2);
+	            case "a/p": return d.getHours() < 12 ? "오전" : "오후";
+	            default: return $1;
+	        }
+	    });
+	};
+	
+	String.prototype.string = function(len){var s = '', i = 0; while (i++ < len) { s += this; } return s;};
+	String.prototype.zf = function(len){return "0".string(len - this.length) + this;};
+	Number.prototype.zf = function(len){return this.toString().zf(len);};
+
+
+	
 	const connectedDate = new Date();
 	const options = {
 		"baltan": ["1", "2"],
@@ -185,23 +214,23 @@
 					const targetGates = post.target.split(",");
 					let option;
 					switch(post.commander){
-						case "baltanNormal":
-						case "baltanHard":
+						case "1":
+						case "2":
 							option = options.baltan;
 							break;
-						case "biackissHard":
-						case "biackissNormal":
+						case "3":
+						case "4":
 							option = options.biackiss;
 							break;
-						case "koukuSatonRehearsal":
-						case "koukuSatonNormal":
+						case "5":
+						case "6":
 							option = options.koukuSaton;
 							break;
-						case "abrelshudDejavu":
+						case "7":
 							option = options.abrelshudDejavu;
 							break;
-						case "abrelshudHard":
-						case "abrelshudNormal":
+						case "8":
+						case "9":
 							option = options.abrelshud;
 							break;
 						default:
@@ -209,7 +238,7 @@
 					}
 					let postHtml = `<div class="post">`
 									+`	<div class="">출발 시간</div>`
-									+`	<div class="time">${post.date}</div>`
+									+`	<div class="time">${new Date(post.date).format("yyyy-MM-dd E a/p hh:mm")}</div>`
 									+`	<div class="">도전 관문</div>`
 									+`	<div class="time">${option[targetGates[0]]} - ${option[targetGates[1]]}</div>`
 									+`	<div class="users">`
@@ -221,7 +250,7 @@
 					})
 					postHtml	   +=`	</div><input type="button" value="지원하기" onclick="window.location.href='/apply?post_id=${post.post_idx}'"></div>`
 					const postElement = createElementFromHTML(postHtml);
-					document.querySelector("#"+post.commander).appendChild(postElement);
+					document.querySelector("#commander"+post.commander).appendChild(postElement);
 				})
 
 			}else{
