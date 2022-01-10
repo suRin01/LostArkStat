@@ -15,7 +15,7 @@
 					어서오세요, {{ name }}님!
 				</h3>
 				<li class="gnb-list-item gnb-list-item__login">
-					<a class="gnb-btn-login" href="/auth/logout">
+					<a class="gnb-btn-login" href="/api/auth/logout">
 						로그아웃
 					</a>
 				</li>
@@ -28,8 +28,15 @@
 		{{else}}
 		<div style="height: auto;">
 			<li class="gnb-list-item gnb-list-item__login">
-				<a class="gnb-btn-login" href="/auth">
+				<a class="gnb-btn-login" href="/api/auth">
 					로그인
+				</a>
+			</li>
+		</div>
+		<div style="height: auto;">
+			<li class="gnb-list-item gnb-list-item__login">
+				<a class="gnb-btn-login" href="/register">
+					회원가입
 				</a>
 			</li>
 		</div>

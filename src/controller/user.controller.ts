@@ -5,7 +5,7 @@ import { AuthGuard } from "@nestjs/passport";
 import { LoginAuthFilter } from "src/filter/LoginAuth.Filter";
 import { ExecutionResult } from "src/dto/executionResult.dto";
 
-@Controller("user")
+@Controller("api/user")
 export class UserController {
 	constructor(private userService: UserServcie) {}
 
@@ -15,6 +15,8 @@ export class UserController {
 	async getUser(@Param("id") id: string): Promise<ExecutionResult> {
 		return await this.userService.getUser(id);
 	}
+
+
 
 	@Post()
 	async createUser(@Body() user: createUserDTO): Promise<ExecutionResult> {

@@ -12,12 +12,12 @@ export class LoginAuthFilter implements ExceptionFilter {
 		const status: number = exception.getStatus();
 
 	
-		if (request.url === "/auth") {
+		if (request.url === "/api/auth") {
 			response.render("login");
 		} else if(request.url === "/") {
 			response.render("index", {"isLogin":false})
 		} else {
-			response.status(status).redirect("/auth");
+			response.status(status).redirect("/api/auth");
 		}
 	}
 }
