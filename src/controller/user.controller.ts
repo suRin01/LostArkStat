@@ -1,4 +1,4 @@
-import { Get, Controller, Post, Body, Param, Patch, UseGuards, UseFilters } from "@nestjs/common";
+import { Get, Controller, Post, Body, Param, Patch, UseGuards, UseFilters, Redirect } from "@nestjs/common";
 import { UserServcie } from "../service/user.service";
 import { createUserDTO } from "../dto/createUser.dto";
 import { AuthGuard } from "@nestjs/passport";
@@ -18,6 +18,7 @@ export class UserController {
 
 
 
+	// @Redirect("/")
 	@Post()
 	async createUser(@Body() user: createUserDTO): Promise<ExecutionResult> {
 		return await this.userService.createUser(user);

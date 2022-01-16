@@ -1,14 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import { createClient } from "redis";
+import "dotenv/config";
+
 @Injectable()
 export class RedisCacheService {
   private client: Record<string, any>
+  private redisUrl = process.env.REDIS;
   constructor() {
     this.client= createClient({
-      url: "redis://:silverlistic97!@203.232.193.178:9779",
-    })
+      url: this.redisUrl
+    });
     this.client.on('error', (err) => console.log('Redis Client Error', err));
     this.client.connect();
+    console.debug(process.env.REDIS)
   }
 
   async get(key:string):Promise<string> {

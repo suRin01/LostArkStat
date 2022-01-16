@@ -11,6 +11,8 @@ export class UserDTO {
 	@IsString()
 	readonly password: string;
 	@IsString()
+	readonly email: string;
+	@IsString()
 	readonly phoneNumber: string;
 	@IsDate()
 	readonly birthDate: Date;
@@ -20,7 +22,7 @@ export class UserDTO {
 	@Optional()
 	readonly mainCharacter: string;
 	@IsDate()
-	readonly timestamp: Date;
+	readonly createdAt: Date;
 	@IsString()
 	readonly salt: string;
 	@IsBoolean()

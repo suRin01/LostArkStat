@@ -22,4 +22,6 @@ export class createUserDTO {
 	readonly gender: string;
 	@IsString()
 	readonly mainCharacter: string;
+	@IsString()
+	readonly guildName: string;
 }

@@ -47,31 +47,31 @@
 	<form method="post" action="http://localhost:8080/api/user">
 		<div class="header">
 			<p>이름</p>
-			<input type="text" name="name">
+			<input type="text" name="name" required>
 		</div>
 		<div class="header">
 			<P>아이디</P>
-			<input type="text" name="id">
+			<input type="text" name="id" required>
 		</div>
 		<div class="header">
 			<p>비밀번호</p>
-			<input type="password" name="password" id="password">
+			<input type="password" name="password" id="password" required>
 		</div>
 		<div class="header">
 			<p>비밀번호 확인</p>
-			<input type="password" name="passwordConfirm" id="passwordConfirm"> X
+			<input type="password" id="passwordConfirm" > X
 		</div>
 		<div class="header">
 			<p>이메일</p>
-			<input type="email" name="email">
+			<input type="email" name="email" required>
 		</div>
 		<div class="header">
 			<p>전화번호</p>
-			<input type="text" name="phoneNumber">
+			<input type="text" name="phoneNumber" required>
 		</div>
 		<div class="header">
 			<p>생년월일</p>
-			<input type="text" name="birthDate">
+			<input type="text" name="birthDate" required>
 		</div>
 		<div class="header">
 			<p>성별</p>
@@ -81,11 +81,11 @@
 		</div>
 		<div class="header">
 			<p>길드명</p>
-			<input type="text" name="guildName">
+			<input type="text" name="guildName" required>
 		</div>
 		<div class="header">
 			<p>메인 케릭터명</p>
-			<input type="text" name="mainChaaracter">
+			<input type="text" name="mainCharacter" required>
 		</div>
 		<div id="iconBox">
 			<input type="submit" value="회원가입">
