@@ -3,7 +3,6 @@ import { AuthGuard } from "@nestjs/passport";
 import { CharacterSearchFilter } from "src/filter/character.search.filter";
 import { LoginAuthFilter } from "src/filter/LoginAuth.Filter";
 import { CharacterProfile } from "src/model/character.profile.model";
-import { RedisCacheService } from "src/service/cache.service";
 import { CrawlingService } from "src/service/crawling.service";
 import { RequestUtility } from "src/util/req.util";
 import { Request, Response } from "express";
@@ -14,7 +13,7 @@ import jwtPayload from "src/model/jwt.payload.model";
 
 @Controller("/")
 export class MainController {
-	constructor(private crawlingService: CrawlingService, private readonly redisCacheService: RedisCacheService, private readonly postService: PostService) {}
+	constructor(private crawlingService: CrawlingService, private readonly postService: PostService) {}
 
 	@Get()
 	@UseGuards(AuthGuard("jwt"))
@@ -35,6 +34,12 @@ export class MainController {
 		return this.crawlingService.getData(id);
 	}
 
+	@Get("/register")
+	@Render("register")
+	createUserPage(): void {
+		// return await this.userService.createUser(user);
+	}
+
 	@Get("/apply")
 	@UseGuards(AuthGuard("jwt"))
 	@Render("apply")
@@ -47,7 +52,7 @@ export class MainController {
 	}
 
 
-	@Get("raids")
+	@Get("/raids")
 	@Render("raids")
 	async raids(
 		@Req() req: Request): Promise<Record<string, string>>{
@@ -58,7 +63,7 @@ export class MainController {
 		return {mainCharacter: jwtParsedData.mainCharacter};
 	}
 
-	@Get("reservation")
+	@Get("/reservation")
 	@Render("new_reservation")
 	async newReservation(): Promise<void>{
 		return;

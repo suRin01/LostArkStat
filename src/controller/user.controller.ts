@@ -1,11 +1,11 @@
-import { Get, Controller, Post, Body, Param, Patch, UseGuards, UseFilters } from "@nestjs/common";
+import { Get, Controller, Post, Body, Param, Patch, UseGuards, UseFilters, Redirect } from "@nestjs/common";
 import { UserServcie } from "../service/user.service";
 import { createUserDTO } from "../dto/createUser.dto";
 import { AuthGuard } from "@nestjs/passport";
 import { LoginAuthFilter } from "src/filter/LoginAuth.Filter";
 import { ExecutionResult } from "src/dto/executionResult.dto";
 
-@Controller("user")
+@Controller("api/user")
 export class UserController {
 	constructor(private userService: UserServcie) {}
 
@@ -16,6 +16,9 @@ export class UserController {
 		return await this.userService.getUser(id);
 	}
 
+
+
+	// @Redirect("/")
 	@Post()
 	async createUser(@Body() user: createUserDTO): Promise<ExecutionResult> {
 		return await this.userService.createUser(user);

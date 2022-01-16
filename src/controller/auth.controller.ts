@@ -8,7 +8,7 @@ import { LoginAuthFilter } from "src/filter/LoginAuth.Filter";
 import JwtToken from "src/model/jwt.token.model";
 import { AuthService } from "../service/auth.service";
 
-@Controller("auth")
+@Controller("api/auth")
 export class AuthController {
 	constructor(private authService: AuthService) {}
 

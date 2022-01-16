@@ -1,0 +1,108 @@
+<html>
+	<head>
+	<style>
+	body{
+    	background-image: url("/images/vacation.jpg");
+    	background-size: cover;
+		color: #DEE8E9;
+		margin: 0px;
+		padding: 5px;
+		
+	    display: flex;
+	    justify-content: center;
+	    align-items: center;
+	}
+	.root{
+		height: 650px;
+		width: 500px;
+		background-color: #0A528C;
+		padding: 5px;
+		border: 2px solid white;
+		border-radius: 10px;
+	}
+	.root .header{
+		height: 60px;
+	}
+	.header p{
+		padding: 0px;
+		margin: 0px 0px 10px 10px;
+	}
+	.root #comment{
+		width: 500px;
+		height: 410px;
+		resize: none;
+		margin-bottom: 5px;
+	}
+
+	.root .icoBox{
+		height: 50px;
+	}
+	
+	</style>
+</head>
+<body>
+<div class="root">
+
+
+	<form method="post" action="http://localhost:8080/api/user">
+		<div class="header">
+			<p>이름</p>
+			<input type="text" name="name" required>
+		</div>
+		<div class="header">
+			<P>아이디</P>
+			<input type="text" name="id" required>
+		</div>
+		<div class="header">
+			<p>비밀번호</p>
+			<input type="password" name="password" id="password" required>
+		</div>
+		<div class="header">
+			<p>비밀번호 확인</p>
+			<input type="password" id="passwordConfirm" > X
+		</div>
+		<div class="header">
+			<p>이메일</p>
+			<input type="email" name="email" required>
+		</div>
+		<div class="header">
+			<p>전화번호</p>
+			<input type="text" name="phoneNumber" required>
+		</div>
+		<div class="header">
+			<p>생년월일</p>
+			<input type="text" name="birthDate" required>
+		</div>
+		<div class="header">
+			<p>성별</p>
+			<input type="radio" name="gender" value="M">남성
+			<input type="radio" name="gender" value="F">여성
+			<input type="radio" name="gender" value="U">선택하지 않음
+		</div>
+		<div class="header">
+			<p>길드명</p>
+			<input type="text" name="guildName" required>
+		</div>
+		<div class="header">
+			<p>메인 케릭터명</p>
+			<input type="text" name="mainCharacter" required>
+		</div>
+		<div id="iconBox">
+			<input type="submit" value="회원가입">
+		</div>
+		
+	</form>
+	
+
+</div>
+</body>
+<script>
+	const passwordField = document.querySelector("#password");
+	const passwordConfirmField = document.querySelector("#passwordConfirm");
+
+	passwordConfirmField.addEventListener("input", function(event){
+		console.log(event.target.value)
+
+	})
+</script>
+</html>

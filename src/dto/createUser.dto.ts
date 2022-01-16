@@ -1,3 +1,4 @@
+import { Optional } from "@nestjs/common";
 import { Type } from "class-transformer";
 import { IsDate, IsEmail, IsString } from "class-validator";
 
@@ -11,6 +12,7 @@ export class createUserDTO {
 	@IsString()
 	readonly phoneNumber: string;
 	@IsEmail()
+	@Optional()
 	readonly email: string;
 
 	@IsDate()
@@ -20,4 +22,6 @@ export class createUserDTO {
 	readonly gender: string;
 	@IsString()
 	readonly mainCharacter: string;
+	@IsString()
+	readonly guildName: string;
 }
