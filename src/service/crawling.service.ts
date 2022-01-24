@@ -1,12 +1,12 @@
 import { Browser } from "puppeteer";
 import { Injectable, InternalServerErrorException } from "@nestjs/common";
 import { InjectBrowser } from "nest-puppeteer";
-import { selector } from "src/common/querySelector";
+import { selector } from "../common/querySelector";
 import { Page } from "puppeteer";
-import { CharacterProfile } from "src/model/character.profile.model";
-import { PageParser } from "src/util/pageParser";
-import { urls } from "src/common/url";
-import { RedisCacheService } from "src/service/cache.service";
+import { CharacterProfile } from "../model/character.profile.model";
+import { PageParser } from "../util/pageParser";
+import { urls } from "../common/url";
+import { RedisCacheService } from "../service/cache.service";
 
 @Injectable()
 export class CrawlingService {

@@ -7,7 +7,6 @@ import { GaxiosResponse } from "gaxios";
 
 @Injectable()
 export class GoogleAuthenticationService {
-	oauthClient: Auth.OAuth2Client;
 
 	async getAccessToken(token: string): Promise<OAuth2Client> {
 		const clientID: string = process.env.GOOGLEOAUTHID;

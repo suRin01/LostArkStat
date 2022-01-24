@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
-import { postQueryString } from "src/common/query";
-import { PostDTO } from "src/dto/post.dto";
-import { ExecutionResult } from "src/dto/executionResult.dto";
+import { postQueryString } from "../common/query";
+import { PostDTO } from "../dto/post.dto";
+import { ExecutionResult } from "../dto/executionResult.dto";
 import { Mapper } from "../mapper/mapper";
 
 @Injectable()

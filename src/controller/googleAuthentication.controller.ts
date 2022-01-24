@@ -3,12 +3,12 @@ import { GoogleAuthenticationService } from "../service/googleAuthentication.ser
 import { OAuth2Client } from "google-auth-library";
 import "dotenv/config";
 import { oauth2_v2 } from "googleapis";
-import { UserServcie } from "src/service/user.service";
-import { AuthService } from "src/service/auth.service";
-import JwtToken from "src/model/jwt.token.model";
+import { UserServcie } from "../service/user.service";
+import { AuthService } from "../service/auth.service";
+import JwtToken from "../model/jwt.token.model";
 import { Response } from "express";
-import { ExecutionResult } from "src/dto/executionResult.dto";
-import { UserDTO } from "src/dto/user.dto";
+import { ExecutionResult } from "../dto/executionResult.dto";
+import { UserDTO } from "../dto/user.dto";
 
 @Controller("auth/google")
 @UseInterceptors(ClassSerializerInterceptor)
