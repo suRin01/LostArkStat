@@ -1,15 +1,15 @@
 import { Get, Controller, Render, Query, UseFilters, Res, Req, UseGuards } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
-import { CharacterSearchFilter } from "src/filter/character.search.filter";
-import { LoginAuthFilter } from "src/filter/LoginAuth.Filter";
-import { CharacterProfile } from "src/model/character.profile.model";
-import { CrawlingService } from "src/service/crawling.service";
-import { RequestUtility } from "src/util/req.util";
+import { CharacterSearchFilter } from "../filter/character.search.filter";
+import { LoginAuthFilter } from "../filter/LoginAuth.Filter";
+import { CharacterProfile } from "../model/character.profile.model";
+import { CrawlingService } from "../service/crawling.service";
+import { RequestUtility } from "../util/req.util";
 import { Request, Response } from "express";
-import { PostService } from "src/service/post.service";
-import { PostDTO } from "src/dto/post.dto";
-import JwtToken from "src/model/jwt.token.model";
-import jwtPayload from "src/model/jwt.payload.model";
+import { PostService } from "../service/post.service";
+import { PostDTO } from "../dto/post.dto";
+import JwtToken from "../model/jwt.token.model";
+import jwtPayload from "../model/jwt.payload.model";
 
 @Controller("/")
 export class MainController {

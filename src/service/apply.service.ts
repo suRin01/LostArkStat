@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { Mapper } from "../mapper/mapper";
 import { applyQueryString } from "../common/query";
-import { ExecutionResult } from "src/dto/executionResult.dto";
+import { ExecutionResult } from "../dto/executionResult.dto";
 
 @Injectable()
 export class ApplyService {

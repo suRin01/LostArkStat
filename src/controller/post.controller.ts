@@ -10,16 +10,16 @@ import {
 	UseGuards,
 } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
-import { ExecutionResult } from "src/dto/executionResult.dto";
+import { ExecutionResult } from "../dto/executionResult.dto";
 import { PostService } from "../service/post.service";
-import { RequestUtility } from "src/util/req.util";
-import { PostData } from "src/model/post.model";
+import { RequestUtility } from "../util/req.util";
+import { PostData } from "../model/post.model";
 import { Request } from "express";
-import jwtPayload from "src/model/jwt.payload.model";
-import { ApplyService } from "src/service/apply.service";
-import { PostDTO } from "src/dto/post.dto";
-import { Applicant } from "src/model/applicant.model";
-import JwtToken from "src/model/jwt.token.model";
+import jwtPayload from "../model/jwt.payload.model";
+import { ApplyService } from "../service/apply.service";
+import { PostDTO } from "../dto/post.dto";
+import { Applicant } from "../model/applicant.model";
+import JwtToken from "../model/jwt.token.model";
 
 @Controller("api/posts")
 export class PostController {
@@ -30,20 +30,23 @@ export class PostController {
 
 	@UseGuards(AuthGuard("jwt"))
 	@Get("/")
-	async getPosts(@Req() req: Request): Promise<PostDTO[]> {
+	async getPosts(@Req() req: Request): Promise<ExecutionResult> {
 
 		const jwtTokenData: JwtToken = RequestUtility.fromAuthCookie()(req);
 		const jwtParsedData: jwtPayload = RequestUtility.parseJwt(jwtTokenData.Authorization);
 		
-
-		let posts: PostDTO[] = (await this.postService.getPosts(jwtParsedData.guildName)).data as PostDTO[];
+		const result = await this.postService.getPosts(jwtParsedData.guildName)
+		let posts: PostDTO[] = result.data as PostDTO[];
 
 		for(let idx = 0, len = posts.length; idx<len; idx++){
 			const postId: number = posts[idx].post_idx;
 			const applicants: Applicant[] = (await this.applyServcie.getApplicants(postId)).data as Applicant[];
 			posts[idx].applicants = applicants;
 		}
-		return posts;
+		return {
+			status: result.status,
+			data: posts
+		}
 	}
 
 	@Get("/:idx")

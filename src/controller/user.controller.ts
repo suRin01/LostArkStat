@@ -2,8 +2,8 @@ import { Get, Controller, Post, Body, Param, Patch, UseGuards, UseFilters, Redir
 import { UserServcie } from "../service/user.service";
 import { createUserDTO } from "../dto/createUser.dto";
 import { AuthGuard } from "@nestjs/passport";
-import { LoginAuthFilter } from "src/filter/LoginAuth.Filter";
-import { ExecutionResult } from "src/dto/executionResult.dto";
+import { LoginAuthFilter } from "../filter/LoginAuth.Filter";
+import { ExecutionResult } from "../dto/executionResult.dto";
 
 @Controller("api/user")
 export class UserController {

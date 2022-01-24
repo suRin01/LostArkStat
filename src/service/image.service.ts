@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import { Mapper } from "../mapper/mapper";
 import { imageQueryString } from "../common/query";
-import { ExecutionResult } from "src/dto/executionResult.dto";
-import { StatusCode } from "src/common/statusCode";
+import { ExecutionResult } from "../dto/executionResult.dto";
+import { StatusCode } from "../common/statusCode";
 
 @Injectable()
 export class ImageService {

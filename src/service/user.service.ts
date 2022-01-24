@@ -7,8 +7,8 @@ import { UpdateUserDTO } from "../dto/updateUser.dto";
 import * as bcrypt from "bcrypt";
 
 import { oauth2_v2 } from "googleapis";
-import { WinstonLogger } from "src/util/logger";
-import { ExecutionResult } from "src/dto/executionResult.dto";
+import { WinstonLogger } from "../util/logger";
+import { ExecutionResult } from "../dto/executionResult.dto";
 
 @Injectable()
 export class UserServcie {

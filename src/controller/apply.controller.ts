@@ -9,11 +9,11 @@ import {
 } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
 import { Request } from "express";
-import { Applicant } from "src/model/applicant.model";
-import jwtPayload from "src/model/jwt.payload.model";
-import JwtToken from "src/model/jwt.token.model";
-import { ApplyService } from "src/service/apply.service";
-import { RequestUtility } from "src/util/req.util";
+import { Applicant } from "../model/applicant.model";
+import jwtPayload from "../model/jwt.payload.model";
+import JwtToken from "../model/jwt.token.model";
+import { ApplyService } from "../service/apply.service";
+import { RequestUtility } from "../util/req.util";
 
 @Controller("api/apply")
 export class ApplyController {

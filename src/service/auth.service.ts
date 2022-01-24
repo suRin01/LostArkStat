@@ -3,18 +3,21 @@ import { Mapper } from "../mapper/mapper";
 import { userQueryString } from "../common/query";
 import { JwtService } from "@nestjs/jwt";
 import * as bcrypt from "bcrypt";
-import jwtPayload from "src/model/jwt.payload.model";
-import JwtToken from "src/model/jwt.token.model";
-import { StatusCode } from "src/common/statusCode";
-import { ExecutionResult } from "src/dto/executionResult.dto";
-import { UserDTO } from "src/dto/user.dto";
+import jwtPayload from "../model/jwt.payload.model";
+import JwtToken from "../model/jwt.token.model";
+import { StatusCode } from "../common/statusCode";
+import { ExecutionResult } from "../dto/executionResult.dto";
+import { UserDTO } from "../dto/user.dto";
+import { UserServcie } from "./user.service";
 
 @Injectable()
 export class AuthService {
-	constructor(private readonly mapper: Mapper, private readonly jwtService: JwtService) {}
+	constructor(private readonly mapper: Mapper, private readonly jwtService: JwtService, private readonly userService: UserServcie) {}
 
 	async validate(userid: string, userpw: string): Promise<ExecutionResult> {
-		const findOne: ExecutionResult = await this.mapper.mapper(userQueryString.findOne, [userid]);
+		// const findOne: ExecutionResult = await this.mapper.mapper(userQueryString.findOne, [userid]);
+		const findOne: ExecutionResult = await this.userService.getUser(userid);
+		
 		const data:UserDTO[] = findOne.data as UserDTO[];
 		if (
 			data.length !== 0 &&

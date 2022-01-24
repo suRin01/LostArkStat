@@ -4,7 +4,7 @@ import "dotenv/config";
 import { database } from "../util/db";
 import { UserDTO } from "../dto/user.dto";
 import { WinstonLogger } from "../util/logger";
-import { StatusCode } from "src/common/statusCode";
+import { StatusCode } from "../common/statusCode";
 import { ExecutionResult } from "src/dto/executionResult.dto";
 
 export class Mapper {
