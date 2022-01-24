@@ -18,7 +18,7 @@ describe('PostController', () => {
 	  mapper: jest.fn()
   })
   const MockApplyService = ()=>({
-	getApplicants: jest.fn()
+  	getApplicants: jest.fn()
   })
 
   beforeEach(async () => {
@@ -26,13 +26,13 @@ describe('PostController', () => {
 		imports: [],
         controllers: [PostController],
         providers: [PostService, {
-			provide: Mapper,
-			useValue: MockMapperRepository
-		},
-		{
-			provide: ApplyService,
-			useValue: MockApplyService
-		}],
+		    	provide: Mapper,
+		    	useValue: MockMapperRepository
+		    },
+		    {
+		    	provide: ApplyService,
+		    	useValue: MockApplyService
+		    }],
       }).compile();
 
       postService = moduleRef.get<PostService>(PostService);
@@ -47,8 +47,7 @@ describe('PostController', () => {
     it('should return posts array', async () => {
 		const mockRequestObject:Request = nodeMock.createRequest();
 		mockRequestObject.res = nodeMock.createResponse();
-		mockRequestObject.headers.cookie = jwtCookie
-		applyService.getApplicants
+		mockRequestObject.headers.cookie = jwtCookie;
 		const postResult:ExecutionResult = posts;
 
 		jest.spyOn(postService, 'getPosts').mockResolvedValue(postResult);

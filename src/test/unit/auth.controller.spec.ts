@@ -46,27 +46,27 @@ describe("AuthController", () => {
 
   });
 
-  describe("login", () => {
-    it("should return posts array", async () => {
-		const mockRequestObject:Request = nodeMock.createRequest();
-		const mockResponseObject = nodeMock.createResponse();
-		mockRequestObject.headers.cookie = testData.jwtCookie;
+//   describe("login", () => {
+//     it("should return posts array", async () => {
+// 		const mockRequestObject:Request = nodeMock.createRequest();
+// 		const mockResponseObject = nodeMock.createResponse();
+// 		mockRequestObject.headers.cookie = testData.jwtCookie;
 
 
-		const tokenResult:JwtToken = testData.jwtTokenCookie;
-		const userResult:ExecutionResult = testData.user;
+// 		const tokenResult:JwtToken = testData.jwtTokenCookie;
+// 		const userResult:ExecutionResult = testData.user;
 
-		jest.spyOn(authService, "validate").mockResolvedValue(userResult);
+// 		jest.spyOn(authService, "validate").mockResolvedValue(userResult);
 		
-		//TODO: get useguard(authguard("jwt")) and apply
+// 		//TODO: get useguard(authguard("jwt")) and apply
 
 
-		await authController.login(mockRequestObject, mockResponseObject)
+// 		await authController.login(mockRequestObject, mockResponseObject)
 
-		console.debug(mockResponseObject);
-		expect(mockResponseObject.cookie).toEqual(tokenResult);
-    });
-  });
+// 		console.debug(mockResponseObject);
+// 		expect(mockResponseObject.cookie).toEqual(tokenResult);
+//     });
+//   });
 
   
   describe("logout", () => {
